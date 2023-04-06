@@ -42,10 +42,9 @@
   },
   "packageManager": "yarn@3.5.0",
   "devDependencies": {
-    "@types/eslint": "^8",
-    "@typescript-eslint/eslint-plugin": "latest",
-    "@typescript-eslint/parser": "latest",
-    "eslint": "latest",
-    "eslint-plugin-react": "latest"
+    "@types/prettier": "^2",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.7"
   }
 }
