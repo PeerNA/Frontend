@@ -52,6 +52,14 @@ const fonts = {
   Peer_Noto_M_SubTitle_1: css`
     font-family: 'Noto Sans KR';
     font-style: normal;
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: 2.9rem;
+    letter-spacing: -0.05rem;
+  `,
+  Peer_Noto_R_SubTitle_1: css`
+    font-family: 'Noto Sans KR';
+    font-style: normal;
     font-weight: 400;
     font-size: 2rem;
     line-height: 2.9rem;
