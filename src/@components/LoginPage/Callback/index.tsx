@@ -12,13 +12,13 @@ const Callback = () => {
   }, []);
 
   const getToken = async () => {
-    const payload = qs.stringify({
-      grant_type: 'authorization_code',
-      client_id: process.env.REACT_APP_REST_API_KEY,
-      redirect_uri: process.env.REACT_APP_REDIRECT_URL,
-      code,
-      client_secret: process.env.REACT_APP_CLIENT_SECRET,
-    });
+    // const payload = qs.stringify({
+    //   grant_type: 'authorization_code',
+    //   client_id: process.env.REACT_APP_REST_API_KEY,
+    //   redirect_uri: process.env.REACT_APP_REDIRECT_URL,
+    //   code,
+    //   client_secret: process.env.REACT_APP_CLIENT_SECRET,
+    // });
     try {
       //   const { data: githubRes } = await axios.get('https://kauth.kakao.com/oauth/token', payload);
       //   if (data.isUser) {
