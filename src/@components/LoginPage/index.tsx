@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 import { IcGithub, IcPeerNaLogo } from '../../assets/icon';
+import { getLoginUserInfo } from '../../lib/api/auth';
 import { St } from './style';
 
 const LoginPage = () => {
   const handleGithubLogin = () => {
-    window.open(
-      `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&redirect_uri=http://localhost:3000/callback`,
-      '_blank',
-    );
+    const data = getLoginUserInfo();
   };
   return (
     <St.LoginPageWrapper>
