@@ -9,11 +9,18 @@ export const St = {
 
     position: relative;
 
+    padding: 1rem;
+
+    border-radius: 2rem;
+
     & > img {
       width: 5.9rem;
       height: 5.9rem;
 
       border-radius: 3rem;
+    }
+    :hover {
+      background-color: ${({ theme }) => theme.colors.Peer_Color_Sky_2};
     }
   `,
   ProfileName: styled.p`
