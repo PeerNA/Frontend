@@ -1,12 +1,8 @@
-FROM node
+FROM node:latest as build
 WORKDIR /usr/src/app
-
+                
+COPY package* yarn.lock .yarn .yarnrc.yml ./
 COPY . .
-COPY .yarn ./
-COPY .* ./
-COPY package* yarn.lock .pnp*     ./
-COPY .yarnrc.yml                  ./
-COPY .yarn                        ./.yarn                   
 
 RUN yarn
 
