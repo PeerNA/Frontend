@@ -7,6 +7,5 @@
 	"singleQuote": true,
 	"endOfLine": "auto",
 	"bracketSpacing": true,
-	"jsxBracketSameLine": true,
-	"useTabs": true
+	"jsxBracketSameLine": true
 }
