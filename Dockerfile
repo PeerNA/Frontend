@@ -1,7 +1,12 @@
-FROM node:14-slim
+FROM node
 WORKDIR /usr/src/app
 
 COPY . .
+COPY .yarn ./
+COPY .* ./
+COPY package* yarn.lock .pnp*     
+COPY .yarnrc.yml                  
+COPY .yarn                       
 
 RUN yarn
 
