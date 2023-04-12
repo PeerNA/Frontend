@@ -5,7 +5,7 @@ import { St } from './style';
 
 const LoginPage = () => {
   const handleGithubLogin = () => {
-    window.location.href = `${process.env.REACT_APP_IP}oauth2/authorize/github?redirect_uri='${process.env.REACT_APP_IP}callback'`;
+    window.location.href = `${process.env.REACT_APP_REDIRECT_URL}`;
   };
   return (
     <St.LoginPageWrapper>

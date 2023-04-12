@@ -10,11 +10,9 @@ const Callback = () => {
   }, []);
 
   const checkLogin = async () => {
-    console.log(code);
     if (code) {
       navigate('/main');
-    }
-    navigate('/');
+    } else navigate('/');
   };
   return null;
 };
