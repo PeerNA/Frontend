@@ -25,15 +25,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint",
-    "@typescript-eslint/eslint-plugin",
-    "simple-import-sort",
-    "react",
-    "react-hooks",
-    "prettier"
-  ],
+  "plugins": ["react", "@typescript-eslint", "@typescript-eslint/eslint-plugin", "simple-import-sort", "react", "react-hooks", "prettier"],
   "rules": {
     "indent": ["off", 2, { "SwitchCase": 1 }], // 들여쓰기 몇 칸? 기본 2칸으로 하되, switch문에서는 1칸으로 지정
     "quotes": ["off", "single"], // 쌍따옴표가 아닌 홑따옴표를 사용
@@ -60,7 +52,8 @@
     "prettier/prettier": [
       "error",
       {
-        "endOfLine": "auto"
+        "endOfLine": "auto",
+        "useTabs": true
       }
     ]
   },
