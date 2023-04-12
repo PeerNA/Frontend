@@ -52,8 +52,7 @@
     "prettier/prettier": [
       "error",
       {
-        "endOfLine": "auto",
-        "useTabs": true
+        "endOfLine": "auto"
       }
     ]
   },
