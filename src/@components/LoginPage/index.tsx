@@ -5,13 +5,14 @@ import { St } from './style';
 
 const LoginPage = () => {
   const handleGithubLogin = () => {
-    const data = getLoginUserInfo();
+    window.location.href = `${process.env.REACT_APP_REDIRECT_URL}`;
   };
   return (
     <St.LoginPageWrapper>
       <IcPeerNaLogo />
       <St.GithubLoginBtn type="button" onClick={handleGithubLogin}>
-        <IcGithub /> <span>Github 계정으로 로그인</span>
+        <IcGithub />
+        <span>Github 계정으로 로그인</span>
       </St.GithubLoginBtn>
     </St.LoginPageWrapper>
   );
