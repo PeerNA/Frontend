@@ -4,9 +4,9 @@ WORKDIR /usr/src/app
 COPY . .
 COPY .yarn ./
 COPY .* ./
-COPY package* yarn.lock .pnp*     
-COPY .yarnrc.yml                  
-COPY .yarn                       
+COPY package* yarn.lock .pnp*     ./
+COPY .yarnrc.yml                  ./
+COPY .yarn                        ./.yarn                   
 
 RUN yarn
 
