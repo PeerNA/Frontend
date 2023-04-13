@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import { IcGithub, IcPeerNaLogo } from '../../assets/icon';
+import { IcGithub } from '../../assets/icon';
 import { getLoginUserInfo } from '../../lib/api/auth';
 import { St } from './style';
+import peerNaLogo from '../../assets/image/peernaLogo.png';
 
 const LoginPage = () => {
   const handleGithubLogin = () => {
@@ -9,7 +9,7 @@ const LoginPage = () => {
   };
   return (
     <St.LoginPageWrapper>
-      <IcPeerNaLogo />
+      <img src={peerNaLogo} alt="peerNa-logo" />
       <St.GithubLoginBtn type="button" onClick={handleGithubLogin}>
         <IcGithub />
         <span>Github 계정으로 로그인</span>
