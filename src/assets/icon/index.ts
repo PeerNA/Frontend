@@ -1,2 +1,4 @@
 export { ReactComponent as IcGithub } from './ic_github.svg';
-export { ReactComponent as IcPeerNaLogo } from './ic_peerna_logo.svg';
+export { ReactComponent as IcArrowDropDown } from './ic_arrow_drop_down.svg';
+export { ReactComponent as IcStudying } from './IcStudying.svg';
+export { ReactComponent as IcOnlineLearning } from './IcOnlineLearning.svg';
