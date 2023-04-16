@@ -8,6 +8,7 @@ const Callback = () => {
   useEffect(() => {
     checkLogin();
   }, []);
+  console.log(code);
 
   const checkLogin = async () => {
     if (code === 'success') {
