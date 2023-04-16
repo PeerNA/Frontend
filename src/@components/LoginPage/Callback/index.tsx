@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Callback = () => {
-  const code = new URL(window.location.href).searchParams.get('code');
+  const code = new URL(window.location.href).searchParams.get('login');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -10,7 +10,7 @@ const Callback = () => {
   }, []);
 
   const checkLogin = async () => {
-    if (code) {
+    if (code === 'success') {
       navigate('/main');
     } else navigate('/');
   };
