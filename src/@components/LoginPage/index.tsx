@@ -1,5 +1,4 @@
 import { IcGithub } from '../../assets/icon';
-import { getLoginUserInfo } from '../../lib/api/auth';
 import { St } from './style';
 import peerNaLogo from '../../assets/image/peernaLogo.png';
 
