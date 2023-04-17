@@ -1,13 +1,14 @@
 import { St } from './style';
-import SubjectSelect from './SubjectSelect';
+import LearningSelect from './LearningSelect';
+import { SELET_TITLE_LIST } from '../../../constants/mainPageInfo';
 
 const LearningExperience = () => {
   return (
-    <St.LearningExperienceSectionr>
-      <SubjectSelect priority={1} />
-      <SubjectSelect priority={2} />
-      <SubjectSelect priority={3} />
-    </St.LearningExperienceSectionr>
+    <St.LearningExperienceSection>
+      {SELET_TITLE_LIST.map((title, idx) => (
+        <LearningSelect key={title} isSubject={Boolean(idx)} title={title} />
+      ))}
+    </St.LearningExperienceSection>
   );
 };
 
