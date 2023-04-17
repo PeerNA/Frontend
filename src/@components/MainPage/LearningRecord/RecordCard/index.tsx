@@ -11,7 +11,7 @@ const RecordCard = (props: RecordCardProps) => {
   const naviagate = useNavigate();
 
   const handleHistoryDetail = async () => {
-    naviagate(`/history/${historyId}`);
+    naviagate(`/detail/${historyId}`);
   };
 
   return (

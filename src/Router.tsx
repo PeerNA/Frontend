@@ -6,6 +6,7 @@ import { RecoilRoot } from 'recoil';
 const LoginPage = lazy(() => import('./@components/LoginPage'));
 const CallBack = lazy(() => import('./@components/LoginPage/Callback'));
 const MainPage = lazy(() => import('./@components/MainPage'));
+const LearningDetailPage = lazy(() => import('./@components/LearningDetailPage'));
 
 const Router = () => {
   return (
@@ -15,6 +16,7 @@ const Router = () => {
           <Route path="/" element={<LoginPage />} />
           <Route path="/callback" element={<CallBack />} />
           <Route path="/main" element={<MainPage />} />
+          <Route path="/detail/:historyid" element={<LearningDetailPage />} />
         </Routes>
       </RecoilRoot>
     </BrowserRouter>
