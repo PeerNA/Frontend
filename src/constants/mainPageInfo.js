@@ -25,3 +25,5 @@ export const SUBJECT_CATEGORY_LIST = [
   'TECH',
   'CODING_TEST',
 ];
+export const CAREER_TYPE_LIST = ['OVER_3', 'OVER_1', 'UNDER_1'];
+export const SELET_TITLE_LIST = ['학습경력', '1순위', '2순위', '3순위'];
