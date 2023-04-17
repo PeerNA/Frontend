@@ -1,10 +1,20 @@
+import { PostInterestInfo } from '../../type/userInfo';
 import { peerNaClient } from '../axios';
 
-export const getLoginUserInfo = async () => {
+export const getUserInfo = async () => {
   try {
-    const res = await peerNaClient.get(`/oauth2/authorize/github?redirect_uri='${process.env.REACT_APP_IP}callback'`);
+    const res = await peerNaClient.get(`api/users/info`);
     return res;
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const postMatchingInterest = async (interestInfo: PostInterestInfo) => {
+  try {
+    const res = await peerNaClient.post(`/api/users/info`, interestInfo);
+    return res;
+  } catch (err) {
+    return err;
   }
 };

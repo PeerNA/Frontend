@@ -23,6 +23,7 @@ declare module 'styled-components' {
       Peer_Noto_B_Title_3: SerializedStyles;
       Peer_Noto_M_Title_1: SerialzedStyles;
       Peer_Noto_M_SubTitle_1: SerializedStyles;
+      Peer_Noto_R_SubTitle_1: SerializedStyles;
       Peer_Noto_R_SubTitle_2: SerializedStyles;
       Peer_Noto_B_Content_1: SerializedStyles;
       Peer_Noto_M_Content_2: SerializedStyles;

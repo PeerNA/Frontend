@@ -10,6 +10,10 @@ export const St = {
 
     width: 100%;
     height: 100%;
+
+    & > img {
+      height: 31.4rem;
+    }
   `,
   GithubLoginBtn: styled.button`
     display: flex;
