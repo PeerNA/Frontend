@@ -1,16 +1,20 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const St = {
-  BackPageNav: styled.nav`
+  BackPageNav: styled.nav<{ isAbsolute: boolean }>`
     display: flex;
     justify-content: center;
     align-items: center;
 
     gap: 1rem;
 
-    position: absolute;
-    top: 1.5rem;
-    left: 2%;
+    ${({ isAbsolute }) =>
+      isAbsolute &&
+      css`
+        position: absolute;
+        top: 1.5rem;
+        left: 2%;
+      `}
 
     cursor: pointer;
   `,
