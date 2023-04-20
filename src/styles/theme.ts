@@ -3,8 +3,10 @@ import { css, DefaultTheme } from 'styled-components';
 const colors = {
   Peer_Color_Gray: '#484848',
   Peer_Color_Red: '#FF7B7B',
+  Peer_Color_Red_Hover: '#DF2E38',
   Peer_Color_Purple: '#C13DFF',
   Peer_Color_Green: '#A2DBA1',
+  Peer_Color_Green_Hover: '#5D9C59',
   Peer_Color_Blue: '#98A8F8',
   Peer_Color_Sky_1: '#8088B2',
   Peer_Color_Sky_2: '#BCCEF8',
