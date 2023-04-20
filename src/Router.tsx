@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
@@ -12,12 +12,14 @@ const Router = () => {
   return (
     <BrowserRouter>
       <RecoilRoot>
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/callback" element={<CallBack />} />
-          <Route path="/main" element={<MainPage />} />
-          <Route path="/detail/:historyid" element={<LearningDetailPage />} />
-        </Routes>
+        <Suspense>
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/callback" element={<CallBack />} />
+            <Route path="/main" element={<MainPage />} />
+            <Route path="/detail/:historyId" element={<LearningDetailPage />} />
+          </Routes>
+        </Suspense>
       </RecoilRoot>
     </BrowserRouter>
   );
