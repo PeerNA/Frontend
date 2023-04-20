@@ -12,6 +12,7 @@ const UserInputBox = (props: UserInputBoxProps) => {
   return (
     <St.UserInputBoxArticle>
       <UserProfile userName="happhee" />
+      <St.UserProfileUnderBar />
       {isModify ? <input type="text" /> : <p className="input_content">{content}</p>}
     </St.UserInputBoxArticle>
   );
