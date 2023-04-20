@@ -5,8 +5,10 @@ declare module 'styled-components' {
     colors: {
       Peer_Color_Gray: string;
       Peer_Color_Red: string;
+      Peer_Color_Red_Hover: string;
       Peer_Color_Purple: string;
       Peer_Color_Green: string;
+      Peer_Color_Green_Hover: string;
       Peer_Color_Blue: string;
       Peer_Color_Sky_1: string;
       Peer_Color_Sky_2: string;
