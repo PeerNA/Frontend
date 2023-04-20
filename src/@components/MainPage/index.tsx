@@ -1,7 +1,7 @@
+import LearningHeader from '../@common/LearningHeader';
 import PeerNaHeader from '../@common/PeerNaHeader';
 import LearningExperience from './LearningExperience';
 import LearningRecord from './LearningRecord';
-import Header from './LearningRecord/Header';
 import PeerMatchingBtn from './PeerMatchingBtn';
 import { St } from './style';
 
@@ -16,7 +16,7 @@ const MainPage = () => {
           <PeerMatchingBtn />
         </section>
         <section>
-          <Header />
+          <LearningHeader title="학습기록" pageType="main" />
           <LearningRecord />
         </section>
       </St.MainWrapper>

@@ -3,14 +3,15 @@ import { St } from './style';
 
 interface UserProfileProps {
   userName: string;
+  imageUrl: string;
 }
 const UserProfile = (props: UserProfileProps) => {
-  const { userName } = props;
+  const { userName, imageUrl } = props;
 
   return (
     <St.UserProfileWrapper>
-      <img src="https://avatars.githubusercontent.com/u/79238676?v=4" alt="profile-img" />
-      <St.ProfileName>{userName}님</St.ProfileName>
+      <img src={imageUrl} alt="profile-img" />
+      <St.ProfileName>{userName}</St.ProfileName>
     </St.UserProfileWrapper>
   );
 };

@@ -1,4 +1,4 @@
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import LearningBtnList from '../@common/LearningBtnList';
 import PeerNaHeader from '../@common/PeerNaHeader';
 import QuestionTitle from '../@common/QuestionTitle';
@@ -20,14 +20,24 @@ const LearningDetailPage = () => {
     <>
       <PeerNaHeader />
       <St.LearningDetailSection>
-        <BackPageNav backTitle="메인으로" backPageURL="/main" />
+        <BackPageNav backTitle="메인으로" isAbsolute={true} />
         <div>
           <LearningBtnList isActive={true} />
           <QuestionTitle question={'OS의 데드락에 대해 설명해주세요'} isAnswer={true} />
           <p className="question_time">{time}</p>
           <St.UserInputBoxWrapper>
-            <UserInputBox isModify={false} content="OS 데드락이란 두 개 이상의 프로세스나 스레드가 서로 자원을 얻지 못해서 다음 처리를 하지 못하는 상태이다." />
-            <UserInputBox isModify={false} content="OS 데드락이란 두 개 이상의 프로세스나 스레드가 서로 자원을 얻지 못해서 다음 처리를 하지 못하는 상태이다." />
+            <UserInputBox
+              isModify={false}
+              content="OS 데드락이란 두 개 이상의 프로세스나 스레드가 서로 자원을 얻지 못해서 다음 처리를 하지 못하는 상태이다."
+              userName="happhee"
+              imageUrl="https://avatars.githubusercontent.com/u/79238676?v=4"
+            />
+            <UserInputBox
+              isModify={false}
+              content="OS 데드락이란 두 개 이상의 프로세스나 스레드가 서로 자원을 얻지 못해서 다음 처리를 하지 못하는 상태이다."
+              userName="happhee"
+              imageUrl="https://avatars.githubusercontent.com/u/79238676?v=4"
+            />
           </St.UserInputBoxWrapper>
         </div>
       </St.LearningDetailSection>
