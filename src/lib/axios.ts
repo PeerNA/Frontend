@@ -18,7 +18,6 @@ peerNaClient.interceptors.request.use((config: any) => {
 
 peerNaClient.interceptors.response.use(
   function (response) {
-    console.log(response, '인터셉터');
     return response;
   },
   async (error) => {
