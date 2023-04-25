@@ -1,5 +1,5 @@
-import PeerNaBtn from '../PeerNaBtn';
-import { St } from './style';
+import styled from 'styled-components';
+import { PeerNaBtn } from '.';
 
 interface LearningBtnListProps {
   isActive: boolean;
@@ -23,3 +23,13 @@ const LearningBtnList = (props: LearningBtnListProps) => {
 };
 
 export default LearningBtnList;
+
+const St = {
+  LearningBtnNav: styled.nav`
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+
+    padding: 1rem 0rem;
+  `,
+};

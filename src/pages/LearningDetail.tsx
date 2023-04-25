@@ -1,12 +1,8 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import LearningBtnList from '../@common/LearningBtnList';
-import PeerNaHeader from '../@common/PeerNaHeader';
-import QuestionTitle from '../@common/QuestionTitle';
-import useGetLearningDetail from '../../lib/hooks/useGetLearningDetail';
-import { St } from './style';
-import Error404 from '../@common/Error404';
-import UserInputBox from '../@common/UserInputBox';
-import BackPageNav from '../@common/BackPageNav';
+import useGetLearningDetail from '../lib/hooks/useGetLearningDetail';
+import styled from 'styled-components';
+
+import { BackPageNav, UserInputBox, Error404, PeerNaHeader, LearningBtnList, QuestionTitle } from '../@components/@common';
 
 const LearningDetailPage = () => {
   const { historyId } = useParams<{ historyId: string }>();
@@ -46,3 +42,32 @@ const LearningDetailPage = () => {
 };
 
 export default LearningDetailPage;
+const St = {
+  LearningDetailSection: styled.section`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    > div {
+      width: 70%;
+    }
+
+    .question_time {
+      padding: 1.3rem;
+
+      ${({ theme }) => theme.fonts.Peer_Noto_R_SubTitle_1};
+      text-align: end;
+    }
+  `,
+  UserInputBoxWrapper: styled.section`
+    display: grid;
+    justify-content: center;
+    align-items: center;
+
+    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+  `,
+};

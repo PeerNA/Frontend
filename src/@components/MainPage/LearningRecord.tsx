@@ -1,10 +1,10 @@
 import { useCallback, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import useGetLearningHistoryList from '../../../lib/hooks/useGetLearningHistory';
+import useGetLearningHistoryList from '../../lib/hooks/useGetLearningHistory';
 
-import { GetLearningHistoryInfo } from '../../../type/history';
-import RecordCard from './RecordCard';
-import { St } from './style';
+import { GetLearningHistoryInfo } from '../../type/history';
+import styled from 'styled-components';
+import { RecordCard } from '.';
 
 const MOCK_RECORD_DATA: GetLearningHistoryInfo[] = [
   {
@@ -96,3 +96,20 @@ const LearningRecord = () => {
 };
 
 export default LearningRecord;
+
+const St = {
+  LearningRecordSection: styled.section`
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 5%;
+    row-gap: 2rem;
+
+    width: 100%;
+
+    margin: 2rem;
+
+    & > div {
+      width: 45%;
+    }
+  `,
+};

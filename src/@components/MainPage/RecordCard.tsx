@@ -1,12 +1,37 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const St = {
+interface RecordCardProps {
+  historyId: number;
+  question: string;
+  time: string;
+}
+const RecordCard = (props: RecordCardProps) => {
+  const { historyId, question, time } = props;
+  const naviagate = useNavigate();
+
+  const handleHistoryDetail = async () => {
+    naviagate(`/detail/${historyId}`);
+  };
+
+  return (
+    <St.RecordCardWrapper onClick={handleHistoryDetail}>
+      <p>{question}</p>
+      <St.RecordDateWrapper>{time}</St.RecordDateWrapper>
+    </St.RecordCardWrapper>
+  );
+};
+
+export default RecordCard;
+
+const St = {
   RecordCardWrapper: styled.article`
     display: flex;
     flex-direction: column;
 
     width: 100%;
     border: 0.1rem solid ${({ theme }) => theme.colors.Peer_Color_Sky_2};
+
     & > p {
       white-space: nowrap;
       overflow: hidden;

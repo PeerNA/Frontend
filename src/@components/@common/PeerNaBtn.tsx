@@ -1,6 +1,25 @@
+import React from 'react';
 import styled from 'styled-components';
 
-export const St = {
+interface PeerNaBtnProps {
+  content: string;
+  isActive: boolean;
+  handleBtnClick: () => void;
+}
+
+const PeerNaBtn = (props: PeerNaBtnProps) => {
+  const { content, isActive, handleBtnClick } = props;
+
+  return (
+    <St.PeerNaBtn isActive={isActive} onClick={handleBtnClick}>
+      {content}
+    </St.PeerNaBtn>
+  );
+};
+
+export default PeerNaBtn;
+
+const St = {
   PeerNaBtn: styled.button<{ isActive: boolean }>`
     padding: 1rem 1.5rem;
 
