@@ -1,13 +1,17 @@
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import peerNaLogo from '../../assets/image/peernaLogo.png';
+import { userInfoState } from '../../recoil/atom/userInfo';
 import MyProfile from './MyProfile';
 
 const PeerNaHeader = () => {
+  const userInfo = useRecoilValue(userInfoState);
+  const { imageUrl, name } = userInfo;
   return (
     <St.HeaderWrapper>
       <img src={peerNaLogo} alt="peerNa-logo" />
-      <MyProfile userName="Happhee" imageUrl="https://avatars.githubusercontent.com/u/79238676?v=4" />
+      <MyProfile userName={name} imageUrl={imageUrl} />
     </St.HeaderWrapper>
   );
 };
