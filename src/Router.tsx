@@ -3,11 +3,11 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 
-const LoginPage = lazy(() => import('./@components/LoginPage'));
-const CallBack = lazy(() => import('./@components/LoginPage/Callback'));
-const MainPage = lazy(() => import('./@components/MainPage'));
-const LearningDetailPage = lazy(() => import('./@components/LearningDetailPage'));
-const AnswerListPage = lazy(() => import('./@components/AnswerListPage'));
+const LoginPage = lazy(() => import('./pages/Login'));
+const CallBack = lazy(() => import('./pages/Callback'));
+const MainPage = lazy(() => import('./pages/Main'));
+const LearningDetailPage = lazy(() => import('./pages/LearningDetail'));
+const AnswerListPage = lazy(() => import('./pages/AnswerList'));
 
 const Router = () => {
   return (
