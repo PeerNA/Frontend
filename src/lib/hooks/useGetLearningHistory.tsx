@@ -5,7 +5,7 @@ import { GetLearningHistoryInfo } from '../../type/history';
 import { peerNaGetFetcher } from '../axios';
 
 const getKey = (cursorIdx: number, voteListData: AxiosResponse<GetLearningHistoryInfo>) =>
-  cursorIdx === 0 ? `api/history/${cursorIdx}` : voteListData.data ? `api/history/${cursorIdx}` : null;
+  cursorIdx === 0 ? `api/history?page=${cursorIdx}` : voteListData.data ? `api/history?page=${cursorIdx}` : null;
 
 const useGetLearningHistoryList = () => {
   const { data, isLoading, error, size, setSize } = useSWRInfinite<AxiosResponse<GetLearningHistoryInfo>>(getKey, peerNaGetFetcher, {
