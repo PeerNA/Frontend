@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IcBack } from '../../../assets/icon';
-import { St } from './style';
+import styled, { css } from 'styled-components';
+import { IcBack } from '../../assets/icon';
 
 interface BackPageNavProps {
   backTitle: string;
@@ -25,3 +25,26 @@ const BackPageNav = (props: BackPageNavProps) => {
 };
 
 export default BackPageNav;
+
+const St = {
+  BackPageNav: styled.nav<{ isAbsolute: boolean }>`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 1rem;
+
+    ${({ isAbsolute }) =>
+      isAbsolute &&
+      css`
+        position: absolute;
+        top: 1.5rem;
+        left: 2%;
+      `}
+
+    cursor: pointer;
+  `,
+  BackTitle: styled.p`
+    ${({ theme }) => theme.fonts.Peer_Noto_M_SubTitle_1}
+  `,
+};
