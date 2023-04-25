@@ -1,10 +1,10 @@
-import { PostInterestInfo } from '../../type/userInfo';
+import { PostInterestInfo, UserInfoType } from '../../type/userInfo';
 import { peerNaClient } from '../axios';
 
 export const getUserInfo = async () => {
   try {
-    const res = await peerNaClient.get(`api/users/info`);
-    return res;
+    const { data } = await peerNaClient.get<UserInfoType>(`api/users/info`);
+    return data;
   } catch (error) {
     console.error(error);
   }
