@@ -12,8 +12,11 @@ const LearningSelect = (props: LearningSelectProps) => {
   const { isSubject, title } = props;
 
   const [userInfoAtom, setUserInfoAtom] = useRecoilState(userInfoState);
-  // const r = useResetRecoilState(userInfoState);
-  // r();
+  const {
+    career,
+    interest: { priority1, priority2, priority3 },
+  } = userInfoAtom;
+
   const OPTION_LIST = isSubject ? SUBJECT_CATEGORY_LIST : CAREER_TYPE_LIST;
 
   const handleChangeOptionValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -22,14 +25,29 @@ const LearningSelect = (props: LearningSelectProps) => {
         setUserInfoAtom({ ...userInfoAtom, career: e.target.value });
         break;
       case SELET_TITLE_LIST[1]:
-        setUserInfoAtom({ ...userInfoAtom, priorityList: { ...userInfoAtom.priorityList, priority1: e.target.value } });
+        setUserInfoAtom({ ...userInfoAtom, interest: { ...userInfoAtom.interest, priority1: e.target.value } });
         break;
       case SELET_TITLE_LIST[2]:
-        setUserInfoAtom({ ...userInfoAtom, priorityList: { ...userInfoAtom.priorityList, priority2: e.target.value } });
+        setUserInfoAtom({ ...userInfoAtom, interest: { ...userInfoAtom.interest, priority2: e.target.value } });
         break;
       case SELET_TITLE_LIST[3]:
-        setUserInfoAtom({ ...userInfoAtom, priorityList: { ...userInfoAtom.priorityList, priority3: e.target.value } });
+        setUserInfoAtom({ ...userInfoAtom, interest: { ...userInfoAtom.interest, priority3: e.target.value } });
         break;
+    }
+  };
+
+  const getSelectValue = () => {
+    switch (title) {
+      case SELET_TITLE_LIST[0]:
+        return career;
+      case SELET_TITLE_LIST[1]:
+        return priority1;
+
+      case SELET_TITLE_LIST[2]:
+        return priority2;
+
+      case SELET_TITLE_LIST[3]:
+        return priority3;
     }
   };
 
@@ -38,7 +56,7 @@ const LearningSelect = (props: LearningSelectProps) => {
       <header>
         <h3>{title}</h3>
       </header>
-      <St.SubjectSelect onChange={handleChangeOptionValue}>
+      <St.SubjectSelect onChange={handleChangeOptionValue} value={getSelectValue()}>
         {OPTION_LIST.map((option) => (
           <St.SubjectOption key={option} value={option}>
             {option}
