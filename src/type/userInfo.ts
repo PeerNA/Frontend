@@ -18,3 +18,12 @@ export interface PostInterestInfo {
   priority3: string;
   career: string;
 }
+
+export interface UserProfileInfo {
+  userName: string;
+  imageUrl: string;
+}
+
+export interface AnswerModalInfo extends UserProfileInfo {
+  answer: string;
+}

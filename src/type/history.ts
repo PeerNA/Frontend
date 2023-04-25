@@ -8,3 +8,10 @@ export interface GetLearningHistoryInfo {
 export interface GetHistoryDetailInfo {
   answer: string;
 }
+export interface ProblemAnswerInfo {
+  replyId: number;
+  userId: number;
+  name: string;
+  imageUrl: string;
+  answer: string;
+}
