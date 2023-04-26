@@ -1,4 +1,4 @@
-import { PostInterestInfo, UserInfoType } from '../../type/userInfo';
+import { PatchInterestInfo, UserInfoType } from '../../type/userInfo';
 import { peerNaClient } from '../axios';
 
 export const getUserInfo = async () => {
@@ -10,7 +10,7 @@ export const getUserInfo = async () => {
   }
 };
 
-export const postMatchingInterest = async (interestInfo: PostInterestInfo) => {
+export const postMatchingInterest = async (interestInfo: PatchInterestInfo) => {
   try {
     const res = await peerNaClient.post(`/api/users/info`, interestInfo);
     return res;
