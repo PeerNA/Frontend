@@ -6,10 +6,10 @@ import { userInfoState } from '../../recoil/atom/userInfo';
 
 const PeerMatchingBtn = () => {
   const userInterestInfo = useRecoilValue(userInfoState);
-  const { career, priorityList } = userInterestInfo;
+  const { career, interest } = userInterestInfo;
   const handleMatchingBtn = async () => {
     try {
-      const data = await postMatchingInterest({ ...priorityList, career });
+      const data = await postMatchingInterest({ ...interest, career });
       console.log(data);
     } catch (e) {
       console.log(e);

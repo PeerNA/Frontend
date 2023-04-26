@@ -1,5 +1,8 @@
 export interface UserInfoType {
-  priorityList: {
+  name: string;
+  email: string;
+  imageUrl: string;
+  interest: {
     priority1: string;
     priority2: string;
     priority3: string;
