@@ -10,11 +10,11 @@ const AnswerCard = (props: ProblemAnswerInfo) => {
 
   const setAnswerInfoState = useSetRecoilState(answerInfoState);
 
-  const { isModalOpen, toggleModal } = useModal();
+  const { isPeernaModal, toggleModal } = useModal();
 
   useEffect(() => {
     setAnswerInfoState({ userName: name, imageUrl, answer });
-  }, [isModalOpen]);
+  }, [isPeernaModal]);
 
   return (
     // <AnswerCardWrapper onClick={toggleModal}>

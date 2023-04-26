@@ -30,3 +30,7 @@ export interface UserProfileInfo {
 export interface AnswerModalInfo extends UserProfileInfo {
   answer: string;
 }
+export interface ActiveModalInfo {
+  isPeernaModal: boolean;
+  isProfileModal: boolean;
+}

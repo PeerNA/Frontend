@@ -10,7 +10,7 @@ const PeerNaModal = () => {
         <St.ModalSection>
           <p>🥳🥳🥳 축하합니다!! 🥳🥳🥳</p>
           <St.ButtonWrapper>
-            <button type="button" onClick={toggleModal}>
+            <button type="button" onClick={() => toggleModal(false)}>
               게임으로 돌아가기
             </button>
           </St.ButtonWrapper>
