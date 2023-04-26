@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { CAREER_TYPE_LIST, SELET_TITLE_LIST, SUBJECT_CATEGORY_LIST } from '../../constants/mainPageInfo';
 import { userInfoState } from '../../recoil/atom/userInfo';
