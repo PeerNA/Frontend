@@ -18,3 +18,12 @@ export const postMatchingInterest = async (interestInfo: PostInterestInfo) => {
     return err;
   }
 };
+
+export const postLogout = async () => {
+  try {
+    const { data } = await peerNaClient.post(`logout`);
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
