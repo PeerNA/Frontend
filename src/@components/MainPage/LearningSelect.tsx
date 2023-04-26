@@ -3,7 +3,7 @@ import { useRecoilState, useResetRecoilState } from 'recoil';
 import { CAREER_TYPE_LIST, SELET_TITLE_LIST, SUBJECT_CATEGORY_LIST } from '../../constants/mainPageInfo';
 import { userInfoState } from '../../recoil/atom/userInfo';
 import styled from 'styled-components';
-import { postMatchingInterest } from '../../lib/api/auth';
+import { patchMatchingInterest } from '../../lib/api/auth';
 import { PatchInterestInfo } from '../../type/userInfo';
 
 interface LearningSelectProps {
@@ -19,7 +19,6 @@ const LearningSelect = (props: LearningSelectProps) => {
     interest: { priority1, priority2, priority3 },
   } = userInfoAtom;
 
-  // console.log(userInfoAtom);
   const OPTION_LIST = isSubject ? SUBJECT_CATEGORY_LIST : CAREER_TYPE_LIST;
 
   const handleChangeOptionValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -47,7 +46,7 @@ const LearningSelect = (props: LearningSelectProps) => {
   };
 
   const handlePatchInterest = async (patchInterest: PatchInterestInfo) => {
-    const data = await postMatchingInterest(patchInterest);
+    const data = await patchMatchingInterest(patchInterest);
     console.log(data);
   };
   const getSelectValue = () => {
