@@ -10,9 +10,9 @@ export const getUserInfo = async () => {
   }
 };
 
-export const postMatchingInterest = async (interestInfo: PatchInterestInfo) => {
+export const patchMatchingInterest = async (interestInfo: PatchInterestInfo) => {
   try {
-    const res = await peerNaClient.post(`/api/users/info`, interestInfo);
+    const res = await peerNaClient.patch(`/api/users/info`, interestInfo);
     return res;
   } catch (err) {
     return err;
