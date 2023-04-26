@@ -11,17 +11,19 @@ const MyProfile = (props: MyProfileProps) => {
   const { userName, imageUrl } = props;
 
   const navigate = useNavigate();
-  const { isModalOpen, toggleModal } = useModal();
+  const { isProfileModal, toggleModal } = useModal();
+  console.log(isProfileModal, '프로필');
 
   const handleLogout = async () => {
     // const data = await postLogout();
-    navigate('/');
+    // console.log(data);
+    // navigate('/');
   };
   return (
-    <St.MyProfileSection onClick={toggleModal}>
+    <St.MyProfileSection onClick={() => toggleModal(true)}>
       <img src={imageUrl} alt="profile-img" />
       <St.ProfileName>{userName}님</St.ProfileName>
-      {isModalOpen && (
+      {isProfileModal && (
         <St.MyProfileArticle>
           <St.ProfileTitle>
             <h1>내 프로필</h1>
