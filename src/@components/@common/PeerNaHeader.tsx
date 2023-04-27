@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
@@ -7,10 +8,12 @@ import MyProfile from './MyProfile';
 
 const PeerNaHeader = () => {
   const userInfo = useRecoilValue(userInfoState);
+  const navigate = useNavigate();
+
   const { imageUrl, name } = userInfo;
   return (
     <St.HeaderWrapper>
-      <img src={peerNaLogo} alt="peerNa-logo" />
+      <img src={peerNaLogo} alt="peerNa-logo" onClick={() => navigate('/main')} />
       <MyProfile userName={name} imageUrl={imageUrl} />
     </St.HeaderWrapper>
   );
@@ -31,6 +34,8 @@ const St = {
 
     & > img {
       height: 7.2rem;
+
+      cursor: pointer;
     }
   `,
 };

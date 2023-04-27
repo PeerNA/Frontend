@@ -1,4 +1,6 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { postLogout } from '../../lib/api/auth';
 import useModal from '../../lib/hooks/useModal';
 
 interface MyProfileProps {
@@ -8,13 +10,20 @@ interface MyProfileProps {
 const MyProfile = (props: MyProfileProps) => {
   const { userName, imageUrl } = props;
 
-  const { isModalOpen, toggleModal } = useModal();
+  const navigate = useNavigate();
+  const { isProfileModal, toggleModal } = useModal();
+  console.log(isProfileModal, '프로필');
 
+  const handleLogout = async () => {
+    // const data = await postLogout();
+    // console.log(data);
+    // navigate('/');
+  };
   return (
-    <St.MyProfileSection onClick={toggleModal}>
+    <St.MyProfileSection onClick={() => toggleModal(true)}>
       <img src={imageUrl} alt="profile-img" />
       <St.ProfileName>{userName}님</St.ProfileName>
-      {isModalOpen && (
+      {isProfileModal && (
         <St.MyProfileArticle>
           <St.ProfileTitle>
             <h1>내 프로필</h1>
@@ -22,7 +31,7 @@ const MyProfile = (props: MyProfileProps) => {
           <img src={imageUrl} alt="profile-img" />
           <p>{userName}</p>
           <St.ProfileModalList>
-            <li>로그아웃</li>
+            <li onClick={handleLogout}>로그아웃</li>
             <li>회원탈퇴</li>
           </St.ProfileModalList>
         </St.MyProfileArticle>
@@ -113,9 +122,13 @@ const St = {
       width: 100%;
       margin: 3rem 0rem;
 
-      ${({ theme }) => theme.fonts.Peer_Noto_M_SubTitle_1}
-      color : ${({ theme }) => theme.colors.Peer_Color_Gray}
+      ${({ theme }) => theme.fonts.Peer_Noto_M_SubTitle_1};
+      color: ${({ theme }) => theme.colors.Peer_Color_Gray};
+      &:hover {
+        cursor: pointer;
+      }
     }
+
     & > li:first-child {
       padding-bottom: 3rem;
       border-bottom: 0.2rem solid ${({ theme }) => theme.colors.Peer_Color_Sky_1};

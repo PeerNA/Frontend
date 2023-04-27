@@ -1,8 +1,8 @@
 export interface GetLearningHistoryInfo {
+  category: string;
   historyId: number;
   problemId: number;
   question: string;
-  category?: string;
   time: string;
 }
 export interface GetHistoryDetailInfo {

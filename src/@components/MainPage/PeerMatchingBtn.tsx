@@ -1,26 +1,39 @@
 import { useRecoilValue } from 'recoil';
-import { postMatchingInterest } from '../../lib/api/auth';
+import { patchMatchingInterest } from '../../lib/api/auth';
 import styled from 'styled-components';
 
 import { userInfoState } from '../../recoil/atom/userInfo';
+import useModal from '../../lib/hooks/useModal';
+import { PeerNaModal } from '../@common';
+import ModalPortal from '../../ModalPortals';
 
 const PeerMatchingBtn = () => {
   const userInterestInfo = useRecoilValue(userInfoState);
   const { career, interest } = userInterestInfo;
+  const { isPeernaModal, toggleModal } = useModal();
+
   const handleMatchingBtn = async () => {
     try {
-      const data = await postMatchingInterest({ ...interest, career });
-      console.log(data);
+      // const data = await postMatchingInterest({ ...interest, career });
+      // console.log(data);
+      toggleModal(false);
     } catch (e) {
       console.log(e);
     }
   };
 
   return (
-    <St.MatchigBtnWrapper onClick={handleMatchingBtn}>
-      <St.MatchingBtn>동료 매칭 시작</St.MatchingBtn>
-      <span className="material-symbols-outlined">arrow_right</span>
-    </St.MatchigBtnWrapper>
+    <>
+      <St.MatchigBtnWrapper onClick={handleMatchingBtn}>
+        <St.MatchingBtn>동료 매칭 시작</St.MatchingBtn>
+        <span className="material-symbols-outlined">arrow_right</span>
+      </St.MatchigBtnWrapper>
+      {isPeernaModal && (
+        <ModalPortal>
+          <PeerNaModal />
+        </ModalPortal>
+      )}
+    </>
   );
 };
 

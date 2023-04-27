@@ -1,20 +1,17 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useSetRecoilState } from 'recoil';
-import { activeStateModal } from '../../recoil/atom/profileBar';
+import { useRecoilState } from 'recoil';
+import { useCallback } from 'react';
+import { modalInfoState } from '../../recoil/atom/profileBar';
 
 const useModal = () => {
-  const setIsActiveModal = useSetRecoilState(activeStateModal);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalInfo, setModalInfo] = useRecoilState(modalInfoState);
+  const { isPeernaModal, isProfileModal } = modalInfo;
 
-  const toggleModal = useCallback(() => {
-    setIsModalOpen((prevModalState) => !prevModalState);
-  }, []);
+  const toggleModal = (isProfileType: boolean) => {
+    if (isProfileType) setModalInfo({ isPeernaModal, isProfileModal: !isProfileModal });
+    else setModalInfo({ isPeernaModal: !isPeernaModal, isProfileModal });
+  };
 
-  useEffect(() => {
-    setIsActiveModal(isModalOpen);
-  }, [isModalOpen, setIsActiveModal]);
-
-  return { isModalOpen, toggleModal };
+  return { isPeernaModal, isProfileModal, toggleModal };
 };
 
 export default useModal;

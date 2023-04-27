@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { ProblemAnswerInfo } from '../type/history';
 import { useRecoilValue } from 'recoil';
-import { activeStateModal } from '../recoil/atom/profileBar';
 import { BackPageNav, Error404, LearningHeader, PeerNaHeader } from '../@components/@common';
 import { AnswerCard, DetailModal } from '../@components/AnswerListPage';
 
@@ -61,15 +60,12 @@ const DATA: ProblemAnswerInfo[] = [
   },
 ];
 const AnswerListPage = () => {
-  const modalState = useRecoilValue(activeStateModal);
-
   const { problemId } = useParams<{ problemId: string }>();
   const historyIdToNumber = Number(problemId) as number;
 
   // const { historyDetailInfo, isLoading, isError } = useGetLearningDetail(historyIdToNumber);
   // if (isError) <Error404 />;
 
-  console.log(modalState);
   return (
     <>
       <PeerNaHeader />
@@ -80,7 +76,7 @@ const AnswerListPage = () => {
           <AnswerCard key={`${name}-${idx}`} replyId={replyId} userId={userId} name={name} imageUrl={imageUrl} answer={answer} />
         ))}
       </St.AnswerListWrapper>
-      {modalState && <DetailModal />}
+      {false && <DetailModal />}
     </>
   );
 };

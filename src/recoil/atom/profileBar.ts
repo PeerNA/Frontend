@@ -1,4 +1,4 @@
-import { AnswerModalInfo } from './../../type/userInfo';
+import { ActiveModalInfo, AnswerModalInfo } from './../../type/userInfo';
 import { atom } from 'recoil';
 
 enum StateType {
@@ -6,9 +6,12 @@ enum StateType {
   ANSWER_INFO_MODAL = 'answerInfo',
 }
 
-export const activeStateModal = atom({
+export const modalInfoState = atom<ActiveModalInfo>({
   key: StateType.ACTIVE_STATE_MODAL,
-  default: true,
+  default: {
+    isPeernaModal: false,
+    isProfileModal: false,
+  },
 });
 
 export const answerInfoState = atom<AnswerModalInfo>({

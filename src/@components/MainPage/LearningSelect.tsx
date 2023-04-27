@@ -1,8 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { CAREER_TYPE_LIST, SELET_TITLE_LIST, SUBJECT_CATEGORY_LIST } from '../../constants/mainPageInfo';
 import { userInfoState } from '../../recoil/atom/userInfo';
 import styled from 'styled-components';
+import { patchMatchingInterest } from '../../lib/api/auth';
+import { PatchInterestInfo } from '../../type/userInfo';
 
 interface LearningSelectProps {
   isSubject: boolean;
@@ -23,19 +25,30 @@ const LearningSelect = (props: LearningSelectProps) => {
     switch (title) {
       case SELET_TITLE_LIST[0]:
         setUserInfoAtom({ ...userInfoAtom, career: e.target.value });
+        handlePatchInterest({ career: e.target.value });
         break;
       case SELET_TITLE_LIST[1]:
         setUserInfoAtom({ ...userInfoAtom, interest: { ...userInfoAtom.interest, priority1: e.target.value } });
+        handlePatchInterest({ priority1: e.target.value });
+
         break;
       case SELET_TITLE_LIST[2]:
         setUserInfoAtom({ ...userInfoAtom, interest: { ...userInfoAtom.interest, priority2: e.target.value } });
+        handlePatchInterest({ priority2: e.target.value });
+
         break;
       case SELET_TITLE_LIST[3]:
         setUserInfoAtom({ ...userInfoAtom, interest: { ...userInfoAtom.interest, priority3: e.target.value } });
+        handlePatchInterest({ priority3: e.target.value });
+
         break;
     }
   };
 
+  const handlePatchInterest = async (patchInterest: PatchInterestInfo) => {
+    const data = await patchMatchingInterest(patchInterest);
+    console.log(data);
+  };
   const getSelectValue = () => {
     switch (title) {
       case SELET_TITLE_LIST[0]:

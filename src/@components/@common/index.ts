@@ -8,3 +8,4 @@ export { default as QuestionTitle } from './QuestionTitle';
 export { default as PeerNaHeader } from './PeerNaHeader';
 export { default as PeerNaBtn } from './PeerNaBtn';
 export { default as LearningBtnList } from './LearningBtnList';
+export { default as PeerNaModal } from './PeerNaModal';
