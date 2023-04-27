@@ -28,24 +28,8 @@ peerNaClient.interceptors.response.use(
     const originalRequest = config;
 
     if (status === 401) {
-      //token refresh 요청
+      window.location.href = `${process.env.REACT_APP_REDIRECT_URL}`;
 
-      // const res = await client.post(
-      //   `/auth/token`, // token refresh api
-      //   {
-      //     accessToken: getAccessToken('accessToken'),
-      //   },
-      // );
-      // if (res.data.status === 400) {
-      //   window.location.href = '/login';
-      // }
-
-      // const newAccessToken = res.data.data.accessToken;
-
-      // setAccessToken('accessToken', newAccessToken);
-      // originalRequest.headers = {
-      //   newAccessToken,
-      // };
       return axios(originalRequest);
     }
     return error.response;
