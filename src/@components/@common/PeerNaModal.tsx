@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import useModal from '../../lib/hooks/useModal';
 import PeerNaBtn from './PeerNaBtn';
