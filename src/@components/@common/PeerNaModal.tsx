@@ -1,22 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 import useModal from '../../lib/hooks/useModal';
+import PeerNaBtn from './PeerNaBtn';
 
-const PeerNaModal = () => {
+interface PeerNaModalProps {
+  modalContent: string;
+}
+const PeerNaModal = (props: PeerNaModalProps) => {
+  const { modalContent } = props;
+
   const { toggleModal } = useModal();
+  const handleModalConfirm = () => {
+    toggleModal(false);
+  };
+
   return (
-    <>
-      <St.ModalWrapper>
-        <St.ModalSection>
-          <p>🥳🥳🥳 축하합니다!! 🥳🥳🥳</p>
-          <St.ButtonWrapper>
-            <button type="button" onClick={() => toggleModal(false)}>
-              게임으로 돌아가기
-            </button>
-          </St.ButtonWrapper>
-        </St.ModalSection>
-      </St.ModalWrapper>
-    </>
+    <St.ModalWrapper>
+      <St.ModalSection>
+        <p>{modalContent}</p>
+        <St.ButtonWrapper>
+          <PeerNaBtn content="확인" isActive={true} handleBtnClick={handleModalConfirm} />
+          <PeerNaBtn content="취소" isActive={false} handleBtnClick={handleModalConfirm} />
+        </St.ButtonWrapper>
+      </St.ModalSection>
+    </St.ModalWrapper>
   );
 };
 
@@ -45,28 +52,30 @@ const St = {
 
   ModalSection: styled.section`
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
+    gap: 3rem;
 
-    width: fit-content;
-    padding: 4rem;
+    max-width: 60rem;
+    padding: 3rem;
 
     border-radius: 1rem;
+    border: 0.5rem solid ${({ theme }) => theme.colors.Peer_Color_Sky_2};
+    background-color: ${({ theme }) => theme.colors.Peer_Color_White_2};
+
+    & > p {
+      padding: 2rem;
+      text-align: center;
+      ${({ theme }) => theme.fonts.Peer_Noto_B_Title_3};
+    }
   `,
 
   ButtonWrapper: styled.div`
     display: flex;
-    gap: 1.2rem;
-    padding-top: 4rem;
+    justify-content: center;
+    align-items: center;
+    gap: 3.3rem;
+
     width: 100%;
-
-    > button {
-      width: 100%;
-      padding: 2rem;
-
-      border: none;
-      border-radius: 1rem;
-    }
   `,
 };
