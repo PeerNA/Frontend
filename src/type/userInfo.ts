@@ -27,7 +27,7 @@ export interface UserProfileInfo {
   imageUrl: string;
 }
 
-export interface AnswerModalInfo extends UserProfileInfo {
+export interface UserAnswerInfo extends UserProfileInfo {
   answer: string;
 }
 export interface ActiveModalInfo {
