@@ -1,11 +1,11 @@
 import useSWRInfinite from 'swr/infinite';
-import { GetLearningHistoryInfo } from '../../type/history';
+import { ProblemAnswerInfo } from '../../type/history';
 
 import { peerNaGetFetcher } from '../axios';
 
 const useGetAnswerList = (problemId: number) => {
-  const { data, isLoading, error, size, setSize } = useSWRInfinite<GetLearningHistoryInfo[]>(
-    (idx: number, answerList: GetLearningHistoryInfo[]) => {
+  const { data, isLoading, error, size, setSize } = useSWRInfinite<ProblemAnswerInfo[]>(
+    (idx: number, answerList: ProblemAnswerInfo[]) => {
       if (!idx) return `api/problems/replies?problemId=${problemId}`;
       if (answerList[0]) return `api/problems/replies?problemId=${problemId}&page=${idx}`;
       return null;
@@ -17,7 +17,7 @@ const useGetAnswerList = (problemId: number) => {
   );
   const parseResultList = data?.flat();
   return {
-    answerList: parseResultList,
+    answerList: parseResultList?.splice(0, 16),
     isLoading,
     isError: error,
     size,
