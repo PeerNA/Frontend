@@ -1,16 +1,23 @@
 import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { problemInfoState } from '../../recoil/atom/problemInfo';
 
 interface RecordCardProps {
   historyId: number;
+  problemId: number;
   question: string;
   time: string;
 }
+
 const RecordCard = (props: RecordCardProps) => {
-  const { historyId, question, time } = props;
+  const { historyId, problemId, question, time } = props;
+
+  const setProblemInfo = useSetRecoilState(problemInfoState);
   const naviagate = useNavigate();
 
-  const handleHistoryDetail = async () => {
+  const handleHistoryDetail = () => {
+    setProblemInfo({ problemId, question });
     naviagate(`/detail/${historyId}`);
   };
 
