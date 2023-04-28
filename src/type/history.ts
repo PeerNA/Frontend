@@ -1,3 +1,6 @@
+import { HashTagInfo } from './problem';
+import { UserAnswerInfo } from './userInfo';
+
 export interface GetLearningHistoryInfo {
   category: string;
   historyId: number;
@@ -5,8 +8,10 @@ export interface GetLearningHistoryInfo {
   question: string;
   time: string;
 }
-export interface GetHistoryDetailInfo {
-  answer: string;
+export interface GetHistoryDetailInfo extends HashTagInfo {
+  question: string;
+  time: string;
+  userInfo: UserAnswerInfo[];
 }
 export interface ProblemAnswerInfo {
   replyId: number;
