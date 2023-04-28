@@ -1,15 +1,18 @@
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { BackPageNav, LearningHeader, PeerNaHeader } from '../@components/@common';
 import { AnswerPaging, DetailModal } from '../@components/AnswerListPage';
+import { problemInfoState } from '../recoil/atom/problemInfo';
 
 const AnswerListPage = () => {
+  const { question } = useRecoilValue(problemInfoState);
   return (
     <>
       <PeerNaHeader />
       <St.AnswerListWrapper>
         <BackPageNav backTitle="돌아가기" isAbsolute={false} />
-        <LearningHeader title="OS의 데드락에 대해 설명해주세요" pageType="answerList" />
+        <LearningHeader title={question} pageType="answerList" />
         <AnswerPaging />
       </St.AnswerListWrapper>
       {false && <DetailModal />}
