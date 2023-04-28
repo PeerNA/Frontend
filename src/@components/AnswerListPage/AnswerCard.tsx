@@ -4,6 +4,9 @@ import { answerInfoState } from '../../recoil/atom/profileBar';
 import { ProblemAnswerInfo } from '../../type/history';
 import styled from 'styled-components';
 import useModal from '../../lib/hooks/useModal';
+import { UserProfile } from '../@common';
+import peernaAnswerLogo from '../../assets/image/peernaAnswerLogo.png';
+import ModalPortal from '../../ModalPortals';
 
 const AnswerCard = (props: ProblemAnswerInfo) => {
   const { replyId, userId, name, imageUrl, answer } = props;
@@ -17,15 +20,19 @@ const AnswerCard = (props: ProblemAnswerInfo) => {
   }, [isPeernaModal]);
 
   return (
-    // <AnswerCardWrapper onClick={toggleModal}>
-    //   <PeernaAnswerLogo backgroundImg={peernaAnswerLogo}>
-    //     <p>{replyId}</p>
-    //   </PeernaAnswerLogo>
-    //   <p>{answer}</p>
+    <St.AnswerCardWrapper onClick={() => toggleModal(false)}>
+      <St.PeernaAnswerLogo backgroundImg={peernaAnswerLogo}>
+        <p>{replyId}</p>
+      </St.PeernaAnswerLogo>
+      <p>{answer}</p>
 
-    //   <UserProfile userName={name} imageUrl={imageUrl} />
-    // </AnswerCardWrapper>
-    <St.AnswerCardWrapper></St.AnswerCardWrapper>
+      <UserProfile userName={name} imageUrl={imageUrl} />
+      {isPeernaModal && (
+        <ModalPortal>
+          <p>모달입니다</p>
+        </ModalPortal>
+      )}
+    </St.AnswerCardWrapper>
   );
 };
 
@@ -50,7 +57,7 @@ const St = {
       background-color: ${({ theme }) => theme.colors.Peer_Color_Sky_3};
     }
     & > p {
-      width: 70%;
+      width: 75%;
       ${({ theme }) => theme.fonts.Peer_Noto_R_SubTitle_1};
       white-space: nowrap;
       overflow: hidden;
