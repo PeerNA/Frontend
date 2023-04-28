@@ -30,7 +30,7 @@ const PeerMatchingBtn = () => {
       </St.MatchigBtnWrapper>
       {isPeernaModal && (
         <ModalPortal>
-          <PeerNaModal />
+          <PeerNaModal modalContent="동료를 매칭중입니다" />
         </ModalPortal>
       )}
     </>

@@ -1,13 +1,12 @@
-import React from 'react';
-import { HashTagList } from '../../../type/problem';
+import { HashTagInfo } from '../../../type/problem';
 import styled from 'styled-components';
 
-const HashTag = (props: HashTagList) => {
-  const { hashTagList } = props;
+const HashTag = (props: HashTagInfo) => {
+  const { keywordList } = props;
 
   return (
     <St.HashTagWrapper>
-      {hashTagList.map((hashTag) => (
+      {keywordList.map((hashTag) => (
         <li key={hashTag}>{hashTag}</li>
       ))}
     </St.HashTagWrapper>
