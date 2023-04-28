@@ -12,6 +12,7 @@ export interface GetHistoryDetailInfo extends HashTagInfo {
   question: string;
   time: string;
   userInfo: UserAnswerInfo[];
+  keyword: string[];
 }
 export interface ProblemAnswerInfo {
   replyId: number;

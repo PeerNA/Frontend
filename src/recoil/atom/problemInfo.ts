@@ -13,6 +13,7 @@ export const problemInfoState = atom<ProblemInfo>({
   key: StateType.PROBLEM_INFO,
   default: {
     problemId: 0,
+    question: '',
   },
   effects_UNSTABLE: [persistAtom],
 });

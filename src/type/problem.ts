@@ -3,6 +3,7 @@ export interface HashTagInfo {
 }
 export interface ProblemInfo {
   problemId: number;
+  question: string;
 }
 export interface GetExampleAnswer {
   answer: string;
