@@ -14,7 +14,6 @@ const Paging = (props: PagingProps) => {
     handleClickPage(pageNumber);
   };
 
-  console.log(totalItemsCount);
   return (
     <St.PaginateWrapper>
       <Pagination

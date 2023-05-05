@@ -6,7 +6,7 @@ import { peerNaGetFetcher } from '../axios';
 const useGetAnswerList = (problemId: number) => {
   const { data, isLoading, error, size, setSize } = useSWRInfinite<ProblemAnswerInfo[]>(
     (idx: number, answerList: ProblemAnswerInfo[]) => {
-      if (!idx) return `api/problems/replies?problemId=${problemId}`;
+      if (!idx) return `api/problems/replies?problemId=${problemId}&page=0`;
       if (answerList[0]) return `api/problems/replies?problemId=${problemId}&page=${idx}`;
       return null;
     },
