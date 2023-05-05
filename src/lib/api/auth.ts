@@ -27,3 +27,12 @@ export const postLogout = async () => {
     console.error(error);
   }
 };
+
+export const getPeerMatch = async () => {
+  try {
+    const { data } = await peerNaClient.get('api/match');
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
