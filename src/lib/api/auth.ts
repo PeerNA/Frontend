@@ -1,3 +1,4 @@
+import { PeerMatchInfo } from '../../type/problem';
 import { PatchInterestInfo, UserInfoType } from '../../type/userInfo';
 import { peerNaClient } from '../axios';
 
@@ -21,7 +22,7 @@ export const patchMatchingInterest = async (interestInfo: PatchInterestInfo) => 
 
 export const postLogout = async () => {
   try {
-    const { data } = await peerNaClient.post(`logout`);
+    const data = await peerNaClient.post(`logout`);
     return data;
   } catch (error) {
     console.error(error);
@@ -30,7 +31,7 @@ export const postLogout = async () => {
 
 export const getPeerMatch = async () => {
   try {
-    const { data } = await peerNaClient.get('api/match');
+    const { data } = await peerNaClient.get<PeerMatchInfo>('api/match');
     return data;
   } catch (error) {
     return error;
