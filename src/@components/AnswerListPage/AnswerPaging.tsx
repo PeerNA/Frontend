@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { AnswerCard, Paging } from '.';
 import useGetAnswerList from '../../lib/hooks/useGetAnswerList';
@@ -6,20 +7,22 @@ import { Error404 } from '../@common';
 
 const AnswerPaging = () => {
   const { problemId } = useRecoilValue(problemInfoState);
-  const { answerList, isLoading, isError, size, setSize } = useGetAnswerList(problemId);
+  const [size, setSize] = useState(0);
+  const { problemAnswerInfo, isLoading, isError } = useGetAnswerList(problemId, size);
 
   const handleClickPage = (newSize: number) => {
-    setSize(newSize);
+    setSize(newSize - 1);
   };
 
-  if (answerList) {
-    const spliceAnswerList = answerList?.slice((size - 1) * 5, (size - 1) * 5 + 5);
+  if (problemAnswerInfo) {
+    const { replyData, totalCount } = problemAnswerInfo;
+
     return (
       <>
-        {spliceAnswerList.map(({ replyId, userId, name, imageUrl, answer }, idx) => (
+        {replyData.map(({ replyId, userId, name, imageUrl, answer }, idx) => (
           <AnswerCard key={`${name}-${idx}`} replyId={replyId} userId={userId} name={name} imageUrl={imageUrl} answer={answer} />
         ))}
-        <Paging totalItemsCount={answerList.length} activePage={size} handleClickPage={handleClickPage} />
+        <Paging totalItemsCount={totalCount} activePage={size} handleClickPage={handleClickPage} />
       </>
     );
   }

@@ -20,8 +20,8 @@ const Paging = (props: PagingProps) => {
         totalItemsCount={totalItemsCount}
         onChange={handlePagination}
         activePage={activePage}
-        pageRangeDisplayed={5}
-        itemsCountPerPage={5}
+        pageRangeDisplayed={10}
+        itemsCountPerPage={10}
         activeLinkClass="active"
       />
     </St.PaginateWrapper>
@@ -32,8 +32,6 @@ export default Paging;
 
 const St = {
   PaginateWrapper: styled.div`
-    position: fixed;
-    bottom: 10%;
     width: 100%;
     ul {
       display: flex;
