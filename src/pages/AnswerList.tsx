@@ -32,6 +32,7 @@ const St = {
 
     width: 100%;
     padding: 2.9rem 2.6rem;
+    margin-bottom: 1rem;
   `,
   UserInputBoxWrapper: styled.section`
     display: grid;
