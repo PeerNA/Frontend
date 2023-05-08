@@ -30,9 +30,9 @@ const LearningRecord = () => {
   return (
     <St.LearningRecordSection>
       {historyCardList &&
-        historyCardList.map(({ historyId, question, time }, idx) => (
+        historyCardList.map(({ historyId, problemId, question, time }, idx) => (
           <div key={`${time}+${idx}`} ref={ref}>
-            <RecordCard historyId={historyId} question={question} time={time} />
+            <RecordCard historyId={historyId} problemId={problemId} question={question} time={time} />
           </div>
         ))}
     </St.LearningRecordSection>

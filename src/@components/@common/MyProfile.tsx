@@ -12,12 +12,10 @@ const MyProfile = (props: MyProfileProps) => {
 
   const navigate = useNavigate();
   const { isProfileModal, toggleModal } = useModal();
-  console.log(isProfileModal, '프로필');
 
   const handleLogout = async () => {
-    // const data = await postLogout();
-    // console.log(data);
-    // navigate('/');
+    const data = await postLogout();
+    if (data) navigate('/');
   };
   return (
     <St.MyProfileSection onClick={() => toggleModal(true)}>

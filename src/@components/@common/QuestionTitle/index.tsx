@@ -3,15 +3,16 @@ import styled from 'styled-components';
 
 interface QuestionTitleProps {
   question: string;
+  keywordList: string[];
   isAnswer: boolean;
 }
 const QuestionTitle = (props: QuestionTitleProps) => {
-  const { question, isAnswer } = props;
+  const { question, keywordList, isAnswer } = props;
 
   return (
     <St.QuestionHeader>
       <St.Title>{question}</St.Title>
-      {isAnswer && <HashTag hashTagList={['스레드', '자원', '공유']} />}
+      {isAnswer && <HashTag keywordList={keywordList} />}
     </St.QuestionHeader>
   );
 };

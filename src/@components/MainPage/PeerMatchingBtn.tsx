@@ -1,22 +1,29 @@
 import { useRecoilValue } from 'recoil';
-import { patchMatchingInterest } from '../../lib/api/auth';
 import styled from 'styled-components';
 
 import { userInfoState } from '../../recoil/atom/userInfo';
 import useModal from '../../lib/hooks/useModal';
 import { PeerNaModal } from '../@common';
 import ModalPortal from '../../ModalPortals';
+import { useNavigate } from 'react-router-dom';
+import { getPeerMatch } from '../../lib/api/auth';
+import { PeerMatchInfo } from '../../type/problem';
 
 const PeerMatchingBtn = () => {
+  const navigate = useNavigate();
   const userInterestInfo = useRecoilValue(userInfoState);
   const { career, interest } = userInterestInfo;
   const { isPeernaModal, toggleModal } = useModal();
 
   const handleMatchingBtn = async () => {
     try {
-      // const data = await postMatchingInterest({ ...interest, career });
-      // console.log(data);
       toggleModal(false);
+      const data = await getPeerMatch();
+      if (data) {
+        const peerMatchInfo = data as PeerMatchInfo;
+        const { roomId } = peerMatchInfo;
+        navigate(`/problem-room/${roomId}`);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -30,7 +37,7 @@ const PeerMatchingBtn = () => {
       </St.MatchigBtnWrapper>
       {isPeernaModal && (
         <ModalPortal>
-          <PeerNaModal />
+          <PeerNaModal modalContent="동료를 매칭중입니다" />
         </ModalPortal>
       )}
     </>
@@ -50,14 +57,29 @@ const St = {
     padding: 1.9rem 3.6rem;
 
     background-color: ${({ theme }) => theme.colors.Peer_Color_Blue};
+    border: 0.4rem solid ${({ theme }) => theme.colors.Peer_Color_Blue};
     border-radius: 3rem;
 
     & > span {
       font-size: 5rem;
       color: ${({ theme }) => theme.colors.Peer_Color_White_2};
     }
+    cursor: pointer;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.Peer_Color_White_1};
+
+      button,
+      span {
+        color: ${({ theme }) => theme.colors.Peer_Color_Blue};
+      }
+    }
   `,
   MatchingBtn: styled.button`
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+
     ${({ theme }) => theme.fonts.Peer_Noto_B_Title_2}
     background: none;
     border: none;

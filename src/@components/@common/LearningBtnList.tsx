@@ -1,5 +1,12 @@
+import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { PeerNaBtn } from '.';
+import { PeerNaBtn, PeerNaModal } from '.';
+import { getExampleAnswer } from '../../lib/api/problem';
+import useModal from '../../lib/hooks/useModal';
+import ModalPortal from '../../ModalPortals';
+import { problemInfoState } from '../../recoil/atom/problemInfo';
 
 interface LearningBtnListProps {
   isActive: boolean;
@@ -7,18 +14,30 @@ interface LearningBtnListProps {
 const LearningBtnList = (props: LearningBtnListProps) => {
   const { isActive } = props;
 
-  const handleExamAnswer = () => {
-    console.log('예시답안');
+  const { problemId } = useRecoilValue(problemInfoState);
+  const exampleAnswer = useRef('');
+  const { isPeernaModal, toggleModal } = useModal();
+  const navigate = useNavigate();
+
+  const handleExamAnswer = async () => {
+    const data = await getExampleAnswer(problemId);
+    if (data) {
+      exampleAnswer.current = data?.answer;
+      toggleModal(false);
+    }
   };
 
   const handleReferenceAnswer = () => {
-    console.log('참고답안');
+    navigate(`/answerList`);
   };
   return (
-    <St.LearningBtnNav>
-      <PeerNaBtn isActive={isActive} content="예시 답안" handleBtnClick={handleExamAnswer} />
-      <PeerNaBtn isActive={isActive} content="참고 답안" handleBtnClick={handleReferenceAnswer} />
-    </St.LearningBtnNav>
+    <>
+      <St.LearningBtnNav>
+        <PeerNaBtn isActive={isActive} content="예시 답안" handleBtnClick={handleExamAnswer} />
+        <PeerNaBtn isActive={isActive} content="참고 답안" handleBtnClick={handleReferenceAnswer} />
+      </St.LearningBtnNav>
+      <ModalPortal>{isPeernaModal && <PeerNaModal modalContent={exampleAnswer.current} />}</ModalPortal>
+    </>
   );
 };
 

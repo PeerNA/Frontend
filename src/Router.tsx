@@ -19,7 +19,7 @@ const Router = () => {
             <Route path="/callback" element={<CallBack />} />
             <Route path="/main" element={<MainPage />} />
             <Route path="/detail/:historyId" element={<LearningDetailPage />} />
-            <Route path="/answerList/:problemId" element={<AnswerListPage />} />
+            <Route path="/answerList" element={<AnswerListPage />} />
           </Routes>
         </Suspense>
       </RecoilRoot>
