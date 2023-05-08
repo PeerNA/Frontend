@@ -24,11 +24,13 @@ peerNaClient.interceptors.request.use((config: any) => {
 peerNaClient.interceptors.response.use(
   (response) => {
     const polling = async () => {
+      let timeCount = 24;
       let pollingRes = await axios.get<PeerMatchInfo>(`${process.env.REACT_APP_IP}api/match`, { withCredentials: true });
-      while (pollingRes.status === 202) {
-        await sleep(2000);
+      while (pollingRes.status === 202 && timeCount) {
+        await sleep(5000);
         try {
           pollingRes = await axios.get<PeerMatchInfo>(`${process.env.REACT_APP_IP}api/match`, { withCredentials: true });
+          timeCount -= 1;
         } catch (err) {
           console.log(err);
         }
@@ -49,7 +51,6 @@ peerNaClient.interceptors.response.use(
     if (response) {
       if (response.status === 401) {
         window.location.href = `${process.env.REACT_APP_REDIRECT_URL}`;
-
         return axios(originalRequest);
       }
     }
