@@ -21,3 +21,8 @@ export interface ProblemAnswerInfo {
   imageUrl: string;
   answer: string;
 }
+
+export interface GetProblemAnswerInfo {
+  replyData: ProblemAnswerInfo[];
+  totalCount: number;
+}

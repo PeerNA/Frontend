@@ -8,7 +8,6 @@ import useModal from '../../lib/hooks/useModal';
 
 const DetailModal = () => {
   const { toggleModal } = useModal();
-  console.log('first');
 
   const answerInfo = useRecoilValue(answerInfoState);
   const { userName, imageUrl, answer } = answerInfo;
