@@ -1,4 +1,4 @@
-import { GetExampleAnswer } from '../../type/problem';
+import { GetExampleAnswer, PostReplyInfo } from '../../type/problem';
 import { peerNaClient } from '../axios';
 
 export const getExampleAnswer = async (problemId: number) => {
@@ -7,5 +7,12 @@ export const getExampleAnswer = async (problemId: number) => {
     return data;
   } catch (error) {
     console.error(error);
+  }
+};
+export const postReplyAnswerData = async (replyAnswerData: PostReplyInfo) => {
+  try {
+    await peerNaClient.post('apl/reply/new', replyAnswerData);
+  } catch (error) {
+    console.log(error);
   }
 };
