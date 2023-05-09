@@ -34,3 +34,8 @@ export interface ActiveModalInfo {
   isPeernaModal: boolean;
   isProfileModal: boolean;
 }
+export interface PeerInfo {
+  id: number;
+  imageUrl: string;
+  name: string;
+}
