@@ -20,15 +20,17 @@ const LearningBtnList = (props: LearningBtnListProps) => {
   const navigate = useNavigate();
 
   const handleExamAnswer = async () => {
-    const data = await getExampleAnswer(problemId);
-    if (data) {
-      exampleAnswer.current = data?.answer;
-      toggleModal(false);
+    if (isActive) {
+      const data = await getExampleAnswer(problemId);
+      if (data) {
+        exampleAnswer.current = data?.answer;
+        toggleModal(false);
+      }
     }
   };
 
   const handleReferenceAnswer = () => {
-    navigate(`/answerList`);
+    isActive && navigate(`/answerList`);
   };
   return (
     <>
