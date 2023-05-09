@@ -1,21 +1,24 @@
 import React from 'react';
 import UserProfile from './UserProfile';
 import styled from 'styled-components';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { replyAnswerInfoState } from '../../recoil/atom/problemInfo';
 
 interface UserInputBoxProps {
   isModify: boolean;
   content?: string;
   userName: string;
   imageUrl: string;
+  handleAnswerTextArea?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 const UserInputBox = (props: UserInputBoxProps) => {
-  const { isModify, content, userName, imageUrl } = props;
+  const { isModify, content, userName, imageUrl, handleAnswerTextArea } = props;
 
   return (
     <St.UserInputBoxArticle>
       <UserProfile userName={userName} imageUrl={imageUrl} />
       <St.UserProfileUnderBar />
-      {isModify ? <input type="text" /> : <p className="input_content">{content}</p>}
+      {isModify && handleAnswerTextArea ? <textarea onChange={handleAnswerTextArea} /> : <p className="input_content">{content}</p>}
     </St.UserInputBoxArticle>
   );
 };
@@ -31,12 +34,14 @@ const St = {
     padding: 1.5rem;
 
     border: 0.2rem solid ${({ theme }) => theme.colors.Peer_Color_Blue};
-    input,
+    textarea,
     .input_content {
       height: 35rem;
 
       ${({ theme }) => theme.fonts.Peer_Noto_R_SubTitle_1};
       overflow-y: visible;
+
+      resize: none;
     }
   `,
   UserProfileUnderBar: styled.hr`
