@@ -33,6 +33,7 @@ export interface UserAnswerInfo extends UserProfileInfo {
 export interface ActiveModalInfo {
   isPeernaModal: boolean;
   isProfileModal: boolean;
+  isPeerMatchModal: boolean;
 }
 export interface PeerInfo {
   id: number;

@@ -1,4 +1,4 @@
-import { PeerInfo } from './userInfo';
+import { PeerInfo, UserAnswerInfo } from './userInfo';
 
 export interface HashTagInfo {
   keywordList: string[];
@@ -15,15 +15,28 @@ interface PeerMatchProblem extends GetExampleAnswer {
   category: string;
   question: string;
 }
+export interface AnswerSubmitInfo {
+  isMyAnswer: boolean;
+  isPeerAnswer: boolean;
+  isTimeRemain: boolean;
+}
 export interface PeerMatchInfo {
   roomId: number;
   historyId: number;
   problem: PeerMatchProblem;
   peer: PeerInfo;
-  isAnswerSubmit: boolean;
+  isAnswerSubmit: AnswerSubmitInfo;
 }
 export interface PostReplyInfo {
   answer: string;
   historyId: number;
   problemId: number;
+  roomId: number;
+}
+export interface GetPeerMatchAnswerInfo {
+  keyword: string[];
+  peerId: number;
+  question: string;
+  time: string;
+  userInfo: UserAnswerInfo[];
 }
