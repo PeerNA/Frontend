@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import { userInfoState } from '../../recoil/atom/userInfo';
@@ -8,20 +8,38 @@ import ModalPortal from '../../ModalPortals';
 import { useNavigate } from 'react-router-dom';
 import { getPeerMatch } from '../../lib/api/auth';
 import { PeerMatchInfo } from '../../type/problem';
+import { peerMatchInfoState, replyAnswerInfoState } from '../../recoil/atom/problemInfo';
 
 const PeerMatchingBtn = () => {
   const navigate = useNavigate();
-  const userInterestInfo = useRecoilValue(userInfoState);
-  const { career, interest } = userInterestInfo;
+  const setPeerMatchInfo = useSetRecoilState(peerMatchInfoState);
+  const setReplyAnswerInfo = useSetRecoilState(replyAnswerInfoState);
   const { isPeernaModal, toggleModal } = useModal();
 
   const handleMatchingBtn = async () => {
+    toggleModal(false);
+
     try {
-      toggleModal(false);
       const data = await getPeerMatch();
       if (data) {
         const peerMatchInfo = data as PeerMatchInfo;
-        const { roomId } = peerMatchInfo;
+        const {
+          roomId,
+          historyId,
+          problem: { id: problemId },
+        } = peerMatchInfo;
+        setPeerMatchInfo({
+          ...peerMatchInfo,
+          isAnswerSubmit: {
+            isMyAnswer: false,
+            isPeerAnswer: false,
+            isTimeRemain: true,
+          },
+        });
+        setReplyAnswerInfo({ answer: '', historyId, problemId, roomId });
+
+        toggleModal(false, true);
+
         navigate(`/problem-room/${roomId}`);
       }
     } catch (e) {

@@ -8,6 +8,7 @@ const CallBack = lazy(() => import('./pages/Callback'));
 const MainPage = lazy(() => import('./pages/Main'));
 const LearningDetailPage = lazy(() => import('./pages/LearningDetail'));
 const AnswerListPage = lazy(() => import('./pages/AnswerList'));
+const PeerMatchingPage = lazy(() => import('./pages/PeerMatching'));
 
 const Router = () => {
   return (
@@ -20,6 +21,7 @@ const Router = () => {
             <Route path="/main" element={<MainPage />} />
             <Route path="/detail/:historyId" element={<LearningDetailPage />} />
             <Route path="/answerList" element={<AnswerListPage />} />
+            <Route path="/problem-room/:roomId" element={<PeerMatchingPage />} />
           </Routes>
         </Suspense>
       </RecoilRoot>

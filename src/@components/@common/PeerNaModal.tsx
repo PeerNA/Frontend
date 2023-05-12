@@ -4,22 +4,31 @@ import PeerNaBtn from './PeerNaBtn';
 
 interface PeerNaModalProps {
   modalContent: string;
+  handleConfirmBtn?: () => void;
 }
 const PeerNaModal = (props: PeerNaModalProps) => {
-  const { modalContent } = props;
+  const { modalContent, handleConfirmBtn } = props;
 
-  const { toggleModal } = useModal();
+  const { toggleModal, togglePeerMatchModal, isPeerMatchModal } = useModal();
+
   const handleModalConfirm = () => {
-    toggleModal(false);
+    if (handleConfirmBtn) {
+      handleConfirmBtn();
+      togglePeerMatchModal();
+    } else toggleModal(false);
   };
 
+  const handleModalCancle = () => {
+    if (isPeerMatchModal) togglePeerMatchModal();
+    else toggleModal(false);
+  };
   return (
     <St.ModalWrapper>
       <St.ModalSection>
         <p>{modalContent}</p>
         <St.ButtonWrapper>
           <PeerNaBtn content="확인" isActive={true} handleBtnClick={handleModalConfirm} />
-          <PeerNaBtn content="취소" isActive={false} handleBtnClick={handleModalConfirm} />
+          <PeerNaBtn content="취소" isActive={false} handleBtnClick={handleModalCancle} />
         </St.ButtonWrapper>
       </St.ModalSection>
     </St.ModalWrapper>
