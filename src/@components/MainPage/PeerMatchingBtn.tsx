@@ -24,15 +24,22 @@ const PeerMatchingBtn = () => {
       if (data) {
         const peerMatchInfo = data as PeerMatchInfo;
         const {
+          roomId,
           historyId,
           problem: { id: problemId },
         } = peerMatchInfo;
-        setPeerMatchInfo(peerMatchInfo);
-        setReplyAnswerInfo({ answer: '', historyId, problemId });
+        setPeerMatchInfo({
+          ...peerMatchInfo,
+          isAnswerSubmit: {
+            isMyAnswer: false,
+            isPeerAnswer: false,
+            isTimeRemain: true,
+          },
+        });
+        setReplyAnswerInfo({ answer: '', historyId, problemId, roomId });
 
         toggleModal(false, true);
 
-        const { roomId } = peerMatchInfo;
         navigate(`/problem-room/${roomId}`);
       }
     } catch (e) {
