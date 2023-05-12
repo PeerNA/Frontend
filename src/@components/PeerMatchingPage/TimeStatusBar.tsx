@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { postReplyAnswerData } from '../../lib/api/problem';
 import useModal from '../../lib/hooks/useModal';
-import { calculateTime } from '../../recoil/selector/problemInfo';
+import { replyAnswerInfoState } from '../../recoil/atom/problemInfo';
+import { calculateTime, answerSubmitInfo } from '../../recoil/selector/problemInfo';
 
 const TimeStatusBar = () => {
   const { isPeernaModal } = useModal();
+  const replyAnswerInfo = useRecoilValue(replyAnswerInfoState);
   const maxTime = useRecoilValue(calculateTime);
+  const [isAnswerSubmitInfo, setIsAnswerSubmitInfo] = useRecoilState(answerSubmitInfo);
+  const { isMyAnswer, isPeerAnswer } = isAnswerSubmitInfo;
   const [time, setTime] = useState(maxTime);
 
   useEffect(() => {
@@ -14,14 +19,28 @@ const TimeStatusBar = () => {
       if (time) setTime((prev) => prev - 1);
     }, 1000);
 
-    if (isPeernaModal) clearInterval(timer);
+    if (isPeernaModal || !isAnswerSubmitInfo.isTimeRemain) {
+      clearInterval(timer);
+    }
+
+    // 시간 마감 시 -> 자동 제출
+    if (!time) {
+      const postReplyAnswer = async () => {
+        const data = await postReplyAnswerData(replyAnswerInfo);
+      };
+      // 내 답안 제출 안됨
+      if (!isMyAnswer) {
+        postReplyAnswer();
+      }
+      setIsAnswerSubmitInfo({ isMyAnswer: true, isPeerAnswer: true, isTimeRemain: false });
+    }
 
     return () => clearInterval(timer);
-  }, [isPeernaModal]);
+  }, [isPeernaModal, time]);
 
   return (
     <St.Progress>
-      <St.Dealt dealt={(time / maxTime) * 100} />
+      <St.Dealt dealt={time > 0 ? (time / maxTime) * 100 : 0} />
     </St.Progress>
   );
 };
