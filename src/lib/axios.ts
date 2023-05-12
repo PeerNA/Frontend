@@ -23,23 +23,32 @@ peerNaClient.interceptors.request.use((config: any) => {
 
 peerNaClient.interceptors.response.use(
   (response) => {
-    const polling = async () => {
-      let timeCount = 24;
-      let pollingRes = await axios.get<PeerMatchInfo>(`${process.env.REACT_APP_IP}api/match`, { withCredentials: true });
-      while (pollingRes.status === 202 && timeCount) {
-        await sleep(5000);
-        try {
-          pollingRes = await axios.get<PeerMatchInfo>(`${process.env.REACT_APP_IP}api/match`, { withCredentials: true });
-          timeCount -= 1;
-        } catch (err) {
-          console.log(err);
-        }
-      }
+    const {
+      config: { baseURL, url },
+    } = response;
 
-      return pollingRes;
-    };
-    if (response.status === 202) {
-      return polling();
+    if (baseURL && url) {
+      const apiUrl = (baseURL + url) as string;
+
+      const polling = async () => {
+        let timeCount = 24;
+        let pollingRes = await axios.get(`${apiUrl}`, { withCredentials: true });
+        while (pollingRes.status === 202 && timeCount) {
+          await sleep(5000);
+          try {
+            pollingRes = await axios.get(`${apiUrl}`, { withCredentials: true });
+            timeCount -= 1;
+          } catch (err) {
+            console.log(err);
+          }
+        }
+
+        return pollingRes;
+      };
+
+      if (response.status === 202) {
+        return polling();
+      }
     }
 
     return response;
