@@ -9,16 +9,16 @@ interface UserInputBoxProps {
   content?: string;
   userName: string;
   imageUrl: string;
+  textAreaValue?: string;
   handleAnswerTextArea?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 const UserInputBox = (props: UserInputBoxProps) => {
-  const { isModify, content, userName, imageUrl, handleAnswerTextArea } = props;
-
+  const { isModify, content, userName, imageUrl, textAreaValue, handleAnswerTextArea } = props;
   return (
     <St.UserInputBoxArticle>
       <UserProfile userName={userName} imageUrl={imageUrl} />
       <St.UserProfileUnderBar />
-      {isModify && handleAnswerTextArea ? <textarea onChange={handleAnswerTextArea} /> : <p className="input_content">{content}</p>}
+      {handleAnswerTextArea || isModify ? <textarea value={textAreaValue} onChange={handleAnswerTextArea} /> : <p className="input_content">{content}</p>}
     </St.UserInputBoxArticle>
   );
 };
