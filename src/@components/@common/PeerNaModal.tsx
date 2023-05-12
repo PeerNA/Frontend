@@ -9,14 +9,18 @@ interface PeerNaModalProps {
 const PeerNaModal = (props: PeerNaModalProps) => {
   const { modalContent, handleConfirmBtn } = props;
 
-  const { toggleModal } = useModal();
+  const { toggleModal, togglePeerMatchModal, isPeerMatchModal } = useModal();
 
   const handleModalConfirm = () => {
-    toggleModal(false);
-    if (handleConfirmBtn) handleConfirmBtn();
+    if (handleConfirmBtn) {
+      handleConfirmBtn();
+      togglePeerMatchModal();
+    } else toggleModal(false);
   };
+
   const handleModalCancle = () => {
-    toggleModal(false);
+    if (isPeerMatchModal) togglePeerMatchModal();
+    else toggleModal(false);
   };
   return (
     <St.ModalWrapper>
