@@ -40,7 +40,7 @@ const ProblemSolving = () => {
     //문제풀이 완료후 답안제출 확인
     const data = await postReplyAnswerData(replyAnswerInfo);
 
-    if (data?.status === 200) {
+    if (data?.status === 200 || data?.status === 409) {
       // 시간 남아있으면 이제 동료 검사
       if (isTimeRemain) {
         const data = await getPeerReplySubmit(roomId);
