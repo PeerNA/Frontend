@@ -13,8 +13,8 @@ declare module 'styled-components' {
       Peer_Color_Sky_1: string;
       Peer_Color_Sky_2: string;
       Peer_Color_Sky_3: string;
-      Pic_Color_Mint_1: string;
-      Pic_Color_Mint_2: string;
+      Peer_Color_Mint_1: string;
+      Peer_Color_Mint_2: string;
       Peer_Color_White_1: string;
       Peer_Color_White_2: string;
       Peer_Color_Black: string;
@@ -30,6 +30,7 @@ declare module 'styled-components' {
       Peer_Noto_B_Content_1: SerializedStyles;
       Peer_Noto_M_Content_2: SerializedStyles;
       Peer_Noto_R_Content_3: SerializedStyles;
+      Peer_Noto_R_Content_4: SerializedStyles;
     };
   }
 }

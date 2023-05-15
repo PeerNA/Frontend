@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { PEER_MATCH_MODAL_INFO, PEER_MATCH_MODAL_TYPE, USER_TYPE } from '../../constants/peerMatchInfo';
@@ -11,7 +11,12 @@ import { LearningBtnList, PeerNaBtn, PeerNaModal, QuestionTitle, UserInputBox } 
 import LockSolving from './LockSolving';
 import TimeStatusBar from './TimeStatusBar';
 
-const ProblemSolving = () => {
+interface ProblemSolvingProps {
+  isExistPeer: boolean;
+}
+const ProblemSolving = (props: ProblemSolvingProps) => {
+  const { isExistPeer } = props;
+
   const { isPeerMatchModal, togglePeerMatchModal } = useModal();
   const [replyAnswerInfo, setReplyAnswerInfo] = useRecoilState(replyAnswerInfoState);
   const modalContentRef = useRef(PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.SUBMIT_ANSWER]);
@@ -51,16 +56,36 @@ const ProblemSolving = () => {
         }
       } else setPeerMatchInfo({ ...peerMatchInfo, isAnswerSubmit: { ...isAnswerSubmit, isMyAnswer: true } });
     }
+    togglePeerMatchModal();
   };
 
   const getNextQuestion = async () => {
+    modalContentRef.current = PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.WAIT_PEER];
     const data = await getNextPeerMatch(roomId, peer.id);
+    // if (!data) {
+    console.log(isPeerMatchModal);
+    // }
+    // console.log(data);
+    // if (data) {
+    //   setPeerMatchInfo({
+    //     ...peerMatchInfo,
+    //     ...data,
+    //     isAnswerSubmit: {
+    //       isMyAnswer: false,
+    //       isPeerAnswer: false,
+    //       isTimeRemain: true,
+    //     },
+    //   });
+    // }
   };
 
   const handleAnswerTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReplyAnswerInfo({ ...replyAnswerInfo, answer: e.target.value });
   };
 
+  useEffect(() => {
+    if (isExistPeer) postReplyAnswer();
+  }, [isExistPeer]);
   return (
     <>
       <St.PeerMatchingWrapper>

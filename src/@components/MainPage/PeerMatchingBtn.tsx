@@ -1,4 +1,4 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import { userInfoState } from '../../recoil/atom/userInfo';
@@ -9,9 +9,14 @@ import { useNavigate } from 'react-router-dom';
 import { getPeerMatch } from '../../lib/api/auth';
 import { PeerMatchInfo } from '../../type/problem';
 import { peerMatchInfoState, replyAnswerInfoState } from '../../recoil/atom/problemInfo';
+import { AxiosResponse } from 'axios';
+import { modalInfoState } from '../../recoil/atom/profileBar';
+import { messageInfoState } from '../../recoil/atom/messageInfo';
 
 const PeerMatchingBtn = () => {
   const navigate = useNavigate();
+  const setChatingMessageInfo = useResetRecoilState(messageInfoState);
+  const setModalInfo = useResetRecoilState(modalInfoState);
   const setPeerMatchInfo = useSetRecoilState(peerMatchInfoState);
   const setReplyAnswerInfo = useSetRecoilState(replyAnswerInfoState);
   const { isPeernaModal, toggleModal } = useModal();
@@ -20,9 +25,9 @@ const PeerMatchingBtn = () => {
     toggleModal(false);
 
     try {
-      const data = await getPeerMatch();
-      if (data) {
-        const peerMatchInfo = data as PeerMatchInfo;
+      const res = (await getPeerMatch()) as AxiosResponse<PeerMatchInfo, any>;
+      if (res) {
+        const peerMatchInfo = res.data as PeerMatchInfo;
         const {
           roomId,
           historyId,
@@ -37,10 +42,9 @@ const PeerMatchingBtn = () => {
           },
         });
         setReplyAnswerInfo({ answer: '', historyId, problemId, roomId });
-
-        toggleModal(false, true);
-
-        navigate(`/problem-room/${roomId}`);
+        setChatingMessageInfo();
+        setModalInfo();
+        navigate(`/problem-room/${roomId}`, { state: { isExistPeer: res.status === 409 } });
       }
     } catch (e) {
       console.log(e);

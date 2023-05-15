@@ -18,3 +18,8 @@ export const answerSubmitInfo = selector({
     return set(peerMatchInfoState, { ...peerMatchInfo, isAnswerSubmit: { isTimeRemain: false, isMyAnswer: true, isPeerAnswer: true } });
   },
 });
+
+export const roomIdInfo = selector({
+  key: 'roomIdSelector',
+  get: ({ get }) => get(peerMatchInfoState).roomId,
+});

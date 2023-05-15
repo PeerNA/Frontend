@@ -59,7 +59,7 @@ const St = {
     width: ${({ dealt }) => dealt + '%'};
     height: 100%;
 
-    background-color: ${({ theme }) => theme.colors.Pic_Color_Mint_1};
+    background-color: ${({ theme }) => theme.colors.Peer_Color_Mint_1};
     border-radius: 10rem;
   `,
 };

@@ -11,8 +11,8 @@ const colors = {
   Peer_Color_Sky_1: '#8088B2',
   Peer_Color_Sky_2: '#BCCEF8',
   Peer_Color_Sky_3: '#E2E8F6',
-  Pic_Color_Mint_1: '#B9E4DF',
-  Pic_Color_Mint_2: '#CDFCF6',
+  Peer_Color_Mint_1: '#B9E4DF',
+  Peer_Color_Mint_2: '#CDFCF6',
   Peer_Color_White_1: '#FAF7F0',
   Peer_Color_White_2: '#FFFFFF',
   Peer_Color_Black: '#000000',
@@ -96,6 +96,14 @@ const fonts = {
     font-style: normal;
     font-weight: 400;
     font-size: 1.8rem;
+    line-height: 2.6rem;
+    letter-spacing: -0.05rem;
+  `,
+  Peer_Noto_R_Content_4: css`
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1rem;
     line-height: 2.6rem;
     letter-spacing: -0.05rem;
   `,

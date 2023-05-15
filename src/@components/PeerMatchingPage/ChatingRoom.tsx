@@ -6,18 +6,23 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { peerMatchInfoState } from '../../recoil/atom/problemInfo';
 import { userInfoState } from '../../recoil/atom/userInfo';
 import { messageInfoState } from '../../recoil/atom/messageInfo';
-import MyMessage from './MyMessage';
-import PeerMessage from './PeerMessage';
+import ChatingMessage from './ChatingMessage';
+import { MessageInfo } from '../../type/message';
 
 const ChatingRoom = () => {
   const myInfo = useRecoilValue(userInfoState);
   const peerMatchInfo = useRecoilValue(peerMatchInfoState);
   const client = useRef<CompatClient>();
   const inputRef = useRef<HTMLInputElement>(null);
+  const chatMessageListRef = useRef<MessageInfo[]>([]);
   const [chatMessageList, setChatMessageList] = useRecoilState(messageInfoState);
-  const chatRef = useRef<HTMLUListElement>(null);
-  const { roomId } = peerMatchInfo;
-  const { name } = myInfo;
+
+  const chatRef = useRef<HTMLDivElement>(null);
+  const {
+    roomId,
+    peer: { id: peerId, name: peerName },
+  } = peerMatchInfo;
+  const { name, id: myId } = myInfo;
 
   const connectHandler = () => {
     client.current = Stomp.over(() => {
@@ -26,42 +31,49 @@ const ChatingRoom = () => {
     });
     client.current.connect({}, () => {
       client.current!.subscribe(`/sub/chat/room/${roomId}`, (message) => {
-        setChatMessageList([...chatMessageList, JSON.parse(message.body)]);
+        chatMessageListRef.current = [...chatMessageListRef.current, JSON.parse(message.body)];
+        setChatMessageList(chatMessageListRef.current);
+        if (chatRef.current) {
+          chatRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
       });
-
-      client.current!.send('/pub/chat/enter', {}, JSON.stringify({ roomId: roomId, writer: name }));
     });
   };
   const handleSubmitMessage = () => {
     if (inputRef.current) {
-      client.current!.send('/pub/chat/message', {}, JSON.stringify({ roomId: roomId, message: inputRef.current.value, writer: name }));
-      setChatMessageList([...chatMessageList, { roomId: roomId + '', message: inputRef.current.value, writer: name }]);
+      client.current!.send(
+        '/pub/chat/message',
+        {},
+        JSON.stringify({
+          roomId: roomId,
+          message: inputRef.current.value,
+          writerId: myId,
+        }),
+      );
       inputRef.current.value = '';
     }
   };
 
   useEffect(() => {
-    connectHandler();
+    if (!client.current?.active) connectHandler();
+    if (chatRef.current) {
+      chatRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   }, []);
 
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [chatMessageList]);
-
-  // console.log(chatMessageList);
+  }, [chatMessageListRef.current]);
 
   return (
     <St.ChatingRoomWrapper>
-      <St.List ref={chatRef}>
-        {chatMessageList.map(({ message, roomId, writer }, idx) =>
-          writer === 'Happhee' ? (
-            <MyMessage message={message} roomId={roomId} writer={writer} key={`${message}-${idx}`} />
-          ) : (
-            <PeerMessage message={message} roomId={roomId} writer={writer} key={`${message}-${idx}`} />
-          ),
-        )}
+      <St.List>
+        {chatMessageList.map(({ message, time, writerId }, idx) => (
+          <ChatingMessage message={message} isMyMessage={myId === writerId} name={name} time={time} key={`${message}-${idx}`} />
+        ))}
+        <div ref={chatRef} />
       </St.List>
       <St.ChatInputWrapper>
         <St.ChatInput ref={inputRef} />
@@ -97,8 +109,12 @@ const St = {
     width: 100%;
 
     overflow-y: scroll;
+
     .my_message {
       margin-left: 50%;
+    }
+    .peer_message {
+      margin-right: 50%;
     }
   `,
   ChatInputWrapper: styled.div`
