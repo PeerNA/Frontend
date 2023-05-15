@@ -24,21 +24,21 @@ const LearningSelect = (props: LearningSelectProps) => {
   const handleChangeOptionValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
     switch (title) {
       case SELET_TITLE_LIST[0]:
-        // setUserInfoAtom({ ...userInfoAtom, career: e.target.value });
+        setUserInfoAtom({ ...userInfoAtom, career: e.target.value });
         handlePatchInterest({ career: e.target.value });
         break;
       case SELET_TITLE_LIST[1]:
-        // setUserInfoAtom({ ...userInfoAtom, interest: { ...userInfoAtom.interest, priority1: e.target.value } });
+        setUserInfoAtom({ ...userInfoAtom, interest: { ...userInfoAtom.interest, priority1: e.target.value } });
         handlePatchInterest({ priority1: e.target.value });
 
         break;
       case SELET_TITLE_LIST[2]:
-        // setUserInfoAtom({ ...userInfoAtom, interest: { ...userInfoAtom.interest, priority2: e.target.value } });
+        setUserInfoAtom({ ...userInfoAtom, interest: { ...userInfoAtom.interest, priority2: e.target.value } });
         handlePatchInterest({ priority2: e.target.value });
 
         break;
       case SELET_TITLE_LIST[3]:
-        // setUserInfoAtom({ ...userInfoAtom, interest: { ...userInfoAtom.interest, priority3: e.target.value } });
+        setUserInfoAtom({ ...userInfoAtom, interest: { ...userInfoAtom.interest, priority3: e.target.value } });
         handlePatchInterest({ priority3: e.target.value });
 
         break;
