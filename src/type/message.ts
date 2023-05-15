@@ -1,5 +1,7 @@
 export interface MessageInfo {
   message: string;
   roomId: string;
-  writer: string;
+  writerId: number;
+  name: string;
+  time: string;
 }
