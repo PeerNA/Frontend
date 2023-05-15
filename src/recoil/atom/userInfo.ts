@@ -8,6 +8,7 @@ const { persistAtom } = recoilPersist();
 export const userInfoState = atom<UserInfoType>({
   key: 'userInfo',
   default: {
+    id: 0,
     name: '',
     email: '',
     imageUrl: '',

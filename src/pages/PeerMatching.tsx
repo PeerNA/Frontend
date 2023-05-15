@@ -1,15 +1,21 @@
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { PeerNaHeader } from '../@components/@common';
-import { ChatingRoom, ProblemSolving } from '../@components/PeerMatchingPage';
+import { ChatingRoom, PeerMatchingExitBtn, ProblemSolving } from '../@components/PeerMatchingPage';
 
 const PeerMatching = () => {
+  const {
+    state: { isExistPeer },
+  } = useLocation();
+
   return (
     <>
       <PeerNaHeader />
       <St.PeerMatchingWrapper>
-        <ProblemSolving />
+        <ProblemSolving isExistPeer={isExistPeer} />
         <ChatingRoom />
       </St.PeerMatchingWrapper>
+      <PeerMatchingExitBtn />
     </>
   );
 };

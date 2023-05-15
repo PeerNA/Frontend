@@ -33,6 +33,11 @@ export interface PostReplyInfo {
   problemId: number;
   roomId: number;
 }
+export interface GetNextPeerMatchProblem {
+  roomId: number;
+  historyId: number;
+  problem: PeerMatchProblem;
+}
 export interface GetPeerMatchAnswerInfo {
   keyword: string[];
   peerId: number;

@@ -108,14 +108,14 @@ const St = {
     cursor: pointer;
 
     ${({ theme }) => theme.fonts.Peer_Noto_B_Content_1}
-    background-color: ${({ theme }) => theme.colors.Pic_Color_Mint_1};
+    background-color: ${({ theme }) => theme.colors.Peer_Color_Mint_1};
     border: 0.3rem solid ${({ theme }) => theme.colors.Peer_Color_Sky_2};
     border-radius: 10rem;
 
     appearance: none;
 
     &:hover {
-      color: ${({ theme }) => theme.colors.Pic_Color_Mint_1};
+      color: ${({ theme }) => theme.colors.Peer_Color_Mint_1};
       background-color: ${({ theme }) => theme.colors.Peer_Color_White_1};
     }
   `,

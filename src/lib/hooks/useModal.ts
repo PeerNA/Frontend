@@ -1,20 +1,23 @@
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { useCallback } from 'react';
 import { modalInfoState } from '../../recoil/atom/profileBar';
 
 const useModal = () => {
   const [modalInfo, setModalInfo] = useRecoilState(modalInfoState);
-  const { isPeernaModal, isProfileModal, isPeerMatchModal } = modalInfo;
+  const { isPeernaModal, isProfileModal, isPeerMatchModal, isProblemExitModal } = modalInfo;
 
   const toggleModal = (isProfileType: boolean, isSuccess?: boolean) => {
-    if (isProfileType) setModalInfo({ isPeernaModal, isProfileModal: !isProfileModal, isPeerMatchModal });
-    else setModalInfo({ isPeernaModal: isSuccess ? false : !isPeernaModal, isProfileModal, isPeerMatchModal });
+    if (isProfileType) setModalInfo({ ...modalInfo, isProfileModal: !isProfileModal });
+    else setModalInfo({ ...modalInfo, isPeernaModal: isSuccess ? false : !isPeernaModal });
   };
 
   const togglePeerMatchModal = () => {
-    setModalInfo({ isPeerMatchModal: !isPeerMatchModal, isPeernaModal, isProfileModal });
+    setModalInfo({ ...modalInfo, isPeerMatchModal: !isPeerMatchModal, isPeernaModal, isProfileModal });
   };
-  return { isPeernaModal, isProfileModal, isPeerMatchModal, toggleModal, togglePeerMatchModal };
+
+  const toggleProblemExitModal = () => {
+    setModalInfo({ ...modalInfo, isProblemExitModal: !isProblemExitModal });
+  };
+  return { isPeernaModal, isProfileModal, isPeerMatchModal, isProblemExitModal, toggleModal, togglePeerMatchModal, toggleProblemExitModal };
 };
 
 export default useModal;
