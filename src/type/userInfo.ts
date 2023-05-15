@@ -1,4 +1,5 @@
 export interface UserInfoType {
+  id: number;
   name: string;
   email: string;
   imageUrl: string;
@@ -34,6 +35,7 @@ export interface ActiveModalInfo {
   isPeernaModal: boolean;
   isProfileModal: boolean;
   isPeerMatchModal: boolean;
+  isProblemExitModal: boolean;
 }
 export interface PeerInfo {
   id: number;
