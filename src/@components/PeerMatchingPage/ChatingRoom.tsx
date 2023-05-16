@@ -54,6 +54,10 @@ const ChatingRoom = () => {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (e.key === 'Enter') handleSubmitMessage();
+  };
   useEffect(() => {
     if (!client.current?.active) connectHandler();
     if (chatRef.current) {
@@ -75,7 +79,7 @@ const ChatingRoom = () => {
         ))}
         <div ref={chatRef} />
       </St.List>
-      <St.ChatInputWrapper>
+      <St.ChatInputWrapper onKeyDown={handleKeyDown}>
         <St.ChatInput ref={inputRef} />
         <button type="submit" onClick={handleSubmitMessage}>
           전송
@@ -117,7 +121,7 @@ const St = {
       margin-right: 50%;
     }
   `,
-  ChatInputWrapper: styled.div`
+  ChatInputWrapper: styled.form`
     display: flex;
     justify-content: center;
     width: 100%;
