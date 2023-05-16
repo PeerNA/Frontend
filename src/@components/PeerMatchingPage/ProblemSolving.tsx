@@ -8,6 +8,7 @@ import ModalPortal from '../../ModalPortals';
 import { peerMatchAnswerInfoState, peerMatchInfoState, replyAnswerInfoState } from '../../recoil/atom/problemInfo';
 import { userInfoState } from '../../recoil/atom/userInfo';
 import { LearningBtnList, PeerNaBtn, PeerNaModal, QuestionTitle, UserInputBox } from '../@common';
+import AutoModal from '../@common/AutoModal';
 import LockSolving from './LockSolving';
 import TimeStatusBar from './TimeStatusBar';
 
@@ -17,7 +18,7 @@ interface ProblemSolvingProps {
 const ProblemSolving = (props: ProblemSolvingProps) => {
   const { isExistPeer } = props;
 
-  const { isPeerMatchModal, togglePeerMatchModal } = useModal();
+  const { isPeerMatchModal, isAutoModal, toggleAutoModal, togglePeerMatchModal } = useModal();
   const [replyAnswerInfo, setReplyAnswerInfo] = useRecoilState(replyAnswerInfoState);
   const modalContentRef = useRef(PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.SUBMIT_ANSWER]);
   const [peerMatchInfo, setPeerMatchInfo] = useRecoilState(peerMatchInfoState);
@@ -62,21 +63,31 @@ const ProblemSolving = (props: ProblemSolvingProps) => {
   const getNextQuestion = async () => {
     modalContentRef.current = PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.WAIT_PEER];
     const data = await getNextPeerMatch(roomId, peer.id);
-    // if (!data) {
-    console.log(isPeerMatchModal);
-    // }
-    // console.log(data);
-    // if (data) {
-    //   setPeerMatchInfo({
-    //     ...peerMatchInfo,
-    //     ...data,
-    //     isAnswerSubmit: {
-    //       isMyAnswer: false,
-    //       isPeerAnswer: false,
-    //       isTimeRemain: true,
-    //     },
-    //   });
-    // }
+
+    if (data?.status === 404) {
+      toggleAutoModal();
+    } else if (data?.data) {
+      const {
+        roomId,
+        historyId,
+        problem: { id: problemId },
+      } = data.data;
+      setPeerMatchInfo({
+        ...peerMatchInfo,
+        ...data,
+        isAnswerSubmit: {
+          isMyAnswer: false,
+          isPeerAnswer: false,
+          isTimeRemain: true,
+        },
+      });
+      setReplyAnswerInfo({
+        answer: '',
+        problemId,
+        historyId,
+        roomId,
+      });
+    }
   };
 
   const handleAnswerTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -129,6 +140,12 @@ const ProblemSolving = (props: ProblemSolvingProps) => {
               modalContentRef.current.type === PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.SUBMIT_ANSWER].type ? postReplyAnswer : getNextQuestion
             }
           />
+        </ModalPortal>
+      )}
+
+      {isAutoModal && (
+        <ModalPortal>
+          <AutoModal content="문제를 다 풀었습니다! 매칭을 종료합니다!" />
         </ModalPortal>
       )}
     </>
