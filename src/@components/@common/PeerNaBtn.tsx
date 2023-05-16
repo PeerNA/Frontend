@@ -11,7 +11,7 @@ const PeerNaBtn = (props: PeerNaBtnProps) => {
   const { content, isActive, handleBtnClick } = props;
 
   return (
-    <St.PeerNaBtn isActive={isActive} onClick={handleBtnClick}>
+    <St.PeerNaBtn isActive={isActive} onClick={handleBtnClick} onKeyDown={handleBtnClick}>
       {content}
     </St.PeerNaBtn>
   );

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import SockJS from 'sockjs-client';
 import { CompatClient, Stomp } from '@stomp/stompjs';
@@ -8,6 +8,7 @@ import { userInfoState } from '../../recoil/atom/userInfo';
 import { messageInfoState } from '../../recoil/atom/messageInfo';
 import ChatingMessage from './ChatingMessage';
 import { MessageInfo } from '../../type/message';
+import ImgPreview from './ImgPreview';
 
 const ChatingRoom = () => {
   const myInfo = useRecoilValue(userInfoState);
@@ -16,8 +17,9 @@ const ChatingRoom = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const chatMessageListRef = useRef<MessageInfo[]>([]);
   const [chatMessageList, setChatMessageList] = useRecoilState(messageInfoState);
-
+  const imageDataRef = useRef<File>();
   const chatRef = useRef<HTMLDivElement>(null);
+  const [isImgPreview, setIsImgPreview] = useState(true);
   const {
     roomId,
     peer: { id: peerId, name: peerName },
@@ -40,7 +42,20 @@ const ChatingRoom = () => {
     });
   };
   const handleSubmitMessage = () => {
-    if (inputRef.current) {
+    console.log('제출', imageDataRef.current);
+    if (imageDataRef.current) {
+      client.current!.send(
+        '/pub/chat/message',
+        {},
+        JSON.stringify({
+          roomId: roomId,
+          // message: new FormData('chatingImg', imageDataRef.current),
+          writerId: myId,
+        }),
+      );
+      imageDataRef.current = undefined;
+      setIsImgPreview(false);
+    } else if (inputRef.current) {
       client.current!.send(
         '/pub/chat/message',
         {},
@@ -54,6 +69,32 @@ const ChatingRoom = () => {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSubmitMessage();
+    }
+  };
+
+  const handleImgPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    // console.log(e.target);
+    if (e.clipboardData.items[1]) {
+      e.preventDefault();
+
+      const dataItem = e.clipboardData.items[1];
+      if (dataItem.kind === 'file') {
+        const imgBlob = dataItem.getAsFile() as Blob;
+        const imgFile = new File([imgBlob], 'chatingImg', { type: 'image/png' });
+
+        console.log(imgFile);
+        imageDataRef.current = imgFile;
+
+        console.log(imageDataRef.current);
+        setIsImgPreview(true);
+      }
+    }
+    // console.log(e.clipboardData.items[1]);
+  };
   useEffect(() => {
     if (!client.current?.active) connectHandler();
     if (chatRef.current) {
@@ -70,17 +111,24 @@ const ChatingRoom = () => {
   return (
     <St.ChatingRoomWrapper>
       <St.List>
-        {chatMessageList.map(({ message, time, writerId }, idx) => (
-          <ChatingMessage message={message} isMyMessage={myId === writerId} name={name} time={time} key={`${message}-${idx}`} />
-        ))}
+        {chatMessageList.map(({ message, time, writerId }, idx) => {
+          return typeof message === 'string' ? (
+            <ChatingMessage message={message} isMyMessage={myId === writerId} name={name} time={time} key={`${message}-${idx}`} />
+          ) : (
+            <ChatingMessage message={'content'} isMyMessage={myId === writerId} name={name} time={time} key={`${message}-${idx}`} />
+          );
+        })}
         <div ref={chatRef} />
       </St.List>
-      <St.ChatInputWrapper>
-        <St.ChatInput ref={inputRef} />
+      <St.ChatInputWrapper onKeyDown={handleKeyDown}>
+        <St.ChatInput ref={inputRef} onPaste={handleImgPaste} />
         <button type="submit" onClick={handleSubmitMessage}>
           전송
         </button>
       </St.ChatInputWrapper>
+      {isImgPreview && imageDataRef.current && (
+        <ImgPreview imgFile={imageDataRef.current} handleExitBtn={() => setIsImgPreview(!isImgPreview)} handleSubmitBtn={handleSubmitMessage} />
+      )}
     </St.ChatingRoomWrapper>
   );
 };
@@ -100,6 +148,14 @@ const St = {
 
     border: 0.2rem solid ${({ theme }) => theme.colors.Peer_Color_Blue};
     border-radius: 3rem;
+
+    position: relative;
+  `,
+  ChatingWrapper: styled.div`
+    position: relative;
+
+    width: 100%;
+    height: 100vh;
   `,
   List: styled.ul`
     display: flex;
@@ -117,7 +173,7 @@ const St = {
       margin-right: 50%;
     }
   `,
-  ChatInputWrapper: styled.div`
+  ChatInputWrapper: styled.form`
     display: flex;
     justify-content: center;
     width: 100%;

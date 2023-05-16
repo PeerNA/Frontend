@@ -1,4 +1,4 @@
-import { GetExampleAnswer, GetPeerMatchAnswerInfo, PostReplyInfo } from '../../type/problem';
+import { GetExampleAnswer, PeerMatchInfo, PostReplyInfo, GetPeerMatchAnswerInfo } from '../../type/problem';
 import { peerNaClient } from '../axios';
 
 export const getExampleAnswer = async (problemId: number) => {
@@ -19,8 +19,8 @@ export const postReplyAnswerData = async (replyAnswerData: PostReplyInfo) => {
 };
 export const getNextPeerMatch = async (roomId: number, peerId: number) => {
   try {
-    const { data } = await peerNaClient.get<GetPeerMatchAnswerInfo>(`api/match/next?roomId=${roomId}&peerId=${peerId}`);
-    return data;
+    const { data, status } = await peerNaClient.get<PeerMatchInfo>(`api/match/next?roomId=${roomId}&peerId=${peerId}`);
+    return { data, status };
   } catch (error) {
     console.log(error);
   }
