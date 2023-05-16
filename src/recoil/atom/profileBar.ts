@@ -15,6 +15,7 @@ export const modalInfoState = atom<ActiveModalInfo>({
     isProfileModal: false,
     isPeerMatchModal: false,
     isProblemExitModal: false,
+    isAutoModal: false,
   },
   effects_UNSTABLE: [persistAtom],
 });

@@ -36,6 +36,7 @@ export interface ActiveModalInfo {
   isProfileModal: boolean;
   isPeerMatchModal: boolean;
   isProblemExitModal: boolean;
+  isAutoModal: boolean;
 }
 export interface PeerInfo {
   id: number;
