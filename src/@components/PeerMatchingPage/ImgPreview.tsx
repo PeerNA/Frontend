@@ -59,7 +59,7 @@ const St = {
     border-radius: 1rem;
   `,
   Img: styled.img`
-    width: 80%;
+    width: inherit;
     object-fit: contain;
   `,
   BtnList: styled.div`
