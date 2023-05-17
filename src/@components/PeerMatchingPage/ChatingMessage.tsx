@@ -11,6 +11,7 @@ const ChatingMessage = (props: ChatingMessageProps) => {
   const { message, name, time, isMyMessage } = props;
   return (
     <St.MessageWrapper className={isMyMessage ? 'my_message' : 'peer_message'}>
+      <St.Profile className={isMyMessage ? 'my_profile' : 'peer_profile'}>{name} 님</St.Profile>
       {isMyMessage ? (
         <St.MessagePargraph>{isImgMessage(message) ? <St.ImgMessage src={message} /> : message}</St.MessagePargraph>
       ) : (
@@ -28,6 +29,16 @@ const St = {
     display: flex;
     flex-direction: column;
     gap: 0.1rem;
+
+    .my_profile {
+      justify-content: flex-end;
+    }
+  `,
+  Profile: styled.div`
+    display: flex;
+    width: 100%;
+    padding: 0 1rem;
+    ${({ theme }) => theme.fonts.Peer_Noto_R_Content_4};
   `,
   MessagePargraph: styled.div`
     padding: 1rem;
