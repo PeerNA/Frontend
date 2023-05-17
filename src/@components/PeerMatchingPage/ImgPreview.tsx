@@ -20,7 +20,6 @@ const ImgPreview = (props: ImgPreviewProps) => {
         setImgBase64(base64.toString());
       }
     };
-    // 파일을 읽어 버퍼에 저장
     reader.readAsDataURL(imgFile);
   };
   useEffect(() => {
@@ -52,14 +51,14 @@ const St = {
     left: 50%;
     transform: translate(-50%, -50%);
 
-    width: 80%;
+    width: 70%;
     height: 50%;
 
     background-color: ${({ theme }) => theme.colors.Peer_Color_Sky_3};
     border-radius: 1rem;
   `,
   Img: styled.img`
-    width: inherit;
+    max-width: 27rem;
     object-fit: contain;
   `,
   BtnList: styled.div`
