@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { PeerNaBtn } from '../@common';
 
 interface ImgPreviewProps {
-  imgFile: File;
+  imgFile: File | undefined;
   handleSubmitBtn: () => void;
   handleExitBtn: () => void;
 }
@@ -20,7 +20,7 @@ const ImgPreview = (props: ImgPreviewProps) => {
         setImgBase64(base64.toString());
       }
     };
-    reader.readAsDataURL(imgFile);
+    if (imgFile) reader.readAsDataURL(imgFile);
   };
   useEffect(() => {
     handleImageChange();

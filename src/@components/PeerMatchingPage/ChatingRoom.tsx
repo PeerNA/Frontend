@@ -23,6 +23,7 @@ const ChatingRoom = () => {
   const [isImgPreview, setIsImgPreview] = useState(true);
   const {
     roomId,
+    historyId,
     peer: { id: peerId, name: peerName },
   } = peerMatchInfo;
   const { name, id: myId } = myInfo;
@@ -56,6 +57,7 @@ const ChatingRoom = () => {
           {},
           JSON.stringify({
             roomId: roomId,
+            historyId,
             message: data,
             writerId: myId,
           }),
@@ -71,6 +73,7 @@ const ChatingRoom = () => {
         {},
         JSON.stringify({
           roomId: roomId,
+          historyId,
           message: inputRef.current.value,
           writerId: myId,
         }),
@@ -87,7 +90,6 @@ const ChatingRoom = () => {
   };
 
   const handleImgPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
-    // console.log(e.target);
     if (e.clipboardData.items[1]) {
       e.preventDefault();
 
@@ -95,15 +97,10 @@ const ChatingRoom = () => {
       if (dataItem.kind === 'file') {
         const imgBlob = dataItem.getAsFile() as Blob;
         const imgFile = new File([imgBlob], 'chatingImg', { type: 'image/png' });
-
-        console.log(imgFile);
         imageDataRef.current = imgFile;
-
-        console.log(imageDataRef.current);
         setIsImgPreview(true);
       }
     }
-    // console.log(e.clipboardData.items[1]);
   };
   useEffect(() => {
     if (!client.current?.active) connectHandler();
@@ -133,9 +130,7 @@ const ChatingRoom = () => {
           전송
         </button>
       </St.ChatInputWrapper>
-      {isImgPreview && imageDataRef.current && (
-        <ImgPreview imgFile={imageDataRef.current} handleExitBtn={() => setIsImgPreview(!isImgPreview)} handleSubmitBtn={handleSubmitMessage} />
-      )}
+      {isImgPreview && <ImgPreview imgFile={imageDataRef.current} handleExitBtn={() => setIsImgPreview(!isImgPreview)} handleSubmitBtn={handleSubmitMessage} />}
     </St.ChatingRoomWrapper>
   );
 };
