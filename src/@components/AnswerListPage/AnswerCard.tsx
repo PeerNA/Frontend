@@ -13,25 +13,21 @@ const AnswerCard = (props: ProblemAnswerInfo) => {
 
   const setAnswerInfoState = useSetRecoilState(answerInfoState);
 
-  const { isPeernaModal, toggleModal } = useModal();
+  const { toggleModal } = useModal();
 
-  useEffect(() => {
+  const handleModalInfo = () => {
     setAnswerInfoState({ userName: name, imageUrl, answer });
-  }, [isPeernaModal]);
+    toggleModal(false);
+  };
 
   return (
-    <St.AnswerCardWrapper onClick={() => toggleModal(false)}>
+    <St.AnswerCardWrapper onClick={handleModalInfo}>
       <St.PeernaAnswerLogo backgroundImg={peernaAnswerLogo}>
         <p>{replyId}</p>
       </St.PeernaAnswerLogo>
       <p>{answer}</p>
 
       <UserProfile userName={name} imageUrl={imageUrl} />
-      {isPeernaModal && (
-        <ModalPortal>
-          <p>모달입니다</p>
-        </ModalPortal>
-      )}
     </St.AnswerCardWrapper>
   );
 };
