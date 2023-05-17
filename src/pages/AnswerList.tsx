@@ -4,9 +4,12 @@ import styled from 'styled-components';
 
 import { BackPageNav, LearningHeader, PeerNaHeader } from '../@components/@common';
 import { AnswerPaging, DetailModal } from '../@components/AnswerListPage';
+import useModal from '../lib/hooks/useModal';
+import ModalPortal from '../ModalPortals';
 import { problemInfoState } from '../recoil/atom/problemInfo';
 
 const AnswerListPage = () => {
+  const { isPeernaModal } = useModal();
   const scrollRef = useRef<HTMLDivElement>(null);
   const { question } = useRecoilValue(problemInfoState);
 
@@ -25,7 +28,11 @@ const AnswerListPage = () => {
         </St.HeaderWrapper>
         <AnswerPaging handleScrollToTop={handleScrollToTop} />
       </St.AnswerListWrapper>
-      {false && <DetailModal />}
+      {isPeernaModal && (
+        <ModalPortal>
+          <DetailModal />
+        </ModalPortal>
+      )}
     </>
   );
 };
