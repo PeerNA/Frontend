@@ -9,6 +9,7 @@ import { messageInfoState } from '../../recoil/atom/messageInfo';
 import ChatingMessage from './ChatingMessage';
 import { MessageInfo } from '../../type/message';
 import ImgPreview from './ImgPreview';
+import { postChatingImage } from '../../lib/api/chating';
 
 const ChatingRoom = () => {
   const myInfo = useRecoilValue(userInfoState);
@@ -41,18 +42,27 @@ const ChatingRoom = () => {
       });
     });
   };
+
   const handleSubmitMessage = () => {
     console.log('제출', imageDataRef.current);
     if (imageDataRef.current) {
-      client.current!.send(
-        '/pub/chat/message',
-        {},
-        JSON.stringify({
-          roomId: roomId,
-          // message: new FormData('chatingImg', imageDataRef.current),
-          writerId: myId,
-        }),
-      );
+      const formData = new FormData();
+      formData.append('file', imageDataRef.current);
+
+      const postImage = async () => {
+        const data = await postChatingImage(formData);
+        client.current!.send(
+          '/pub/chat/message',
+          {},
+          JSON.stringify({
+            roomId: roomId,
+            message: data,
+            writerId: myId,
+          }),
+        );
+      };
+
+      postImage();
       imageDataRef.current = undefined;
       setIsImgPreview(false);
     } else if (inputRef.current) {
@@ -108,15 +118,12 @@ const ChatingRoom = () => {
     }
   }, [chatMessageListRef.current]);
 
+  console.log(isImgPreview && imageDataRef.current);
   return (
     <St.ChatingRoomWrapper>
       <St.List>
         {chatMessageList.map(({ message, time, writerId }, idx) => {
-          return typeof message === 'string' ? (
-            <ChatingMessage message={message} isMyMessage={myId === writerId} name={name} time={time} key={`${message}-${idx}`} />
-          ) : (
-            <ChatingMessage message={'content'} isMyMessage={myId === writerId} name={name} time={time} key={`${message}-${idx}`} />
-          );
+          return <ChatingMessage message={message} isMyMessage={myId === writerId} name={name} time={time} key={`${message}-${idx}`} />;
         })}
         <div ref={chatRef} />
       </St.List>
