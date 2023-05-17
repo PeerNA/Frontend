@@ -60,6 +60,9 @@ const St = {
   Img: styled.img`
     max-width: 27rem;
     object-fit: contain;
+
+    background-color: ${({ theme }) => theme.colors.Peer_Color_White_1};
+    border-radius: 1rem;
   `,
   BtnList: styled.div`
     display: flex;
