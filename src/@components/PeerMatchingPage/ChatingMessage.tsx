@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { isImgMessage } from '../../lib/utils/problemInfo';
 
 interface ChatingMessageProps {
   message: string;
@@ -10,7 +11,11 @@ const ChatingMessage = (props: ChatingMessageProps) => {
   const { message, name, time, isMyMessage } = props;
   return (
     <St.MessageWrapper className={isMyMessage ? 'my_message' : 'peer_message'}>
-      {isMyMessage ? <St.MessagePargraph>{message}</St.MessagePargraph> : <PeerMessage>{message}</PeerMessage>}
+      {isMyMessage ? (
+        <St.MessagePargraph>{isImgMessage(message) ? <St.ImgMessage src={message} /> : message}</St.MessagePargraph>
+      ) : (
+        <PeerMessage>{isImgMessage(message) ? <St.ImgMessage src={message} /> : message}</PeerMessage>
+      )}
       <St.TimePargraph>{time.slice(0, 8)}</St.TimePargraph>
     </St.MessageWrapper>
   );
@@ -37,6 +42,10 @@ const St = {
     padding: 0 1rem;
 
     ${({ theme }) => theme.fonts.Peer_Noto_R_Content_4};
+  `,
+  ImgMessage: styled.img`
+    width: -webkit-fill-available;
+    object-fit: contain;
   `,
 };
 const PeerMessage = styled(St.MessagePargraph)`
