@@ -42,7 +42,7 @@ const PeerMatchingBtn = () => {
           },
         });
         setReplyAnswerInfo({ answer: '', historyId, problemId, roomId });
-        setChatingMessageInfo();
+        if (res.status !== 409) setChatingMessageInfo();
         setModalInfo();
         navigate(`/problem-room/${roomId}`, { state: { isExistPeer: res.status === 409 } });
       }

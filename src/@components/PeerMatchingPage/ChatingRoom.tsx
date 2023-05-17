@@ -20,7 +20,7 @@ const ChatingRoom = () => {
   const [chatMessageList, setChatMessageList] = useRecoilState(messageInfoState);
   const imageDataRef = useRef<File>();
   const chatRef = useRef<HTMLDivElement>(null);
-  const [isImgPreview, setIsImgPreview] = useState(true);
+  const [isImgPreview, setIsImgPreview] = useState(false);
   const {
     roomId,
     historyId,

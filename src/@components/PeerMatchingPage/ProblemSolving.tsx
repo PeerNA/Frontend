@@ -57,7 +57,7 @@ const ProblemSolving = (props: ProblemSolvingProps) => {
         }
       } else setPeerMatchInfo({ ...peerMatchInfo, isAnswerSubmit: { ...isAnswerSubmit, isMyAnswer: true } });
     }
-    togglePeerMatchModal();
+    if (!isExistPeer) togglePeerMatchModal();
   };
 
   const getNextQuestion = async () => {
