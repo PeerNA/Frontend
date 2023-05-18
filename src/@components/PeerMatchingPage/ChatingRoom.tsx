@@ -99,6 +99,8 @@ const ChatingRoom = () => {
         const imgFile = new File([imgBlob], 'chatingImg', { type: 'image/png' });
         imageDataRef.current = imgFile;
         setIsImgPreview(true);
+      } else {
+        if (inputRef.current) inputRef.current.value = e.clipboardData.getData('Text');
       }
     }
   };
@@ -115,7 +117,6 @@ const ChatingRoom = () => {
     }
   }, [chatMessageListRef.current]);
 
-  console.log(isImgPreview && imageDataRef.current);
   return (
     <St.ChatingRoomWrapper>
       <St.List>
