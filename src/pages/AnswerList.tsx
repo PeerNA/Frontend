@@ -22,7 +22,6 @@ const AnswerListPage = () => {
     <>
       <PeerNaHeader />
       <St.AnswerListWrapper>
-        <BackPageNav backTitle="돌아가기" isAbsolute={false} />
         <St.HeaderWrapper ref={scrollRef}>
           <LearningHeader title={question} pageType="answerList" />
         </St.HeaderWrapper>
