@@ -32,7 +32,7 @@ const PeerNaModal = (props: PeerNaModalProps) => {
     <St.ModalWrapper>
       <St.ModalSection>
         <p>{modalContent}</p>
-        <St.SubModalContent>{subModalContent}</St.SubModalContent>
+        {subModalContent && <St.SubModalContent>{subModalContent}</St.SubModalContent>}
         <St.ButtonWrapper>
           {handleConfirmBtn && <PeerNaBtn content="확인" isActive={true} handleBtnClick={handleModalConfirm} />}
           <PeerNaBtn content="취소" isActive={false} handleBtnClick={handleModalCancle} />
