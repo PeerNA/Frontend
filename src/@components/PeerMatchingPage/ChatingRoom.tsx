@@ -45,7 +45,6 @@ const ChatingRoom = () => {
   };
 
   const handleSubmitMessage = () => {
-    console.log('제출', imageDataRef.current);
     if (imageDataRef.current) {
       const formData = new FormData();
       formData.append('file', imageDataRef.current);
@@ -68,6 +67,8 @@ const ChatingRoom = () => {
       imageDataRef.current = undefined;
       setIsImgPreview(false);
     } else if (inputRef.current) {
+      console.log('제출1', inputRef.current.value);
+
       client.current!.send(
         '/pub/chat/message',
         {},
@@ -79,6 +80,7 @@ const ChatingRoom = () => {
         }),
       );
       inputRef.current.value = '';
+      console.log('제출3', inputRef.current?.value);
     }
   };
 
@@ -105,7 +107,7 @@ const ChatingRoom = () => {
     }
   };
   useEffect(() => {
-    if (!client.current?.active) connectHandler();
+    if (!client.current?.abort) connectHandler();
     if (chatRef.current) {
       chatRef.current.scrollIntoView({ behavior: 'smooth' });
     }
@@ -127,7 +129,12 @@ const ChatingRoom = () => {
       </St.List>
       <St.ChatInputWrapper onKeyDown={handleKeyDown}>
         <St.ChatInput ref={inputRef} onPaste={handleImgPaste} />
-        <button type="submit" onClick={handleSubmitMessage}>
+        <button
+          type="submit"
+          onClick={(e) => {
+            e.preventDefault();
+            handleSubmitMessage();
+          }}>
           전송
         </button>
       </St.ChatInputWrapper>
