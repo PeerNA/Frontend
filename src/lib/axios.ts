@@ -42,7 +42,7 @@ peerNaClient.interceptors.response.use(
         return pollingRes;
       };
 
-      if (response.status === 202 && url.includes('api/match/next')) {
+      if (response.status === 202 && (url.includes('api/match/status') || url.includes('api/match/next'))) {
         return polling();
       }
     }

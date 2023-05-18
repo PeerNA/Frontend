@@ -7,6 +7,7 @@ import useModal from '../../lib/hooks/useModal';
 import ModalPortal from '../../ModalPortals';
 import { peerMatchAnswerInfoState, peerMatchInfoState, replyAnswerInfoState } from '../../recoil/atom/problemInfo';
 import { userInfoState } from '../../recoil/atom/userInfo';
+import { PeerMatchInfo } from '../../type/problem';
 import { LearningBtnList, PeerNaBtn, PeerNaModal, QuestionTitle, UserInputBox } from '../@common';
 import AutoModal from '../@common/AutoModal';
 import LockSolving from './LockSolving';
@@ -31,12 +32,16 @@ const ProblemSolving = () => {
   const { isTimeRemain } = isAnswerSubmit;
 
   const handleAnswerSubmit = () => {
+    modalContentRef.current = PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.SUBMIT_ANSWER];
+    console.log('답안제출', isAnswerSubmit, isPeerMatchModal);
     if (!isAnswerSubmit.isMyAnswer) togglePeerMatchModal();
   };
 
   const handleNextQuestion = () => {
+    console.log('다음문제', isAnswerSubmit);
     modalContentRef.current = PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.NEXT_QUESTION];
     togglePeerMatchModal();
+    getNextQuestion();
   };
   const postReplyAnswer = async () => {
     //문제풀이 완료후 답안제출 확인
@@ -63,14 +68,15 @@ const ProblemSolving = () => {
     if (data?.status === 404) {
       toggleAutoModal();
     } else if (data?.data) {
+      const resPeerMatchInfo = data.data as PeerMatchInfo;
       const {
         roomId,
         historyId,
         problem: { id: problemId },
-      } = data.data;
+      } = resPeerMatchInfo;
       setPeerMatchInfo({
         ...peerMatchInfo,
-        ...data,
+        ...resPeerMatchInfo,
         isAnswerSubmit: {
           isMyAnswer: false,
           isPeerAnswer: false,
@@ -83,6 +89,7 @@ const ProblemSolving = () => {
         historyId,
         roomId,
       });
+      togglePeerMatchModal();
     }
   };
 
@@ -132,9 +139,7 @@ const ProblemSolving = () => {
         <ModalPortal>
           <PeerNaModal
             modalContent={modalContentRef.current.content}
-            handleConfirmBtn={
-              modalContentRef.current.type === PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.SUBMIT_ANSWER].type ? postReplyAnswer : getNextQuestion
-            }
+            handleConfirmBtn={modalContentRef.current.type === PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.SUBMIT_ANSWER].type ? postReplyAnswer : undefined}
           />
         </ModalPortal>
       )}

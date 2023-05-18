@@ -1,4 +1,4 @@
-import { GetExampleAnswer, PeerMatchInfo, PostReplyInfo, GetPeerMatchAnswerInfo } from '../../type/problem';
+import { GetExampleAnswer, PeerMatchInfo, PostReplyInfo, GetPeerMatchAnswerInfo, GetRandomProblemInfo } from '../../type/problem';
 import { peerNaClient } from '../axios';
 
 export const getExampleAnswer = async (problemId: number) => {
@@ -7,6 +7,15 @@ export const getExampleAnswer = async (problemId: number) => {
     return data;
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const getCategoryRandomProblem = async (category: string) => {
+  try {
+    const { data } = await peerNaClient.get<GetRandomProblemInfo>(`api/problems/category?category=${category}`);
+    return data;
+  } catch (error) {
+    console.log(error);
   }
 };
 export const postReplyAnswerData = async (replyAnswerData: PostReplyInfo) => {

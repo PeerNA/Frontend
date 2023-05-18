@@ -37,3 +37,12 @@ export const getPeerMatch = async () => {
     return error;
   }
 };
+
+export const deleteUserInfo = async () => {
+  try {
+    const data = await peerNaClient.delete('api/users/sign-out');
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};

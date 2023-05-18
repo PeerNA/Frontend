@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { postLogout } from '../../lib/api/auth';
+import { deleteUserInfo, postLogout } from '../../lib/api/auth';
 import useModal from '../../lib/hooks/useModal';
 
 interface MyProfileProps {
@@ -17,6 +17,11 @@ const MyProfile = (props: MyProfileProps) => {
     const data = await postLogout();
     if (data) navigate('/');
   };
+
+  const handleDeleteUser = async () => {
+    const data = await deleteUserInfo();
+    if (data) navigate('/');
+  };
   return (
     <St.MyProfileSection onClick={() => toggleModal(true)}>
       <img src={imageUrl} alt="profile-img" />
@@ -30,7 +35,7 @@ const MyProfile = (props: MyProfileProps) => {
           <p>{userName}</p>
           <St.ProfileModalList>
             <li onClick={handleLogout}>로그아웃</li>
-            <li>회원탈퇴</li>
+            <li onClick={handleDeleteUser}>회원탈퇴</li>
           </St.ProfileModalList>
         </St.MyProfileArticle>
       )}

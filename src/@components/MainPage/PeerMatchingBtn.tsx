@@ -12,22 +12,30 @@ import { peerMatchInfoState, replyAnswerInfoState } from '../../recoil/atom/prob
 import axios, { AxiosResponse } from 'axios';
 import { modalInfoState } from '../../recoil/atom/profileBar';
 import { messageInfoState } from '../../recoil/atom/messageInfo';
-import { deletePeerMatch } from '../../lib/api/problem';
+import { deletePeerMatch, getCategoryRandomProblem } from '../../lib/api/problem';
 import { sleep } from '../../lib/api/polling';
+import { useEffect, useRef } from 'react';
+import { userCategoryInfo } from '../../recoil/selector/userInfo';
 
 const PeerMatchingBtn = () => {
   const navigate = useNavigate();
+
+  const category = useRecoilValue(userCategoryInfo);
   const setChatingMessageInfo = useResetRecoilState(messageInfoState);
   const setModalInfo = useResetRecoilState(modalInfoState);
   const setPeerMatchInfo = useSetRecoilState(peerMatchInfoState);
   const setReplyAnswerInfo = useSetRecoilState(replyAnswerInfoState);
-  const [pollingInfo, setPollingInfo] = useRecoilState(pollingInfoState);
+  const pollingInfo = useRef(true);
+  const modalContentRef = useRef('');
 
   const { isPeernaModal, toggleModal } = useModal();
 
   const handleMatchingBtn = async () => {
-    toggleModal(false);
-
+    const data = await getCategoryRandomProblem(category);
+    if (data) {
+      modalContentRef.current = data.question;
+      toggleModal(false);
+    }
     try {
       let res = (await getPeerMatch()) as AxiosResponse<PeerMatchInfo, any>;
 
@@ -35,7 +43,8 @@ const PeerMatchingBtn = () => {
         const polling = async () => {
           let timeCount = 24;
           let pollingRes = await axios.get(`${process.env.REACT_APP_IP}api/match?player=2`, { withCredentials: true });
-          while (pollingRes.status === 202 && timeCount && pollingInfo.isPeerMatch) {
+
+          while (pollingRes.status === 202 && timeCount && pollingInfo.current) {
             await sleep(5000);
             try {
               pollingRes = await axios.get(`${process.env.REACT_APP_IP}api/match?player=2`, { withCredentials: true });
@@ -55,20 +64,34 @@ const PeerMatchingBtn = () => {
           historyId,
           problem: { id: problemId },
         } = peerMatchInfo;
-        setPeerMatchInfo({
-          ...peerMatchInfo,
-          isAnswerSubmit: {
-            isMyAnswer: false,
-            isPeerAnswer: false,
-            isTimeRemain: true,
-          },
-          isExistPeer: res.status === 409,
-        });
-        setReplyAnswerInfo({ answer: '', historyId, problemId, roomId });
-        if (res.status !== 409) setChatingMessageInfo();
+
+        // 매칭되어있는 상태
+        if (res.status === 409) {
+          setPeerMatchInfo({
+            ...peerMatchInfo,
+            isAnswerSubmit: {
+              isMyAnswer: false,
+              isPeerAnswer: false,
+              isTimeRemain: true,
+            },
+            isExistPeer: true,
+          });
+        } else {
+          setChatingMessageInfo();
+          setPeerMatchInfo({
+            ...peerMatchInfo,
+            isAnswerSubmit: {
+              isMyAnswer: false,
+              isPeerAnswer: false,
+              isTimeRemain: true,
+            },
+            isExistPeer: false,
+          });
+          setReplyAnswerInfo({ answer: '', historyId, problemId, roomId });
+        }
 
         setModalInfo();
-        navigate(`/problem-room/${roomId}`, { state: { isExistPeer: res.status === 409 } });
+        navigate(`/problem-room/${roomId}`);
       }
     } catch (e) {
       console.log(e);
@@ -77,9 +100,12 @@ const PeerMatchingBtn = () => {
 
   const handleCancelPeerMatch = async () => {
     const data = await deletePeerMatch();
-    if (data === 'success') setPollingInfo({ isPeerMatch: false });
+    if (data === 'success') pollingInfo.current = false;
   };
 
+  useEffect(() => {
+    pollingInfo.current = true;
+  });
   return (
     <>
       <St.MatchigBtnWrapper onClick={handleMatchingBtn}>
@@ -88,7 +114,11 @@ const PeerMatchingBtn = () => {
       </St.MatchigBtnWrapper>
       {isPeernaModal && (
         <ModalPortal>
-          <PeerNaModal modalContent="동료를 매칭중입니다" handleCancelBtn={handleCancelPeerMatch} />
+          <PeerNaModal
+            modalContent="동료를 기다리는 중입니다! 하단문제를 풀어보세요!"
+            subModalContent={`Q. ${modalContentRef.current}`}
+            handleCancelBtn={handleCancelPeerMatch}
+          />
         </ModalPortal>
       )}
     </>
