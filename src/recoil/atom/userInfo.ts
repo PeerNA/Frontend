@@ -1,6 +1,6 @@
 import { recoilPersist } from 'recoil-persist';
 import { atom } from 'recoil';
-import { UserInfoType } from '../../type/userInfo';
+import { PollingInfoType, UserInfoType } from '../../type/userInfo';
 import { CAREER_TYPE_LIST, SUBJECT_CATEGORY_LIST } from '../../constants/mainPageInfo';
 
 const { persistAtom } = recoilPersist();
@@ -20,4 +20,11 @@ export const userInfoState = atom<UserInfoType>({
     career: CAREER_TYPE_LIST[0],
   },
   effects_UNSTABLE: [persistAtom],
+});
+
+export const pollingInfoState = atom<PollingInfoType>({
+  key: 'pollingInfo',
+  default: {
+    isPeerMatch: true,
+  },
 });

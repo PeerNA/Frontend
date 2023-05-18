@@ -10,6 +10,9 @@ export interface UserInfoType {
   };
   career: string;
 }
+export interface PollingInfoType {
+  isPeerMatch: boolean;
+}
 export interface ProblemHistoryInfo {
   id: number;
   question: string;

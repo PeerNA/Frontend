@@ -1,7 +1,7 @@
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
-import { userInfoState } from '../../recoil/atom/userInfo';
+import { pollingInfoState, userInfoState } from '../../recoil/atom/userInfo';
 import useModal from '../../lib/hooks/useModal';
 import { PeerNaModal } from '../@common';
 import ModalPortal from '../../ModalPortals';
@@ -9,9 +9,11 @@ import { useNavigate } from 'react-router-dom';
 import { getPeerMatch } from '../../lib/api/auth';
 import { PeerMatchInfo } from '../../type/problem';
 import { peerMatchInfoState, replyAnswerInfoState } from '../../recoil/atom/problemInfo';
-import { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { modalInfoState } from '../../recoil/atom/profileBar';
 import { messageInfoState } from '../../recoil/atom/messageInfo';
+import { deletePeerMatch } from '../../lib/api/problem';
+import { sleep } from '../../lib/api/polling';
 
 const PeerMatchingBtn = () => {
   const navigate = useNavigate();
@@ -19,13 +21,33 @@ const PeerMatchingBtn = () => {
   const setModalInfo = useResetRecoilState(modalInfoState);
   const setPeerMatchInfo = useSetRecoilState(peerMatchInfoState);
   const setReplyAnswerInfo = useSetRecoilState(replyAnswerInfoState);
+  const [pollingInfo, setPollingInfo] = useRecoilState(pollingInfoState);
+
   const { isPeernaModal, toggleModal } = useModal();
 
   const handleMatchingBtn = async () => {
     toggleModal(false);
 
     try {
-      const res = (await getPeerMatch()) as AxiosResponse<PeerMatchInfo, any>;
+      let res = (await getPeerMatch()) as AxiosResponse<PeerMatchInfo, any>;
+
+      if (res.status === 202) {
+        const polling = async () => {
+          let timeCount = 24;
+          let pollingRes = await axios.get(`${process.env.REACT_APP_IP}api/match?player=2`, { withCredentials: true });
+          while (pollingRes.status === 202 && timeCount && pollingInfo.isPeerMatch) {
+            await sleep(5000);
+            try {
+              pollingRes = await axios.get(`${process.env.REACT_APP_IP}api/match?player=2`, { withCredentials: true });
+              timeCount -= 1;
+            } catch (err) {
+              console.log(err);
+            }
+          }
+          res = pollingRes;
+        };
+        polling();
+      }
       if (res) {
         const peerMatchInfo = res.data as PeerMatchInfo;
         const {
@@ -53,6 +75,11 @@ const PeerMatchingBtn = () => {
     }
   };
 
+  const handleCancelPeerMatch = async () => {
+    const data = await deletePeerMatch();
+    if (data === 'success') setPollingInfo({ isPeerMatch: false });
+  };
+
   return (
     <>
       <St.MatchigBtnWrapper onClick={handleMatchingBtn}>
@@ -61,7 +88,7 @@ const PeerMatchingBtn = () => {
       </St.MatchigBtnWrapper>
       {isPeernaModal && (
         <ModalPortal>
-          <PeerNaModal modalContent="동료를 매칭중입니다" />
+          <PeerNaModal modalContent="동료를 매칭중입니다" handleCancelBtn={handleCancelPeerMatch} />
         </ModalPortal>
       )}
     </>

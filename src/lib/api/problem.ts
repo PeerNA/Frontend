@@ -37,7 +37,16 @@ export const getPeerReplySubmit = async (roomId: number) => {
 
 export const deletePeerRoom = async (roomId: number) => {
   try {
-    const { data } = await peerNaClient.delete(`/api/room?roomId=${roomId}`);
+    const { data } = await peerNaClient.delete(`api/room?roomId=${roomId}`);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deletePeerMatch = async () => {
+  try {
+    const { data } = await peerNaClient.delete(`api/match`);
     return data;
   } catch (error) {
     console.log(error);

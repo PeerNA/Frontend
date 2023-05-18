@@ -1,11 +1,6 @@
-import { PeerMatchInfo } from './../type/problem';
 import axios from 'axios';
+import { sleep } from './api/polling';
 
-const sleep = (timeout: number) => {
-  return new Promise((resolve) => {
-    setTimeout(resolve, timeout);
-  });
-};
 const peerNaClient = axios.create({
   baseURL: process.env.REACT_APP_IP,
   headers: {
@@ -24,7 +19,8 @@ peerNaClient.interceptors.request.use((config: any) => {
 peerNaClient.interceptors.response.use(
   (response) => {
     const {
-      config: { baseURL, url },
+      data,
+      config: { baseURL, url, method },
     } = response;
 
     if (baseURL && url) {
@@ -46,7 +42,7 @@ peerNaClient.interceptors.response.use(
         return pollingRes;
       };
 
-      if (response.status === 202) {
+      if (response.status === 202 && url.includes('api/match/next')) {
         return polling();
       }
     }
