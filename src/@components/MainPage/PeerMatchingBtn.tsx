@@ -14,7 +14,7 @@ import { modalInfoState } from '../../recoil/atom/profileBar';
 import { messageInfoState } from '../../recoil/atom/messageInfo';
 import { deletePeerMatch, getCategoryRandomProblem } from '../../lib/api/problem';
 import { sleep } from '../../lib/api/polling';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { userCategoryInfo } from '../../recoil/selector/userInfo';
 
 const PeerMatchingBtn = () => {
@@ -25,7 +25,7 @@ const PeerMatchingBtn = () => {
   const setModalInfo = useResetRecoilState(modalInfoState);
   const setPeerMatchInfo = useSetRecoilState(peerMatchInfoState);
   const setReplyAnswerInfo = useSetRecoilState(replyAnswerInfoState);
-  const [pollingInfo, setPollingInfo] = useRecoilState(pollingInfoState);
+  const pollingInfo = useRef(true);
   const modalContentRef = useRef('');
 
   const { isPeernaModal, toggleModal } = useModal();
@@ -43,8 +43,8 @@ const PeerMatchingBtn = () => {
         const polling = async () => {
           let timeCount = 24;
           let pollingRes = await axios.get(`${process.env.REACT_APP_IP}api/match?player=2`, { withCredentials: true });
-          while (pollingRes.status === 202 && timeCount && pollingInfo.isPeerMatch) {
-            console.log(pollingInfo.isPeerMatch, '폴링');
+
+          while (pollingRes.status === 202 && timeCount && pollingInfo.current) {
             await sleep(5000);
             try {
               pollingRes = await axios.get(`${process.env.REACT_APP_IP}api/match?player=2`, { withCredentials: true });
@@ -86,9 +86,12 @@ const PeerMatchingBtn = () => {
 
   const handleCancelPeerMatch = async () => {
     const data = await deletePeerMatch();
-    if (data === 'success') setPollingInfo({ isPeerMatch: false });
+    if (data === 'success') pollingInfo.current = false;
   };
 
+  useEffect(() => {
+    pollingInfo.current = true;
+  });
   return (
     <>
       <St.MatchigBtnWrapper onClick={handleMatchingBtn}>
