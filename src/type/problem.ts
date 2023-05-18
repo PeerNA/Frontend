@@ -46,3 +46,10 @@ export interface GetPeerMatchAnswerInfo {
   time: string;
   userInfo: UserAnswerInfo[];
 }
+
+export interface GetRandomProblemInfo extends HashTagInfo {
+  answer: string;
+  category: string;
+  problemId: number;
+  question: string;
+}

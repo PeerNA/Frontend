@@ -4,11 +4,12 @@ import PeerNaBtn from './PeerNaBtn';
 
 interface PeerNaModalProps {
   modalContent: string;
+  subModalContent?: string;
   handleConfirmBtn?: () => void;
   handleCancelBtn?: () => void;
 }
 const PeerNaModal = (props: PeerNaModalProps) => {
-  const { modalContent, handleConfirmBtn, handleCancelBtn } = props;
+  const { modalContent, subModalContent, handleConfirmBtn, handleCancelBtn } = props;
 
   const { toggleModal, togglePeerMatchModal, toggleProblemExitModal, isPeerMatchModal, isProblemExitModal } = useModal();
 
@@ -31,6 +32,7 @@ const PeerNaModal = (props: PeerNaModalProps) => {
     <St.ModalWrapper>
       <St.ModalSection>
         <p>{modalContent}</p>
+        <St.SubModalContent>{subModalContent}</St.SubModalContent>
         <St.ButtonWrapper>
           {handleConfirmBtn && <PeerNaBtn content="확인" isActive={true} handleBtnClick={handleModalConfirm} />}
           <PeerNaBtn content="취소" isActive={false} handleBtnClick={handleModalCancle} />
@@ -82,7 +84,13 @@ const St = {
       ${({ theme }) => theme.fonts.Peer_Noto_B_Title_3};
     }
   `,
-
+  SubModalContent: styled.div`
+    width: 100%;
+    padding: 3rem;
+    ${({ theme }) => theme.fonts.Peer_Noto_M_SubTitle_1};
+    background-color: ${({ theme }) => theme.colors.Peer_Color_Mint_1};
+    border-radius: 1rem;
+  `,
   ButtonWrapper: styled.div`
     display: flex;
     justify-content: center;
