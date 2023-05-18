@@ -12,12 +12,7 @@ import AutoModal from '../@common/AutoModal';
 import LockSolving from './LockSolving';
 import TimeStatusBar from './TimeStatusBar';
 
-interface ProblemSolvingProps {
-  isExistPeer: boolean;
-}
-const ProblemSolving = (props: ProblemSolvingProps) => {
-  const { isExistPeer } = props;
-
+const ProblemSolving = () => {
   const { isPeerMatchModal, isAutoModal, toggleAutoModal, togglePeerMatchModal } = useModal();
   const [replyAnswerInfo, setReplyAnswerInfo] = useRecoilState(replyAnswerInfoState);
   const modalContentRef = useRef(PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.SUBMIT_ANSWER]);
@@ -31,6 +26,7 @@ const ProblemSolving = (props: ProblemSolvingProps) => {
     problem: { question },
     peer,
     isAnswerSubmit,
+    isExistPeer,
   } = peerMatchInfo;
   const { isTimeRemain } = isAnswerSubmit;
 

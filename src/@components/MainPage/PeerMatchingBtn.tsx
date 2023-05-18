@@ -40,9 +40,11 @@ const PeerMatchingBtn = () => {
             isPeerAnswer: false,
             isTimeRemain: true,
           },
+          isExistPeer: res.status === 409,
         });
         setReplyAnswerInfo({ answer: '', historyId, problemId, roomId });
         if (res.status !== 409) setChatingMessageInfo();
+
         setModalInfo();
         navigate(`/problem-room/${roomId}`, { state: { isExistPeer: res.status === 409 } });
       }

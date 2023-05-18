@@ -26,6 +26,7 @@ export interface PeerMatchInfo {
   problem: PeerMatchProblem;
   peer: PeerInfo;
   isAnswerSubmit: AnswerSubmitInfo;
+  isExistPeer: boolean;
 }
 export interface PostReplyInfo {
   answer: string;

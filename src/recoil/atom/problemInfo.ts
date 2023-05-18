@@ -43,6 +43,7 @@ export const peerMatchInfoState = atom<PeerMatchInfo>({
       isPeerAnswer: false,
       isTimeRemain: true,
     },
+    isExistPeer: false,
   },
   effects_UNSTABLE: [persistAtom],
 });
