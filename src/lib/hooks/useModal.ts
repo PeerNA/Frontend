@@ -11,7 +11,7 @@ const useModal = () => {
   };
 
   const togglePeerMatchModal = () => {
-    setModalInfo({ ...modalInfo, isPeerMatchModal: !isPeerMatchModal, isPeernaModal, isProfileModal });
+    setModalInfo({ ...modalInfo, isPeerMatchModal: !isPeerMatchModal });
   };
 
   const toggleProblemExitModal = () => {
