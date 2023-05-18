@@ -24,6 +24,7 @@ const PeerNaModal = (props: PeerNaModalProps) => {
     if (isPeerMatchModal) togglePeerMatchModal();
     else if (isProblemExitModal) toggleProblemExitModal();
     else toggleModal(false);
+
     if (handleCancelBtn) handleCancelBtn();
   };
   return (
@@ -31,7 +32,7 @@ const PeerNaModal = (props: PeerNaModalProps) => {
       <St.ModalSection>
         <p>{modalContent}</p>
         <St.ButtonWrapper>
-          <PeerNaBtn content="확인" isActive={true} handleBtnClick={handleModalConfirm} />
+          {handleConfirmBtn && <PeerNaBtn content="확인" isActive={true} handleBtnClick={handleModalConfirm} />}
           <PeerNaBtn content="취소" isActive={false} handleBtnClick={handleModalCancle} />
         </St.ButtonWrapper>
       </St.ModalSection>
