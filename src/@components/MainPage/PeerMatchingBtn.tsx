@@ -64,20 +64,34 @@ const PeerMatchingBtn = () => {
           historyId,
           problem: { id: problemId },
         } = peerMatchInfo;
-        setPeerMatchInfo({
-          ...peerMatchInfo,
-          isAnswerSubmit: {
-            isMyAnswer: false,
-            isPeerAnswer: false,
-            isTimeRemain: true,
-          },
-          isExistPeer: res.status === 409,
-        });
-        setReplyAnswerInfo({ answer: '', historyId, problemId, roomId });
-        if (res.status !== 409) setChatingMessageInfo();
+
+        // 매칭되어있는 상태
+        if (res.status === 409) {
+          setPeerMatchInfo({
+            ...peerMatchInfo,
+            isAnswerSubmit: {
+              isMyAnswer: false,
+              isPeerAnswer: false,
+              isTimeRemain: true,
+            },
+            isExistPeer: true,
+          });
+        } else {
+          setChatingMessageInfo();
+          setPeerMatchInfo({
+            ...peerMatchInfo,
+            isAnswerSubmit: {
+              isMyAnswer: false,
+              isPeerAnswer: false,
+              isTimeRemain: true,
+            },
+            isExistPeer: false,
+          });
+          setReplyAnswerInfo({ answer: '', historyId, problemId, roomId });
+        }
 
         setModalInfo();
-        navigate(`/problem-room/${roomId}`, { state: { isExistPeer: res.status === 409 } });
+        navigate(`/problem-room/${roomId}`);
       }
     } catch (e) {
       console.log(e);
