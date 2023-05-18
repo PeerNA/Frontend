@@ -5,10 +5,10 @@ import PeerNaBtn from './PeerNaBtn';
 interface PeerNaModalProps {
   modalContent: string;
   handleConfirmBtn?: () => void;
-  handleCancelPeerMatch?: () => void;
+  handleCancelBtn?: () => void;
 }
 const PeerNaModal = (props: PeerNaModalProps) => {
-  const { modalContent, handleConfirmBtn, handleCancelPeerMatch } = props;
+  const { modalContent, handleConfirmBtn, handleCancelBtn } = props;
 
   const { toggleModal, togglePeerMatchModal, toggleProblemExitModal, isPeerMatchModal, isProblemExitModal } = useModal();
 
@@ -24,7 +24,7 @@ const PeerNaModal = (props: PeerNaModalProps) => {
     if (isPeerMatchModal) togglePeerMatchModal();
     else if (isProblemExitModal) toggleProblemExitModal();
     else toggleModal(false);
-    if (handleCancelPeerMatch) handleCancelPeerMatch();
+    if (handleCancelBtn) handleCancelBtn();
   };
   return (
     <St.ModalWrapper>
