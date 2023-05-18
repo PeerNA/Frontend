@@ -6,7 +6,7 @@ export enum PEER_MATCH_MODAL_TYPE {
 
 export const PEER_MATCH_MODAL_INFO = [
   { type: '답안 제출', content: '나의 답안을 제출하시겠습니까?' },
-  { type: '다음 문제', content: '다음문제로 넘어가시겠습니까?' },
+  { type: '다음 문제', content: '동료와 함께 다음문제로 이동하고 있습니다!' },
   { type: '동료 기다리기', content: '동료를 기다리는 중입니다.' },
 ];
 export enum USER_TYPE {

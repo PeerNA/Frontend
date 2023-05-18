@@ -37,6 +37,7 @@ const ProblemSolving = () => {
   const handleNextQuestion = () => {
     modalContentRef.current = PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.NEXT_QUESTION];
     togglePeerMatchModal();
+    // getNextQuestion();
   };
   const postReplyAnswer = async () => {
     //문제풀이 완료후 답안제출 확인
@@ -132,9 +133,7 @@ const ProblemSolving = () => {
         <ModalPortal>
           <PeerNaModal
             modalContent={modalContentRef.current.content}
-            handleConfirmBtn={
-              modalContentRef.current.type === PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.SUBMIT_ANSWER].type ? postReplyAnswer : getNextQuestion
-            }
+            handleConfirmBtn={modalContentRef.current.type === PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.SUBMIT_ANSWER].type ? postReplyAnswer : undefined}
           />
         </ModalPortal>
       )}
