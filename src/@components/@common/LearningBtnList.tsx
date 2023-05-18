@@ -30,7 +30,7 @@ const LearningBtnList = (props: LearningBtnListProps) => {
   };
 
   const handleReferenceAnswer = () => {
-    isActive && navigate(`/answerList`);
+    isActive && window.open(`/answerList`, '_blank');
   };
   return (
     <>
