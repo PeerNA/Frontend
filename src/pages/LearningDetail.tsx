@@ -12,9 +12,8 @@ const LearningDetailPage = () => {
 
   const { historyDetailInfo, isLoading, isError } = useGetLearningDetail(historyIdToNumber);
   if (isError) <Error404 />;
-
   if (historyDetailInfo) {
-    const { question, time, userInfo, keyword } = historyDetailInfo;
+    const { question, time, mine, peer, keyword } = historyDetailInfo;
 
     return (
       <>
@@ -26,9 +25,8 @@ const LearningDetailPage = () => {
             <QuestionTitle question={question} isAnswer={true} keywordList={keyword} />
             <p className="question_time">{time}</p>
             <St.UserInputBoxWrapper>
-              {userInfo.map(({ answer, userName, imageUrl }) => (
-                <UserInputBox key={userName} isModify={false} content={answer} userName={userName} imageUrl={imageUrl} />
-              ))}
+              <UserInputBox isModify={false} content={mine.answer} userName={mine.name} imageUrl={mine.imageUrl} />
+              <UserInputBox isModify={false} content={peer.answer} userName={peer.name} imageUrl={peer.imageUrl} />
             </St.UserInputBoxWrapper>
           </div>
         </St.LearningDetailSection>
