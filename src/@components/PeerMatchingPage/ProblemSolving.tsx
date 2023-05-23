@@ -19,13 +19,12 @@ const ProblemSolving = () => {
   const modalContentRef = useRef(PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.SUBMIT_ANSWER]);
   const [peerMatchInfo, setPeerMatchInfo] = useRecoilState(peerMatchInfoState);
   const [peerMatchAnswerInfo, setPeerMatchAnswerInfo] = useRecoilState(peerMatchAnswerInfoState);
-  const { keyword, userInfo } = peerMatchAnswerInfo;
+  const { keyword, mine, peer } = peerMatchAnswerInfo;
 
   const myInfo = useRecoilValue(userInfoState);
   const {
     roomId,
     problem: { question },
-    peer,
     isAnswerSubmit,
     isExistPeer,
   } = peerMatchInfo;
@@ -63,7 +62,7 @@ const ProblemSolving = () => {
 
   const getNextQuestion = async () => {
     modalContentRef.current = PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.WAIT_PEER];
-    const data = await getNextPeerMatch(roomId, peer.id);
+    const data = await getNextPeerMatch(roomId, peer.userId);
 
     if (data?.status === 404) {
       toggleAutoModal();
@@ -125,7 +124,7 @@ const ProblemSolving = () => {
             {!isAnswerSubmit.isPeerAnswer ? (
               <LockSolving />
             ) : (
-              <UserInputBox isModify={!isAnswerSubmit} userName={peer.name} imageUrl={peer.imageUrl} content={userInfo[USER_TYPE.PEER].answer} />
+              <UserInputBox isModify={!isAnswerSubmit} userName={peer.name} imageUrl={peer.imageUrl} content={peer.answer} />
             )}
             <PeerNaBtn
               isActive={isAnswerSubmit.isMyAnswer && isAnswerSubmit.isPeerAnswer}

@@ -1,3 +1,4 @@
+import { GetHistoryDetailInfo } from '../../type/history';
 import { GetExampleAnswer, PeerMatchInfo, PostReplyInfo, GetPeerMatchAnswerInfo, GetRandomProblemInfo } from '../../type/problem';
 import { peerNaClient } from '../axios';
 
@@ -37,7 +38,7 @@ export const getNextPeerMatch = async (roomId: number, peerId: number) => {
 
 export const getPeerReplySubmit = async (roomId: number) => {
   try {
-    const { data } = await peerNaClient.get<GetPeerMatchAnswerInfo>(`api/match/status?roomId=${roomId}`);
+    const { data } = await peerNaClient.get<GetHistoryDetailInfo>(`api/match/status?roomId=${roomId}`);
     return data;
   } catch (error) {
     console.log(error);
