@@ -66,7 +66,7 @@ const ChatingRoom = () => {
       postImage();
       imageDataRef.current = undefined;
       setIsImgPreview(false);
-    } else if (inputRef.current) {
+    } else if (inputRef.current?.value) {
       console.log('제출1', inputRef.current.value);
 
       client.current!.send(
@@ -91,6 +91,15 @@ const ChatingRoom = () => {
     }
   };
 
+  const handleAttachImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      e.preventDefault();
+      const dataItem = e.target.files[0];
+      const imgFile = new File([dataItem], 'chatingImg', { type: 'image/png' });
+      imageDataRef.current = imgFile;
+      setIsImgPreview(true);
+    }
+  };
   const handleImgPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     if (e.clipboardData.items[1]) {
       e.preventDefault();
@@ -123,20 +132,32 @@ const ChatingRoom = () => {
     <St.ChatingRoomWrapper>
       <St.List>
         {chatMessageList.map(({ message, time, writerId }, idx) => {
-          return <ChatingMessage message={message} isMyMessage={myId === writerId} name={name} time={time} key={`${message}-${idx}`} />;
+          return (
+            <ChatingMessage
+              message={message}
+              isMyMessage={myId === writerId}
+              name={myId === writerId ? name : peerName}
+              time={time}
+              key={`${message}-${idx}`}
+            />
+          );
         })}
         <div ref={chatRef} />
       </St.List>
       <St.ChatInputWrapper onKeyDown={handleKeyDown}>
         <St.ChatInput ref={inputRef} onPaste={handleImgPaste} />
         <button
-          type="submit"
+          type="button"
           onClick={(e) => {
             e.preventDefault();
             handleSubmitMessage();
           }}>
           전송
         </button>
+        <label className="input-file-button" htmlFor="input-file">
+          <span className="material-symbols-outlined">image</span>
+        </label>
+        <input type="file" id="input-file" style={{ display: 'none' }} onChange={handleAttachImg} />
       </St.ChatInputWrapper>
       {isImgPreview && <ImgPreview imgFile={imageDataRef.current} handleExitBtn={() => setIsImgPreview(!isImgPreview)} handleSubmitBtn={handleSubmitMessage} />}
     </St.ChatingRoomWrapper>
@@ -186,13 +207,14 @@ const St = {
   ChatInputWrapper: styled.form`
     display: flex;
     justify-content: center;
+    gap: 1rem;
     width: 100%;
 
     position: relative;
 
     button {
       position: absolute;
-      right: 5%;
+      right: 14%;
       top: 20%;
 
       width: 5rem;
@@ -202,6 +224,19 @@ const St = {
       background-color: ${({ theme }) => theme.colors.Peer_Color_White_1};
       border: none;
       border-radius: 3rem;
+    }
+    label {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      span {
+        color: ${({ theme }) => theme.colors.Peer_Color_Blue};
+        font-size: 4rem;
+
+        :hover {
+          background-color: ${({ theme }) => theme.colors.Peer_Color_Blue};
+        }
+      }
     }
   `,
   ChatInput: styled.input`
