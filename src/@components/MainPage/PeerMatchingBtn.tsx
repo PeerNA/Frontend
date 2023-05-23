@@ -30,6 +30,43 @@ const PeerMatchingBtn = () => {
 
   const { isPeernaModal, toggleModal } = useModal();
 
+  const checkIsExistRoom = (res: AxiosResponse<PeerMatchInfo, any>) => {
+    const peerMatchInfo = res.data as PeerMatchInfo;
+    const {
+      roomId,
+      historyId,
+      problem: { id: problemId },
+    } = peerMatchInfo;
+
+    console.log(peerMatchInfo);
+    // 매칭되어있는 상태
+    if (res.status === 409) {
+      setPeerMatchInfo({
+        ...peerMatchInfo,
+        isAnswerSubmit: {
+          isMyAnswer: false,
+          isPeerAnswer: false,
+          isTimeRemain: true,
+        },
+        isExistPeer: true,
+      });
+    } else {
+      setChatingMessageInfo();
+      setPeerMatchInfo({
+        ...peerMatchInfo,
+        isAnswerSubmit: {
+          isMyAnswer: false,
+          isPeerAnswer: false,
+          isTimeRemain: true,
+        },
+        isExistPeer: false,
+      });
+      setReplyAnswerInfo({ answer: '', historyId, problemId, roomId });
+    }
+
+    setModalInfo();
+    navigate(`/problem-room/${roomId}`);
+  };
   const handleMatchingBtn = async () => {
     const data = await getCategoryRandomProblem(category);
     if (data) {
@@ -37,7 +74,7 @@ const PeerMatchingBtn = () => {
       toggleModal(false);
     }
     try {
-      let res = (await getPeerMatch()) as AxiosResponse<PeerMatchInfo, any>;
+      const res = (await getPeerMatch()) as AxiosResponse<PeerMatchInfo, any>;
 
       if (res.status === 202) {
         const polling = async () => {
@@ -53,45 +90,11 @@ const PeerMatchingBtn = () => {
               console.log(err);
             }
           }
-          res = pollingRes;
+          checkIsExistRoom(pollingRes);
         };
         polling();
-      }
-      if (res) {
-        const peerMatchInfo = res.data as PeerMatchInfo;
-        const {
-          roomId,
-          historyId,
-          problem: { id: problemId },
-        } = peerMatchInfo;
-
-        // 매칭되어있는 상태
-        if (res.status === 409) {
-          setPeerMatchInfo({
-            ...peerMatchInfo,
-            isAnswerSubmit: {
-              isMyAnswer: false,
-              isPeerAnswer: false,
-              isTimeRemain: true,
-            },
-            isExistPeer: true,
-          });
-        } else {
-          setChatingMessageInfo();
-          setPeerMatchInfo({
-            ...peerMatchInfo,
-            isAnswerSubmit: {
-              isMyAnswer: false,
-              isPeerAnswer: false,
-              isTimeRemain: true,
-            },
-            isExistPeer: false,
-          });
-          setReplyAnswerInfo({ answer: '', historyId, problemId, roomId });
-        }
-
-        setModalInfo();
-        navigate(`/problem-room/${roomId}`);
+      } else if (res.status === 200) {
+        checkIsExistRoom(res);
       }
     } catch (e) {
       console.log(e);
