@@ -4,7 +4,7 @@ import { GetProblemAnswerInfo, ProblemAnswerInfo } from '../../type/history';
 import { peerNaGetFetcher } from '../axios';
 
 const useGetAnswerList = (problemId: number) => {
-  const { data, isLoading, error, size, setSize } = useSWRInfinite<GetProblemAnswerInfo>(
+  const { data, isLoading, error, size, setSize, mutate } = useSWRInfinite<GetProblemAnswerInfo>(
     (idx: number, answerList: GetProblemAnswerInfo) => {
       if (!idx) return `api/problems/replies?problemId=${problemId}&page=0`;
 
@@ -22,6 +22,7 @@ const useGetAnswerList = (problemId: number) => {
     isError: error,
     size,
     setSize,
+    mutate,
   };
 };
 
