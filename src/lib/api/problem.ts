@@ -10,7 +10,14 @@ export const getExampleAnswer = async (problemId: number) => {
     console.error(error);
   }
 };
-
+export const postReplyLike = async (replyId: number) => {
+  try {
+    const { data, status } = await peerNaClient.post(`api/reply/likey?replyId=${replyId}`);
+    return { data, status };
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const getCategoryRandomProblem = async (category: string) => {
   try {
     const { data } = await peerNaClient.get<GetRandomProblemInfo>(`api/problems/category?category=${category}`);

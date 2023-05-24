@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { AnswerCard, Paging } from '.';
+import { postReplyLike } from '../../lib/api/problem';
 import useGetAnswerList from '../../lib/hooks/useGetAnswerList';
 import { problemInfoState } from '../../recoil/atom/problemInfo';
 import { Error404 } from '../@common';
@@ -14,19 +15,32 @@ const AnswerPaging = (props: AnswerPagingProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const { problemId } = useRecoilValue(problemInfoState);
-  const { problemAnswerInfo, isLoading, isError, setSize, size } = useGetAnswerList(problemId);
+  const { problemAnswerInfo, isLoading, isError, setSize, size, mutate } = useGetAnswerList(problemId);
 
   const handleClickPage = (newSize: number) => {
     handleScrollToTop();
     setSize(newSize);
+  };
+  const handlePostLike = async (replyId: number) => {
+    const data = await postReplyLike(replyId);
+    if (data?.status === 200) mutate();
   };
 
   if (problemAnswerInfo) {
     const { replyData, totalCount } = problemAnswerInfo;
     return (
       <St.AnswerPagingWrapper ref={scrollRef}>
-        {replyData.map(({ replyId, userId, name, imageUrl, answer }, idx) => (
-          <AnswerCard key={`${name}-${idx}`} replyId={replyId} userId={userId} name={name} imageUrl={imageUrl} answer={answer} />
+        {replyData.map(({ replyId, userId, name, imageUrl, answer, likes }, idx) => (
+          <AnswerCard
+            key={`${name}-${idx}`}
+            handlePostLike={handlePostLike}
+            likes={likes}
+            replyId={replyId}
+            userId={userId}
+            name={name}
+            imageUrl={imageUrl}
+            answer={answer}
+          />
         ))}
         <Paging totalItemsCount={totalCount} activePage={size} handleClickPage={handleClickPage} />
       </St.AnswerPagingWrapper>

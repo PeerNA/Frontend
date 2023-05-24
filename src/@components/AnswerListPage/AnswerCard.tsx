@@ -8,8 +8,11 @@ import { UserProfile } from '../@common';
 import peernaAnswerLogo from '../../assets/image/peernaAnswerLogo.png';
 import ModalPortal from '../../ModalPortals';
 
-const AnswerCard = (props: ProblemAnswerInfo) => {
-  const { replyId, userId, name, imageUrl, answer } = props;
+interface AnswerCardProps extends ProblemAnswerInfo {
+  handlePostLike: (replyId: number) => void;
+}
+const AnswerCard = (props: AnswerCardProps) => {
+  const { replyId, userId, likes, name, imageUrl, answer, handlePostLike } = props;
 
   const setAnswerInfoState = useSetRecoilState(answerInfoState);
 
@@ -21,11 +24,11 @@ const AnswerCard = (props: ProblemAnswerInfo) => {
   };
 
   return (
-    <St.AnswerCardWrapper onClick={handleModalInfo}>
-      <St.PeernaAnswerLogo backgroundImg={peernaAnswerLogo}>
-        <p>{replyId}</p>
+    <St.AnswerCardWrapper>
+      <St.PeernaAnswerLogo backgroundImg={peernaAnswerLogo} onClick={() => handlePostLike(replyId)}>
+        <p>{likes}</p>
       </St.PeernaAnswerLogo>
-      <p>{answer}</p>
+      <p onClick={handleModalInfo}>{answer}</p>
 
       <UserProfile userName={name} imageUrl={imageUrl} />
     </St.AnswerCardWrapper>
@@ -74,12 +77,18 @@ const St = {
 
     width: 5rem;
     height: 4rem;
+    padding: 1rem;
+    border-radius: 1rem;
 
     background-image: url(${({ backgroundImg }) => backgroundImg});
     background-repeat: round;
     & > p {
       ${({ theme }) => theme.fonts.Peer_Noto_B_Title_2}
       color : ${({ theme }) => theme.colors.Peer_Color_Purple};
+    }
+
+    :hover {
+      background-color: ${({ theme }) => theme.colors.Peer_Color_Mint_2};
     }
   `,
 };
