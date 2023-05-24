@@ -1,6 +1,7 @@
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-import { PeerMatchInfo, PostReplyInfo, ProblemInfo, GetPeerMatchAnswerInfo } from '../../type/problem';
+import { GetHistoryDetailInfo } from '../../type/history';
+import { PeerMatchInfo, PostReplyInfo, ProblemInfo } from '../../type/problem';
 
 enum StateType {
   PROBLEM_INFO = 'problemInfo',
@@ -59,25 +60,29 @@ export const replyAnswerInfoState = atom<PostReplyInfo>({
   effects_UNSTABLE: [persistAtom],
 });
 
-export const peerMatchAnswerInfoState = atom<GetPeerMatchAnswerInfo>({
+export const peerMatchAnswerInfoState = atom<GetHistoryDetailInfo>({
   key: StateType.PEER_MATCH_ANSWER,
   default: {
-    keyword: [],
-    peerId: 0,
     question: '',
     time: '',
-    userInfo: [
-      {
-        userName: '',
-        imageUrl: '',
-        answer: '',
-      },
-      {
-        userName: '',
-        imageUrl: '',
-        answer: '',
-      },
-    ],
+    chat: [{ message: '', time: '', writerId: 0 }],
+    mine: {
+      name: '',
+      userId: 0,
+      replyId: 0,
+      likes: 0,
+      imageUrl: '',
+      answer: '',
+    },
+    peer: {
+      name: '',
+      userId: 0,
+      replyId: 0,
+      likes: 0,
+      imageUrl: '',
+      answer: '',
+    },
+    keyword: [''],
   },
   effects_UNSTABLE: [persistAtom],
 });

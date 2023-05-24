@@ -8,10 +8,20 @@ export interface GetLearningHistoryInfo {
   question: string;
   time: string;
 }
-export interface GetHistoryDetailInfo extends HashTagInfo {
+export interface UserHistoryInfo extends ProblemAnswerInfo {
+  likes: number;
+}
+export interface ChatMessageInfo {
+  message: string;
+  time: string;
+  writerId: number;
+}
+export interface GetHistoryDetailInfo {
   question: string;
   time: string;
-  userInfo: UserAnswerInfo[];
+  chat: ChatMessageInfo[];
+  mine: UserHistoryInfo;
+  peer: UserHistoryInfo;
   keyword: string[];
 }
 export interface ProblemAnswerInfo {
@@ -20,6 +30,7 @@ export interface ProblemAnswerInfo {
   name: string;
   imageUrl: string;
   answer: string;
+  likes: number;
 }
 
 export interface GetProblemAnswerInfo {

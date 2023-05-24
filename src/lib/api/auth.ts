@@ -46,3 +46,12 @@ export const deleteUserInfo = async () => {
     console.log(error);
   }
 };
+
+export const deleteAllNotification = async () => {
+  try {
+    const data = await peerNaClient.delete('api/notifications');
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
