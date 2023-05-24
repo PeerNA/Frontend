@@ -56,7 +56,6 @@ const St = {
     display: grid;
     grid-template-columns: 0.5fr 2fr 1fr;
     justify-content: center;
-    align-items: center;
 
     padding-right: 1rem;
     gap: 2rem;
@@ -83,7 +82,6 @@ const St = {
     gap: 1.3rem;
 
     width: 100%;
-    max-width: 20rem;
     height: 100%;
     margin-top: 2rem;
     padding: 1rem;
