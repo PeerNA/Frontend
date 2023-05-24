@@ -30,6 +30,7 @@ export interface ProblemAnswerInfo {
   name: string;
   imageUrl: string;
   answer: string;
+  likes: number;
 }
 
 export interface GetProblemAnswerInfo {
