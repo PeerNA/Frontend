@@ -30,6 +30,7 @@ const St = {
     flex-direction: column;
     gap: 0.1rem;
 
+    max-width: 25rem;
     .my_profile {
       justify-content: flex-end;
     }

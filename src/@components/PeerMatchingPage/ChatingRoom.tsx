@@ -15,7 +15,7 @@ const ChatingRoom = () => {
   const myInfo = useRecoilValue(userInfoState);
   const peerMatchInfo = useRecoilValue(peerMatchInfoState);
   const client = useRef<CompatClient>();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const chatMessageListRef = useRef<MessageInfo[]>([]);
   const [chatMessageList, setChatMessageList] = useRecoilState(messageInfoState);
   const imageDataRef = useRef<File>();
@@ -100,7 +100,7 @@ const ChatingRoom = () => {
       setIsImgPreview(true);
     }
   };
-  const handleImgPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+  const handleImgPaste = (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
     if (e.clipboardData.items[1]) {
       e.preventDefault();
 
@@ -113,6 +113,13 @@ const ChatingRoom = () => {
       } else {
         if (inputRef.current) inputRef.current.value = e.clipboardData.getData('Text');
       }
+    }
+  };
+
+  const handleTextAreaHeight = () => {
+    if (inputRef.current) {
+      inputRef.current.style.height = '0.1rem';
+      inputRef.current.style.height = 12 + inputRef.current.scrollHeight + 'px';
     }
   };
   useEffect(() => {
@@ -145,7 +152,7 @@ const ChatingRoom = () => {
         <div ref={chatRef} />
       </St.List>
       <St.ChatInputWrapper onKeyDown={handleKeyDown}>
-        <St.ChatInput ref={inputRef} onPaste={handleImgPaste} />
+        <St.ChatInput ref={inputRef} onPasteCapture={handleImgPaste} onChange={handleTextAreaHeight} />
         <button
           type="button"
           onClick={(e) => {
@@ -239,10 +246,17 @@ const St = {
       }
     }
   `,
-  ChatInput: styled.input`
+  ChatInput: styled.textarea`
     width: 100%;
     height: 5rem;
-    padding: 1rem;
+
+    max-width: 80rem;
+    padding-left: 1rem;
+    padding-right: 4rem;
+    overflow-y: hidden;
+
+    word-break: break-all;
+    resize: none;
 
     ${({ theme }) => theme.fonts.Peer_Noto_R_Content_3};
     background-color: ${({ theme }) => theme.colors.Peer_Color_Blue};
