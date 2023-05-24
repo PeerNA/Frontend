@@ -11,10 +11,15 @@ export interface GetLearningHistoryInfo {
 export interface UserHistoryInfo extends ProblemAnswerInfo {
   likes: number;
 }
+export interface ChatMessageInfo {
+  message: string;
+  time: string;
+  writerId: number;
+}
 export interface GetHistoryDetailInfo {
   question: string;
   time: string;
-  chat: string[];
+  chat: ChatMessageInfo[];
   mine: UserHistoryInfo;
   peer: UserHistoryInfo;
   keyword: string[];

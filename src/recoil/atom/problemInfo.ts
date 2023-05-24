@@ -65,7 +65,7 @@ export const peerMatchAnswerInfoState = atom<GetHistoryDetailInfo>({
   default: {
     question: '',
     time: '',
-    chat: [''],
+    chat: [{ message: '', time: '', writerId: 0 }],
     mine: {
       name: '',
       userId: 0,
