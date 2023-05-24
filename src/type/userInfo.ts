@@ -36,6 +36,7 @@ export interface UserAnswerInfo extends UserProfileInfo {
 }
 export interface ActiveModalInfo {
   isPeernaModal: boolean;
+  isNotificationModal: boolean;
   isProfileModal: boolean;
   isPeerMatchModal: boolean;
   isProblemExitModal: boolean;

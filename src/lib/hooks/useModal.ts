@@ -3,13 +3,15 @@ import { modalInfoState } from '../../recoil/atom/profileBar';
 
 const useModal = () => {
   const [modalInfo, setModalInfo] = useRecoilState(modalInfoState);
-  const { isAutoModal, isPeernaModal, isProfileModal, isPeerMatchModal, isProblemExitModal } = modalInfo;
+  const { isAutoModal, isPeernaModal, isProfileModal, isPeerMatchModal, isNotificationModal, isProblemExitModal } = modalInfo;
 
   const toggleModal = (isProfileType: boolean, isSuccess?: boolean) => {
     if (isProfileType) setModalInfo({ ...modalInfo, isProfileModal: !isProfileModal });
     else setModalInfo({ ...modalInfo, isPeernaModal: isSuccess ? false : !isPeernaModal });
   };
-
+  const toggleNotificationModal = () => {
+    setModalInfo({ ...modalInfo, isNotificationModal: !isNotificationModal });
+  };
   const togglePeerMatchModal = () => {
     setModalInfo({ ...modalInfo, isPeerMatchModal: !isPeerMatchModal });
   };
@@ -27,6 +29,8 @@ const useModal = () => {
     isProfileModal,
     isPeerMatchModal,
     isProblemExitModal,
+    isNotificationModal,
+    toggleNotificationModal,
     toggleAutoModal,
     toggleModal,
     togglePeerMatchModal,

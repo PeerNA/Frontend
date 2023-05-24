@@ -12,6 +12,7 @@ export const modalInfoState = atom<ActiveModalInfo>({
   key: StateType.ACTIVE_STATE_MODAL,
   default: {
     isPeernaModal: false,
+    isNotificationModal: false,
     isProfileModal: false,
     isPeerMatchModal: false,
     isProblemExitModal: false,
