@@ -17,7 +17,8 @@ const St = {
     justify-content: center;
     align-items: center;
 
-    height: 47rem;
+    height: 35rem;
+
     border: 0.2rem solid ${({ theme }) => theme.colors.Peer_Color_Blue};
 
     > span {
