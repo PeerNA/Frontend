@@ -3,9 +3,11 @@ import UserProfile from './UserProfile';
 import styled from 'styled-components';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { replyAnswerInfoState } from '../../recoil/atom/problemInfo';
+import { LockSolving } from '../PeerMatchingPage';
 
 interface UserInputBoxProps {
   isModify: boolean;
+  isPeerAnswer: boolean;
   content?: string;
   userName: string;
   imageUrl: string;
@@ -13,12 +15,18 @@ interface UserInputBoxProps {
   handleAnswerTextArea?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 const UserInputBox = (props: UserInputBoxProps) => {
-  const { isModify, content, userName, imageUrl, textAreaValue, handleAnswerTextArea } = props;
+  const { isModify, isPeerAnswer, content, userName, imageUrl, textAreaValue, handleAnswerTextArea } = props;
   return (
     <St.UserInputBoxArticle>
       <UserProfile userName={userName} imageUrl={imageUrl} />
       <St.UserProfileUnderBar />
-      {handleAnswerTextArea || isModify ? <textarea value={textAreaValue} onChange={handleAnswerTextArea} /> : <p className="input_content">{content}</p>}
+      {!isPeerAnswer ? (
+        <LockSolving />
+      ) : handleAnswerTextArea || isModify ? (
+        <textarea value={textAreaValue} onChange={handleAnswerTextArea} />
+      ) : (
+        <p className="input_content">{content}</p>
+      )}
     </St.UserInputBoxArticle>
   );
 };

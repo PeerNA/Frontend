@@ -27,8 +27,8 @@ const LearningDetailPage = () => {
             <QuestionTitle question={question} isAnswer={true} keywordList={keyword} />
             <p className="question_time">{time}</p>
             <St.UserInputBoxWrapper>
-              <UserInputBox isModify={false} content={mine.answer} userName={mine.name} imageUrl={mine.imageUrl} />
-              <UserInputBox isModify={false} content={peer.answer} userName={peer.name} imageUrl={peer.imageUrl} />
+              <UserInputBox isModify={false} isPeerAnswer={true} content={mine.answer} userName={mine.name} imageUrl={mine.imageUrl} />
+              <UserInputBox isModify={false} isPeerAnswer={true} content={peer.answer} userName={peer.name} imageUrl={peer.imageUrl} />
             </St.UserInputBoxWrapper>
           </div>
           <St.List>
