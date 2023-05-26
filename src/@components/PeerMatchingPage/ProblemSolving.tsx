@@ -20,6 +20,7 @@ const ProblemSolving = () => {
   const [peerMatchInfo, setPeerMatchInfo] = useRecoilState(peerMatchInfoState);
   const [peerMatchAnswerInfo, setPeerMatchAnswerInfo] = useRecoilState(peerMatchAnswerInfoState);
   const { keyword, mine, peer } = peerMatchAnswerInfo;
+  const { peer: peerInfo } = peerMatchInfo;
 
   const myInfo = useRecoilValue(userInfoState);
   const {
@@ -44,6 +45,7 @@ const ProblemSolving = () => {
   };
   const postReplyAnswer = async () => {
     //문제풀이 완료후 답안제출 확인
+    console.log(replyAnswerInfo);
     const data = await postReplyAnswerData(replyAnswerInfo);
 
     if (data?.status === 200 || data?.status === 409) {
@@ -62,7 +64,7 @@ const ProblemSolving = () => {
 
   const getNextQuestion = async () => {
     modalContentRef.current = PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.WAIT_PEER];
-    const data = await getNextPeerMatch(roomId, peer.userId);
+    const data = await getNextPeerMatch(roomId, peerInfo.id);
 
     if (data?.status === 404) {
       toggleAutoModal();
@@ -109,6 +111,7 @@ const ProblemSolving = () => {
           <div>
             <UserInputBox
               isModify={!isAnswerSubmit.isMyAnswer}
+              isPeerAnswer={true}
               userName={myInfo.name}
               imageUrl={myInfo.imageUrl}
               textAreaValue={replyAnswerInfo.answer}
@@ -121,11 +124,14 @@ const ProblemSolving = () => {
             />
           </div>
           <div>
-            {!isAnswerSubmit.isPeerAnswer ? (
-              <LockSolving />
-            ) : (
-              <UserInputBox isModify={!isAnswerSubmit} userName={peer.name} imageUrl={peer.imageUrl} content={peer.answer} />
-            )}
+            <UserInputBox
+              isModify={!isAnswerSubmit.isPeerAnswer}
+              isPeerAnswer={isAnswerSubmit.isPeerAnswer}
+              userName={peerInfo.name}
+              imageUrl={peerInfo.imageUrl}
+              content={peer.answer}
+            />
+
             <PeerNaBtn
               isActive={isAnswerSubmit.isMyAnswer && isAnswerSubmit.isPeerAnswer}
               content={PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.NEXT_QUESTION].type}
