@@ -82,7 +82,7 @@ const St = {
     gap: 1.3rem;
 
     width: 100%;
-    height: 100%;
+    height: 74rem;
     margin-top: 2rem;
     padding: 1rem;
 
