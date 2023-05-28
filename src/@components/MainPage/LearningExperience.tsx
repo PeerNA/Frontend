@@ -6,8 +6,8 @@ import { SELET_TITLE_LIST } from '../../constants/mainPageInfo';
 const LearningExperience = () => {
   return (
     <St.LearningExperienceSection>
-      {SELET_TITLE_LIST.map((title, idx) => (
-        <LearningSelect key={title} isSubject={Boolean(idx)} title={title} />
+      {SELET_TITLE_LIST.map((title) => (
+        <LearningSelect key={title} title={title} />
       ))}
     </St.LearningExperienceSection>
   );
