@@ -30,7 +30,7 @@ const AnswerCard = (props: AnswerCardProps) => {
       </St.PeernaAnswerLogo>
       <p onClick={handleModalInfo}>{answer}</p>
 
-      <UserProfile userName={name} imageUrl={imageUrl} score={score} />
+      <UserProfile userName={name} imageUrl={imageUrl} />
     </St.AnswerCardWrapper>
   );
 };
