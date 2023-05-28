@@ -1,6 +1,6 @@
 import { LearningHeader, PeerNaHeader } from '../@components/@common';
 import styled from 'styled-components';
-import { LearningExperience, PeerMatchingBtn, LearningRecord } from '../@components/MainPage';
+import { LearningExperience, PeerMatchingBtn, LearningRecord, ScoreInfo } from '../@components/MainPage';
 
 const MainPage = () => {
   return (
@@ -9,6 +9,7 @@ const MainPage = () => {
 
       <St.MainWrapper>
         <section>
+          <ScoreInfo />
           <LearningExperience />
           <PeerMatchingBtn />
         </section>

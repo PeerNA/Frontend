@@ -1,43 +1,35 @@
 import React from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { CAREER_TYPE_LIST, POST_CAREER_TYPE_LIST, SELET_TITLE_LIST, SUBJECT_CATEGORY_LIST } from '../../constants/mainPageInfo';
+import { POST_CAREER_TYPE_LIST, SELET_TITLE_LIST, SUBJECT_CATEGORY_LIST } from '../../constants/mainPageInfo';
 import { userInfoState } from '../../recoil/atom/userInfo';
 import styled from 'styled-components';
 import { patchMatchingInterest } from '../../lib/api/auth';
 import { PatchInterestInfo } from '../../type/userInfo';
 
 interface LearningSelectProps {
-  isSubject: boolean;
   title: string;
 }
 const LearningSelect = (props: LearningSelectProps) => {
-  const { isSubject, title } = props;
+  const { title } = props;
 
   const [userInfoAtom, setUserInfoAtom] = useRecoilState(userInfoState);
   const {
-    career,
     interest: { priority1, priority2, priority3 },
   } = userInfoAtom;
-
-  const OPTION_LIST = isSubject ? SUBJECT_CATEGORY_LIST : CAREER_TYPE_LIST;
 
   const handleChangeOptionValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
     switch (title) {
       case SELET_TITLE_LIST[0]:
-        setUserInfoAtom({ ...userInfoAtom, career: POST_CAREER_TYPE_LIST[CAREER_TYPE_LIST.indexOf(e.target.value)] });
-        handlePatchInterest({ career: POST_CAREER_TYPE_LIST[CAREER_TYPE_LIST.indexOf(e.target.value)] });
-        break;
-      case SELET_TITLE_LIST[1]:
         setUserInfoAtom({ ...userInfoAtom, interest: { ...userInfoAtom.interest, priority1: e.target.value } });
         handlePatchInterest({ priority1: e.target.value });
 
         break;
-      case SELET_TITLE_LIST[2]:
+      case SELET_TITLE_LIST[1]:
         setUserInfoAtom({ ...userInfoAtom, interest: { ...userInfoAtom.interest, priority2: e.target.value } });
         handlePatchInterest({ priority2: e.target.value });
 
         break;
-      case SELET_TITLE_LIST[3]:
+      case SELET_TITLE_LIST[2]:
         setUserInfoAtom({ ...userInfoAtom, interest: { ...userInfoAtom.interest, priority3: e.target.value } });
         handlePatchInterest({ priority3: e.target.value });
 
@@ -52,14 +44,12 @@ const LearningSelect = (props: LearningSelectProps) => {
   const getSelectValue = () => {
     switch (title) {
       case SELET_TITLE_LIST[0]:
-        return CAREER_TYPE_LIST[POST_CAREER_TYPE_LIST.indexOf(career)];
-      case SELET_TITLE_LIST[1]:
         return priority1;
 
-      case SELET_TITLE_LIST[2]:
+      case SELET_TITLE_LIST[1]:
         return priority2;
 
-      case SELET_TITLE_LIST[3]:
+      case SELET_TITLE_LIST[2]:
         return priority3;
     }
   };
@@ -70,7 +60,7 @@ const LearningSelect = (props: LearningSelectProps) => {
         <h3>{title}</h3>
       </header>
       <St.SubjectSelect onChange={handleChangeOptionValue} value={getSelectValue()}>
-        {OPTION_LIST.map((option) => (
+        {SUBJECT_CATEGORY_LIST.map((option) => (
           <St.SubjectOption key={option} value={option}>
             {option}
           </St.SubjectOption>

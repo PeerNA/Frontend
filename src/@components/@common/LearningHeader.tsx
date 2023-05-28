@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { IcStudying } from '../../assets/icon';
+import studying from '../../assets/image/studying.png';
 
 interface LearningHeaderProps {
   title: string;
@@ -7,10 +7,9 @@ interface LearningHeaderProps {
 }
 const LearningHeader = (props: LearningHeaderProps) => {
   const { title, pageType } = props;
-
   return (
     <St.HeaderWrapper>
-      <IcStudying />
+      <img src={studying} />
       {pageType === 'main' ? <h2> {title}</h2> : <h1>{title}</h1>}
     </St.HeaderWrapper>
   );
