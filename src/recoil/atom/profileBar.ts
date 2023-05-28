@@ -27,6 +27,7 @@ export const answerInfoState = atom<UserAnswerInfo>({
     userName: '',
     imageUrl: '',
     answer: '',
+    score: 0,
   },
   effects_UNSTABLE: [persistAtom],
 });

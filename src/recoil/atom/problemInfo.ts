@@ -38,6 +38,7 @@ export const peerMatchInfoState = atom<PeerMatchInfo>({
       id: 0,
       imageUrl: '',
       name: '',
+      score: 0,
     },
     isAnswerSubmit: {
       isMyAnswer: false,
@@ -73,6 +74,7 @@ export const peerMatchAnswerInfoState = atom<GetHistoryDetailInfo>({
       likes: 0,
       imageUrl: '',
       answer: '',
+      score: 0,
     },
     peer: {
       name: '',
@@ -81,6 +83,7 @@ export const peerMatchAnswerInfoState = atom<GetHistoryDetailInfo>({
       likes: 0,
       imageUrl: '',
       answer: '',
+      score: 0,
     },
     keyword: [''],
   },

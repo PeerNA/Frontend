@@ -10,6 +10,7 @@ export interface GetLearningHistoryInfo {
 }
 export interface UserHistoryInfo extends ProblemAnswerInfo {
   likes: number;
+  score: number;
 }
 export interface ChatMessageInfo {
   message: string;
@@ -31,6 +32,7 @@ export interface ProblemAnswerInfo {
   imageUrl: string;
   answer: string;
   likes: number;
+  score: number;
 }
 
 export interface GetProblemAnswerInfo {

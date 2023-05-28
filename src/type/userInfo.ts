@@ -30,6 +30,7 @@ export interface PatchInterestInfo {
 export interface UserProfileInfo {
   userName: string;
   imageUrl: string;
+  score?: number;
 }
 
 export interface UserAnswerInfo extends UserProfileInfo {
@@ -47,4 +48,5 @@ export interface PeerInfo {
   id: number;
   imageUrl: string;
   name: string;
+  score: number;
 }
