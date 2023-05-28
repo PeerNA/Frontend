@@ -1,8 +1,6 @@
 import React from 'react';
 import UserProfile from './UserProfile';
 import styled from 'styled-components';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { replyAnswerInfoState } from '../../recoil/atom/problemInfo';
 import { LockSolving } from '../PeerMatchingPage';
 
 interface UserInputBoxProps {
@@ -11,14 +9,15 @@ interface UserInputBoxProps {
   content?: string;
   userName: string;
   imageUrl: string;
+  score: number;
   textAreaValue?: string;
   handleAnswerTextArea?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 const UserInputBox = (props: UserInputBoxProps) => {
-  const { isModify, isPeerAnswer, content, userName, imageUrl, textAreaValue, handleAnswerTextArea } = props;
+  const { isModify, isPeerAnswer, content, userName, score, imageUrl, textAreaValue, handleAnswerTextArea } = props;
   return (
     <St.UserInputBoxArticle>
-      <UserProfile userName={userName} imageUrl={imageUrl} />
+      <UserProfile userName={userName} imageUrl={imageUrl} score={score} />
       <St.UserProfileUnderBar />
       {!isPeerAnswer ? (
         <LockSolving />

@@ -30,7 +30,7 @@ const AnswerPaging = (props: AnswerPagingProps) => {
     const { replyData, totalCount } = problemAnswerInfo;
     return (
       <St.AnswerPagingWrapper ref={scrollRef}>
-        {replyData.map(({ replyId, userId, name, imageUrl, answer, likes }, idx) => (
+        {replyData.map(({ replyId, userId, name, imageUrl, answer, likes, score }, idx) => (
           <AnswerCard
             key={`${name}-${idx}`}
             handlePostLike={handlePostLike}
@@ -40,6 +40,7 @@ const AnswerPaging = (props: AnswerPagingProps) => {
             name={name}
             imageUrl={imageUrl}
             answer={answer}
+            score={score}
           />
         ))}
         <Paging totalItemsCount={totalCount} activePage={size} handleClickPage={handleClickPage} />

@@ -116,6 +116,7 @@ const ProblemSolving = () => {
               imageUrl={myInfo.imageUrl}
               textAreaValue={replyAnswerInfo.answer}
               handleAnswerTextArea={handleAnswerTextArea}
+              score={myInfo.score}
             />
             <PeerNaBtn
               isActive={!isAnswerSubmit.isMyAnswer && Boolean(replyAnswerInfo.answer.length)}
@@ -130,6 +131,7 @@ const ProblemSolving = () => {
               userName={peerInfo.name}
               imageUrl={peerInfo.imageUrl}
               content={peer.answer}
+              score={peerInfo.score}
             />
 
             <PeerNaBtn

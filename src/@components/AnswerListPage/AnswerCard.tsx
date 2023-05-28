@@ -12,14 +12,14 @@ interface AnswerCardProps extends ProblemAnswerInfo {
   handlePostLike: (replyId: number) => void;
 }
 const AnswerCard = (props: AnswerCardProps) => {
-  const { replyId, userId, likes, name, imageUrl, answer, handlePostLike } = props;
+  const { replyId, userId, likes, name, imageUrl, answer, score, handlePostLike } = props;
 
   const setAnswerInfoState = useSetRecoilState(answerInfoState);
 
   const { toggleModal } = useModal();
 
   const handleModalInfo = () => {
-    setAnswerInfoState({ userName: name, imageUrl, answer });
+    setAnswerInfoState({ userName: name, imageUrl, answer, score });
     toggleModal(false);
   };
 
@@ -30,7 +30,7 @@ const AnswerCard = (props: AnswerCardProps) => {
       </St.PeernaAnswerLogo>
       <p onClick={handleModalInfo}>{answer}</p>
 
-      <UserProfile userName={name} imageUrl={imageUrl} />
+      <UserProfile userName={name} imageUrl={imageUrl} score={score} />
     </St.AnswerCardWrapper>
   );
 };

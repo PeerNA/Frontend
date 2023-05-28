@@ -10,13 +10,13 @@ const DetailModal = () => {
   const { toggleModal } = useModal();
 
   const answerInfo = useRecoilValue(answerInfoState);
-  const { userName, imageUrl, answer } = answerInfo;
+  const { userName, imageUrl, answer, score } = answerInfo;
 
   return (
     <St.DetailModalWrapper>
       <St.DetailModalArticle>
         <St.ProfileWrapper>
-          <UserProfile userName={userName} imageUrl={imageUrl} />
+          <UserProfile userName={userName} imageUrl={imageUrl} score={score} />
         </St.ProfileWrapper>
         <St.AnswerWrapper>{answer}</St.AnswerWrapper>
         <PeerNaBtn content="닫기" isActive={true} handleBtnClick={() => toggleModal(false)} />
