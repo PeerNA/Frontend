@@ -9,6 +9,7 @@ export interface UserInfoType {
     priority3: string;
   };
   career: string;
+  score: number;
 }
 export interface PollingInfoType {
   isPeerMatch: boolean;

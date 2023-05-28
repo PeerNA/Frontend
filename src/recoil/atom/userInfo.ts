@@ -18,6 +18,7 @@ export const userInfoState = atom<UserInfoType>({
       priority3: SUBJECT_CATEGORY_LIST[0],
     },
     career: POST_CAREER_TYPE_LIST[0],
+    score: 0,
   },
   effects_UNSTABLE: [persistAtom],
 });
