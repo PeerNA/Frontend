@@ -8,7 +8,7 @@ import ModalPortal from '../../ModalPortals';
 import { useNavigate } from 'react-router-dom';
 import { getPeerMatch } from '../../lib/api/auth';
 import { PeerMatchInfo } from '../../type/problem';
-import { peerMatchInfoState, replyAnswerInfoState } from '../../recoil/atom/problemInfo';
+import { peerMatchAnswerInfoState, peerMatchInfoState, replyAnswerInfoState } from '../../recoil/atom/problemInfo';
 import axios, { AxiosResponse } from 'axios';
 import { modalInfoState } from '../../recoil/atom/profileBar';
 import { messageInfoState } from '../../recoil/atom/messageInfo';
@@ -25,6 +25,7 @@ const PeerMatchingBtn = () => {
   const setModalInfo = useResetRecoilState(modalInfoState);
   const setPeerMatchInfo = useSetRecoilState(peerMatchInfoState);
   const setReplyAnswerInfo = useSetRecoilState(replyAnswerInfoState);
+  const [perrMatchAnswerInfo, setPeerMatchAnswerInfo] = useRecoilState(peerMatchAnswerInfoState);
   const pollingInfo = useRef(true);
   const modalContentRef = useRef('');
 
@@ -62,6 +63,10 @@ const PeerMatchingBtn = () => {
         isExistPeer: false,
       });
       setReplyAnswerInfo({ answer: '', historyId, problemId, roomId });
+      setPeerMatchAnswerInfo({
+        ...perrMatchAnswerInfo,
+        peer: { ...peerMatchInfo.peer, likes: 0, replyId: 0, answer: '' },
+      });
     }
 
     setModalInfo();

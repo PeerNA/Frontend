@@ -87,5 +87,4 @@ export const peerMatchAnswerInfoState = atom<GetHistoryDetailInfo>({
     },
     keyword: [''],
   },
-  effects_UNSTABLE: [persistAtom],
 });
