@@ -45,7 +45,7 @@ export interface ActiveModalInfo {
   isAutoModal: boolean;
 }
 export interface PeerInfo {
-  id: number;
+  userId: number;
   imageUrl: string;
   name: string;
   score: number;

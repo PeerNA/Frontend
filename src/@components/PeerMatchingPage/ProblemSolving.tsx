@@ -64,7 +64,7 @@ const ProblemSolving = () => {
 
   const getNextQuestion = async () => {
     modalContentRef.current = PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.WAIT_PEER];
-    const data = await getNextPeerMatch(roomId, peerInfo.id);
+    const data = await getNextPeerMatch(roomId, peerInfo.userId);
 
     if (data?.status === 404) {
       toggleAutoModal();

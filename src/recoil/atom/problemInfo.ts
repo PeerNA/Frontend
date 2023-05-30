@@ -35,7 +35,7 @@ export const peerMatchInfoState = atom<PeerMatchInfo>({
       answer: '',
     },
     peer: {
-      id: 0,
+      userId: 0,
       imageUrl: '',
       name: '',
       score: 0,

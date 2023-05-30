@@ -24,7 +24,7 @@ const ChatingRoom = () => {
   const {
     roomId,
     historyId,
-    peer: { id: peerId, name: peerName },
+    peer: { userId: peerId, name: peerName },
   } = peerMatchInfo;
   const { name, id: myId } = myInfo;
 
