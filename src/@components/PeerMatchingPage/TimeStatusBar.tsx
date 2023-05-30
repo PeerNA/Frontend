@@ -36,7 +36,7 @@ const TimeStatusBar = () => {
     }
 
     return () => clearInterval(timer);
-  }, [isPeernaModal, time]);
+  }, [isPeernaModal, time, isAnswerSubmitInfo.isTimeRemain]);
 
   return (
     <St.Progress>
