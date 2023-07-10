@@ -29,3 +29,7 @@ export const pollingInfoState = atom<PollingInfoType>({
     isPeerMatch: true,
   },
 });
+export const wsRoomIdState = atom<number>({
+  key: 'wsRoomId',
+  default: 0,
+});
