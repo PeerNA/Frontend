@@ -9,14 +9,13 @@ const useSocketClient = () => {
   const userId = useRecoilValue(userIdInfo);
   const [wsRoomId, setWsRoomId] = useRecoilState(wsRoomIdState);
   const client = useRef<CompatClient>();
-  const sock = new SockJS(`${process.env.REACT_APP_IP}stomp/ws`);
 
-  // 웹소켓 초기 생성 핸들러
   const wsConnectHandler = () => {
-    console.log(client, '클라이언트');
-
-    if (client.current?.abort) client.current = Stomp.over(() => sock);
-    console.log(client, '클라이언트 후');
+    if (!client.current)
+      client.current = Stomp.over(() => {
+        const sock = new SockJS(`${process.env.REACT_APP_IP}stomp/chat`);
+        return sock;
+      });
   };
 
   // 동료 찾기
