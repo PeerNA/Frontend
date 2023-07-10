@@ -44,6 +44,10 @@ const ChatingRoom = () => {
     });
   };
 
+  const disconnectHandler = () => {
+    client.current?.deactivate();
+  };
+
   const handleSubmitMessage = () => {
     if (imageDataRef.current) {
       const formData = new FormData();
@@ -122,11 +126,13 @@ const ChatingRoom = () => {
       inputRef.current.style.height = 12 + inputRef.current.scrollHeight + 'px';
     }
   };
+
   useEffect(() => {
     if (!client.current?.abort) connectHandler();
     if (chatRef.current) {
       chatRef.current.scrollIntoView({ behavior: 'smooth' });
     }
+    return () => disconnectHandler();
   }, []);
 
   useEffect(() => {
