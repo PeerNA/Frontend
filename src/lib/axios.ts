@@ -23,30 +23,6 @@ peerNaClient.interceptors.response.use(
       config: { baseURL, url, method },
     } = response;
 
-    if (baseURL && url) {
-      const apiUrl = (baseURL + url) as string;
-
-      const polling = async () => {
-        let timeCount = 24;
-        let pollingRes = await axios.get(`${apiUrl}`, { withCredentials: true });
-        while (pollingRes.status === 202 && timeCount) {
-          await sleep(5000);
-          try {
-            pollingRes = await axios.get(`${apiUrl}`, { withCredentials: true });
-            timeCount -= 1;
-          } catch (err) {
-            console.log(err);
-          }
-        }
-
-        return pollingRes;
-      };
-
-      if (response.status === 202 && (url.includes('api/match/status') || url.includes('api/match/next'))) {
-        return polling();
-      }
-    }
-
     return response;
   },
   async (error) => {

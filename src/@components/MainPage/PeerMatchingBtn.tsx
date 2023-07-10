@@ -16,8 +16,10 @@ import { deletePeerMatch, getCategoryRandomProblem } from '../../lib/api/problem
 import { sleep } from '../../lib/api/polling';
 import { useEffect, useRef } from 'react';
 import { userCategoryInfo } from '../../recoil/selector/userInfo';
+import useSocketClient from '../../lib/hooks/useSocketClient';
 
 const PeerMatchingBtn = () => {
+  const { wsConnectHandler, wsSubscribePeerWait, wsUnSubscribePeerWait } = useSocketClient();
   const navigate = useNavigate();
 
   const category = useRecoilValue(userCategoryInfo);
@@ -26,7 +28,6 @@ const PeerMatchingBtn = () => {
   const setPeerMatchInfo = useSetRecoilState(peerMatchInfoState);
   const setReplyAnswerInfo = useSetRecoilState(replyAnswerInfoState);
   const [perrMatchAnswerInfo, setPeerMatchAnswerInfo] = useRecoilState(peerMatchAnswerInfoState);
-  const pollingInfo = useRef(true);
   const modalContentRef = useRef('');
 
   const { isPeernaModal, toggleModal } = useModal();
@@ -72,48 +73,17 @@ const PeerMatchingBtn = () => {
     setModalInfo();
     navigate(`/problem-room/${roomId}`);
   };
-  const handleMatchingBtn = async () => {
-    const data = await getCategoryRandomProblem(category);
-    if (data) {
-      modalContentRef.current = data.question;
-      toggleModal(false);
-    }
-    try {
-      const res = (await getPeerMatch()) as AxiosResponse<PeerMatchInfo, any>;
-
-      if (res.status === 202) {
-        const polling = async () => {
-          let timeCount = 24;
-          let pollingRes = await axios.get(`${process.env.REACT_APP_IP}api/match?player=2`, { withCredentials: true });
-
-          while (pollingRes.status === 202 && timeCount && pollingInfo.current) {
-            await sleep(5000);
-            try {
-              pollingRes = await axios.get(`${process.env.REACT_APP_IP}api/match?player=2`, { withCredentials: true });
-              timeCount -= 1;
-            } catch (err) {
-              console.log(err);
-            }
-          }
-          checkIsExistRoom(pollingRes);
-        };
-        polling();
-      } else if (res.status === 200) {
-        checkIsExistRoom(res);
-      }
-    } catch (e) {
-      console.log(e);
-    }
+  const handleMatchingBtn = () => {
+    wsSubscribePeerWait();
   };
 
-  const handleCancelPeerMatch = async () => {
-    const data = await deletePeerMatch();
-    if (data === 'success') pollingInfo.current = false;
+  const handleCancelPeerMatch = () => {
+    wsUnSubscribePeerWait();
   };
 
   useEffect(() => {
-    pollingInfo.current = true;
-  });
+    wsConnectHandler();
+  }, []);
   return (
     <>
       <St.MatchigBtnWrapper onClick={handleMatchingBtn}>
