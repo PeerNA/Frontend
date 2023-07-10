@@ -11,6 +11,7 @@ const useSocketClient = () => {
   const client = useRef<CompatClient>();
   const sock = new SockJS(`${process.env.REACT_APP_IP}stomp/ws`);
 
+  console.log(client);
   // 웹소켓 초기 생성 핸들러
   const wsConnectHandler = () => {
     if (client.current?.abort) client.current = Stomp.over(() => sock);
@@ -18,11 +19,13 @@ const useSocketClient = () => {
 
   // 동료 찾기
   const wsSubscribePeerWait = () => {
-    client.current?.subscribe(`/wait/${userId}`, (message) => {
-      if (message) {
-        console.log(message);
-        wsUnSubscribePeerWait();
-      }
+    client.current?.connect({}, () => {
+      client.current?.subscribe(`/wait/${userId}`, (message) => {
+        if (message) {
+          console.log(message);
+          wsUnSubscribePeerWait();
+        }
+      });
     });
   };
 
