@@ -11,10 +11,12 @@ const useSocketClient = () => {
   const client = useRef<CompatClient>();
   const sock = new SockJS(`${process.env.REACT_APP_IP}stomp/ws`);
 
-  console.log(client);
   // 웹소켓 초기 생성 핸들러
   const wsConnectHandler = () => {
+    console.log(client, '클라이언트');
+
     if (client.current?.abort) client.current = Stomp.over(() => sock);
+    console.log(client, '클라이언트 후');
   };
 
   // 동료 찾기
