@@ -106,7 +106,7 @@ const useSocketClient = () => {
   const wsDisconnectHandler = useCallback(() => {
     client.current?.deactivate();
   }, []);
-  return { wsConnectHandler, wsSubscribePeerWait, wsUnSubscribePeerWait, wsSubscribeRoom, wsUnSubscribeRoom };
+  return { wsConnectHandler, wsSubscribePeerWait, wsUnSubscribePeerWait, wsSubscribeRoom, wsUnSubscribeRoom, client };
 };
 
 export default useSocketClient;

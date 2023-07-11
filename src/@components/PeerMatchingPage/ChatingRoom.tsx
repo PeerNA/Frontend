@@ -10,11 +10,12 @@ import ChatingMessage from './ChatingMessage';
 import { MessageInfo } from '../../type/message';
 import ImgPreview from './ImgPreview';
 import { postChatingImage } from '../../lib/api/chating';
+import useSocketClient from '../../lib/hooks/useSocketClient';
 
 const ChatingRoom = () => {
   const myInfo = useRecoilValue(userInfoState);
   const peerMatchInfo = useRecoilValue(peerMatchInfoState);
-  const client = useRef<CompatClient>();
+  const { client } = useSocketClient();
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const chatMessageListRef = useRef<MessageInfo[]>([]);
   const [chatMessageList, setChatMessageList] = useRecoilState(messageInfoState);
@@ -29,11 +30,7 @@ const ChatingRoom = () => {
   const { name, id: myId } = myInfo;
 
   const connectHandler = () => {
-    client.current = Stomp.over(() => {
-      const sock = new SockJS(`${process.env.REACT_APP_IP}stomp/chat`);
-      return sock;
-    });
-    client.current.connect({}, () => {
+    client.current?.connect({}, () => {
       client.current!.subscribe(`/sub/chat/room/${roomId}`, (message) => {
         chatMessageListRef.current = [...chatMessageListRef.current, JSON.parse(message.body)];
         setChatMessageList(chatMessageListRef.current);
