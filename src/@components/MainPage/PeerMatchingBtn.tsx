@@ -1,80 +1,29 @@
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import { pollingInfoState, userInfoState } from '../../recoil/atom/userInfo';
 import useModal from '../../lib/hooks/useModal';
 import { PeerNaModal } from '../@common';
 import ModalPortal from '../../ModalPortals';
-import { useNavigate } from 'react-router-dom';
-import { getPeerMatch } from '../../lib/api/auth';
-import { PeerMatchInfo } from '../../type/problem';
-import { peerMatchAnswerInfoState, peerMatchInfoState, replyAnswerInfoState } from '../../recoil/atom/problemInfo';
-import axios, { AxiosResponse } from 'axios';
-import { modalInfoState } from '../../recoil/atom/profileBar';
-import { messageInfoState } from '../../recoil/atom/messageInfo';
-import { deletePeerMatch, getCategoryRandomProblem } from '../../lib/api/problem';
-import { sleep } from '../../lib/api/polling';
+import { getCategoryRandomProblem } from '../../lib/api/problem';
 import { useEffect, useRef } from 'react';
 import { userCategoryInfo } from '../../recoil/selector/userInfo';
 import useSocketClient from '../../lib/hooks/useSocketClient';
 
 const PeerMatchingBtn = () => {
   const { wsConnectHandler, wsSubscribePeerWait, wsUnSubscribePeerWait } = useSocketClient();
-  const navigate = useNavigate();
 
   const category = useRecoilValue(userCategoryInfo);
-  const setChatingMessageInfo = useResetRecoilState(messageInfoState);
-  const setModalInfo = useResetRecoilState(modalInfoState);
-  const setPeerMatchInfo = useSetRecoilState(peerMatchInfoState);
-  const setReplyAnswerInfo = useSetRecoilState(replyAnswerInfoState);
-  const [perrMatchAnswerInfo, setPeerMatchAnswerInfo] = useRecoilState(peerMatchAnswerInfoState);
   const modalContentRef = useRef('');
 
   const { isPeernaModal, toggleModal } = useModal();
 
-  const checkIsExistRoom = (res: AxiosResponse<PeerMatchInfo, any>) => {
-    const peerMatchInfo = res.data as PeerMatchInfo;
-    const {
-      roomId,
-      historyId,
-      problem: { id: problemId },
-    } = peerMatchInfo;
-
-    console.log(peerMatchInfo);
-    // 매칭되어있는 상태
-    if (res.status === 409) {
-      setPeerMatchInfo({
-        ...peerMatchInfo,
-        isAnswerSubmit: {
-          isMyAnswer: false,
-          isPeerAnswer: false,
-          isTimeRemain: true,
-        },
-        isExistPeer: true,
-      });
-    } else {
-      setChatingMessageInfo();
-      setPeerMatchInfo({
-        ...peerMatchInfo,
-        isAnswerSubmit: {
-          isMyAnswer: false,
-          isPeerAnswer: false,
-          isTimeRemain: true,
-        },
-        isExistPeer: false,
-      });
-      setReplyAnswerInfo({ answer: '', historyId, problemId, roomId });
-      setPeerMatchAnswerInfo({
-        ...perrMatchAnswerInfo,
-        peer: { ...peerMatchInfo.peer, likes: 0, replyId: 0, answer: '' },
-      });
+  const handleMatchingBtn = async () => {
+    const data = await getCategoryRandomProblem(category);
+    if (data) {
+      modalContentRef.current = data.question;
+      toggleModal(false);
+      wsSubscribePeerWait();
     }
-
-    setModalInfo();
-    navigate(`/problem-room/${roomId}`);
-  };
-  const handleMatchingBtn = () => {
-    wsSubscribePeerWait();
   };
 
   const handleCancelPeerMatch = () => {
