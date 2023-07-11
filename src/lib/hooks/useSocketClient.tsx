@@ -79,17 +79,13 @@ const useSocketClient = () => {
           wsUnSubscribePeerWait();
         }
       });
-      client.current?.subscribe(`/pub/match/request`, (message) => {
-        if (message) {
-          console.log(message);
-        }
-      });
+
+      client.current?.send(`/pub/match/request`, {}, JSON.stringify({ userId }));
     });
   };
 
   const wsUnSubscribePeerWait = () => {
     client.current?.unsubscribe(`/wait/${userId}`);
-    client.current?.unsubscribe('/pub/match/cancel');
   };
   // 방 구독
   const wsSubscribeRoom = () => {
