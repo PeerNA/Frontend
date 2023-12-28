@@ -33,19 +33,16 @@ const ProblemSolving = () => {
 
   const handleAnswerSubmit = () => {
     modalContentRef.current = PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.SUBMIT_ANSWER];
-    console.log('답안제출', isAnswerSubmit, isPeerMatchModal);
     if (!isAnswerSubmit.isMyAnswer) togglePeerMatchModal();
   };
 
   const handleNextQuestion = () => {
-    console.log('다음문제', isAnswerSubmit);
     modalContentRef.current = PEER_MATCH_MODAL_INFO[PEER_MATCH_MODAL_TYPE.NEXT_QUESTION];
     togglePeerMatchModal();
     getNextQuestion();
   };
   const postReplyAnswer = async () => {
     //문제풀이 완료후 답안제출 확인
-    console.log(replyAnswerInfo);
     const data = await postReplyAnswerData(replyAnswerInfo);
 
     if (data?.status === 200 || data?.status === 409) {

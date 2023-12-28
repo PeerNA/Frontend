@@ -68,8 +68,6 @@ const ChatingRoom = () => {
       imageDataRef.current = undefined;
       setIsImgPreview(false);
     } else if (inputRef.current?.value) {
-      console.log('제출1', inputRef.current.value);
-
       client.current!.send(
         '/pub/chat/message',
         {},
@@ -81,7 +79,6 @@ const ChatingRoom = () => {
         }),
       );
       inputRef.current.value = '';
-      console.log('제출3', inputRef.current?.value);
     }
   };
 

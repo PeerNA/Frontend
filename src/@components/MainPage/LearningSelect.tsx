@@ -39,7 +39,6 @@ const LearningSelect = (props: LearningSelectProps) => {
 
   const handlePatchInterest = async (patchInterest: PatchInterestInfo) => {
     const data = await patchMatchingInterest(patchInterest);
-    console.log(data);
   };
   const getSelectValue = () => {
     switch (title) {

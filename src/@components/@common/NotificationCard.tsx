@@ -17,12 +17,7 @@ interface NotificationCardProps {
 const NotificationCard = (props: NotificationCardProps) => {
   const { notificationData, handleDeleteNotification, handlePostPRAccept } = props;
   const { notificationId, type, answer, sender, msg, time } = notificationData;
-  const modalContent = answer ? answer : sender;
   const [isNotificationDetailModal, setIsNotificationDetailModal] = useState(false);
-
-  const handlePostPR = async () => {
-    console.log('PR');
-  };
 
   const getInfoType = () => {
     switch (type) {

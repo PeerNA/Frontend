@@ -24,9 +24,7 @@ export const postLogout = async () => {
   try {
     const data = await peerNaClient.post(`logout`);
     return data;
-  } catch (error) {
-    console.error(error);
-  }
+  } catch (error) {}
 };
 
 export const getPeerMatch = async () => {
@@ -42,16 +40,12 @@ export const deleteUserInfo = async () => {
   try {
     const data = await peerNaClient.delete('api/users/sign-out');
     return data;
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };
 
 export const deleteAllNotification = async () => {
   try {
     const data = await peerNaClient.delete('api/notifications');
     return data;
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };

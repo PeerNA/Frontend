@@ -36,7 +36,6 @@ const useSocketClient = () => {
     client.current?.connect({}, () => {
       client.current?.subscribe(`/wait/${userId}`, (message) => {
         if (message) {
-          console.log(message);
           const peerMatchInfo = JSON.parse(message.body) as PeerMatchInfo;
           const {
             roomId,
@@ -44,7 +43,6 @@ const useSocketClient = () => {
             problem: { id: problemId },
           } = peerMatchInfo;
 
-          console.log(peerMatchInfo);
           // 매칭되어있는 상태
           //   if (res.status === 409) {
           setPeerMatchInfo({
@@ -89,9 +87,7 @@ const useSocketClient = () => {
   };
   // 방 구독
   const wsSubscribeRoom = () => {
-    client.current?.subscribe(`/match/${wsRoomId}`, (message) => {
-      console.log(message);
-    });
+    client.current?.subscribe(`/match/${wsRoomId}`, (message) => {});
   };
 
   // 방 구독 취소
